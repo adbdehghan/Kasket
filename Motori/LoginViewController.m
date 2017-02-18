@@ -91,6 +91,7 @@
     }
     else
     {
+        [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"🤔"
                                                         message:@"لطفا همه ی مقادیر را تکمیل نمایید."

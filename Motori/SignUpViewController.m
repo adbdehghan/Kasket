@@ -90,11 +90,10 @@
             {
                 [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"خطا"
-                                                                message:@"کد وارد شده اشتباه است!"
+                                                                message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                                delegate:self
                                                       cancelButtonTitle:@"خب"
                                                       otherButtonTitles:nil];
-                
                 [alert show];
                 signUpButton.enabled = YES;
             }
@@ -102,6 +101,7 @@
             
             
         } else {
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"خطا"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                            delegate:self
