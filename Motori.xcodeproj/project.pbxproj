@@ -26,6 +26,7 @@
 		3AB5B1A91E33BFAE002AE9F2 /* notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB5B1A81E33BFAE002AE9F2 /* notification.png */; };
 		3AD9703B1E539FF2002B7888 /* DataCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9703A1E539FF2002B7888 /* DataCollector.m */; };
 		3AD9703E1E53CF26002B7888 /* DestinationDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9703D1E53CF26002B7888 /* DestinationDetails.m */; };
+		3AD970411E5759FC002B7888 /* SummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD970401E5759FC002B7888 /* SummaryView.m */; };
 		640412701E4FCAEA00D29680 /* sourceDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 6404126F1E4FCAEA00D29680 /* sourceDetails.m */; };
 		640607331E16B32000E07C83 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640607321E16B32000E07C83 /* libsqlite3.tbd */; };
 		642018031E4FBEB000AF7819 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 642017FF1E4FBEB000AF7819 /* back@2x.png */; };
@@ -166,6 +167,8 @@
 		3AD9703A1E539FF2002B7888 /* DataCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCollector.m; sourceTree = "<group>"; };
 		3AD9703C1E53CF26002B7888 /* DestinationDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestinationDetails.h; sourceTree = "<group>"; };
 		3AD9703D1E53CF26002B7888 /* DestinationDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestinationDetails.m; sourceTree = "<group>"; };
+		3AD9703F1E5759FC002B7888 /* SummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryView.h; sourceTree = "<group>"; };
+		3AD970401E5759FC002B7888 /* SummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryView.m; sourceTree = "<group>"; };
 		3DA0FEB3FAD18E4E72E2497A /* Pods-Motori.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motori.release.xcconfig"; path = "Pods/Target Support Files/Pods-Motori/Pods-Motori.release.xcconfig"; sourceTree = "<group>"; };
 		6404126E1E4FCAEA00D29680 /* sourceDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sourceDetails.h; sourceTree = "<group>"; };
 		6404126F1E4FCAEA00D29680 /* sourceDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sourceDetails.m; sourceTree = "<group>"; };
@@ -429,6 +432,8 @@
 				6404126F1E4FCAEA00D29680 /* sourceDetails.m */,
 				3AD9703C1E53CF26002B7888 /* DestinationDetails.h */,
 				3AD9703D1E53CF26002B7888 /* DestinationDetails.m */,
+				3AD9703F1E5759FC002B7888 /* SummaryView.h */,
+				3AD970401E5759FC002B7888 /* SummaryView.m */,
 			);
 			path = "Popup Views";
 			sourceTree = "<group>";
@@ -1053,6 +1058,7 @@
 				64343ACC1E16B0D600B4FE3F /* UIImageView+HighlightedWebCache.m in Sources */,
 				64343ABD1E16B0D600B4FE3F /* JCDHTTPConnection.m in Sources */,
 				64343AC81E16B0D600B4FE3F /* UIButton+WebCache.m in Sources */,
+				3AD970411E5759FC002B7888 /* SummaryView.m in Sources */,
 				64343AB71E16B0D600B4FE3F /* SBJsonBase.m in Sources */,
 				64343AA51E16B0D600B4FE3F /* DBManager.m in Sources */,
 				64343ABB1E16B0D600B4FE3F /* UzysAnimtedGifLoadMoreView.m in Sources */,
