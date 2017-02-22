@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "IQKeyboardManager.h"
+#import <OCGoogleDirectionsAPI/OCGoogleDirectionsAPI.h>
 
 @import GoogleMaps;
 @import GooglePlaces;
@@ -22,6 +23,7 @@
     
     [GMSServices provideAPIKey:@"AIzaSyCvhTlttp-AAadtH5Azgjg8lZBhWKVJF1o"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyBegoSeF2g34tFK_22yCbFE7UlTjKev7lg"];
+    [OCDirectionsAPIClient provideAPIKey:@"AIzaSyAaqMrPIwSTSyCPd6LSyQk8stGZ4iDMCeg"];
     [IQKeyboardManager sharedManager].enable = NO;
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)

@@ -108,14 +108,13 @@ NSMutableDictionary *receivedData;
 
 }
 
-- (void)GetPrice:(NSString*)token Car:(NSString*)car WashType:(NSString*)washType Wax:(NSString*)wax  withCallback:(RequestCompleteBlock)callback
+- (void)GetPrice:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
 
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/GetPrice",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/GetPrice",URLaddress];
     
-    NSDictionary *parameters = @{@"car": car, @"washtype" : washType,@"wax":wax};
-    
+    NSDictionary *parameters = @{@"sourceLat": sourceLat, @"sourceLon" : sourceLon,@"destinationLat":destinationLat,@"destinationLon":destinationLon,@"haveReturn":haveReturn,@"orderType":orderType};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -135,7 +134,6 @@ NSMutableDictionary *receivedData;
         callback(NO,nil);
         NSLog(@"Failure %@, %@", error, operation.responseString);
     }];
-    
 }
 
 - (void)OffCode:(NSString*)token Code:(NSString*)code withCallback:(RequestCompleteBlock)callback

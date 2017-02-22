@@ -18,6 +18,8 @@
 {
     UITextField *bellTextField;
     UITextField *plateTextField;
+    UITextField *phoneTextField;
+    UITextField *nameTextField;
     
 }
 

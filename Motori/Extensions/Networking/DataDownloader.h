@@ -21,7 +21,7 @@ typedef void (^ImageRequestCompleteBlock) (BOOL wasSuccessful,UIImage *image);
 
 - (void)GetVersion:(NSString *)params withCallback:(RequestCompleteBlock)callback;
 
-- (void)GetPrice:(NSString*)token Car:(NSString*)car WashType:(NSString*)washType Wax:(NSString*)wax  withCallback:(RequestCompleteBlock)callback;
+- (void)GetPrice:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType withCallback:(RequestCompleteBlock)callback;
 
 - (void)Order:(NSString*)token Car:(NSString*)car WashType:(NSString*)washType Wax:(NSString*)wax Lat:(NSString*)lat Lon:(NSString*)lon Day:(NSString*)day Hour:(NSString*)hour Price:(NSString*)price Plate:(NSString*)plate Address:(NSString*)address OffCode:(NSString*)offCode withCallback:(RequestCompleteBlock)callback;
 

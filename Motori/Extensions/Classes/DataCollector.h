@@ -21,4 +21,6 @@
 @property (nonatomic,strong) NSString *destinationBell;
 @property (nonatomic,strong) NSString *destinationPlate;
 @property (nonatomic,strong) NSString *destinationPhoneNumber;
+@property (nonatomic,strong) NSString *destinationFullName;
+@property (nonatomic,strong) NSString *orderType;
 @end

@@ -25,6 +25,7 @@
 #import "sourceDetails.h"
 #import "DataCollector.h"
 #import "DestinationDetails.h"
+#import "SummaryView.h"
 
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -33,6 +34,7 @@ typedef NS_ENUM(NSInteger, OrderState) {
     SourceStep,
     SourceView,
     DestinationStep,
+    SummaryStep,
     FindEmployee
 };
 
@@ -44,7 +46,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface MapViewController ()<GMSMapViewDelegate,CLLocationManagerDelegate,UIGestureRecognizerDelegate,INSSearchBarDelegate,RSCameraSwitchDelegate,CNPPopupControllerDelegate,sourceDelegate,DestinationDelegate>
+@interface MapViewController ()<GMSMapViewDelegate,CLLocationManagerDelegate,UIGestureRecognizerDelegate,INSSearchBarDelegate,RSCameraSwitchDelegate,CNPPopupControllerDelegate,sourceDelegate,DestinationDelegate,SummaryDelegate>
 {
     GMSMapView *mapView;
     NSString *str2;
@@ -137,7 +139,9 @@ typedef NS_ENUM(NSInteger, RequestType) {
 {
     if (isFront) {
         requestType = Box;
+        [DataCollector sharedInstance].orderType = @"0";
     } else {
+        [DataCollector sharedInstance].orderType = @"1";
         requestType = Human;
     }
 }
@@ -286,6 +290,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
         double longitude = mapView.camera.target.longitude;
         
         self.pinLocationSource = CLLocationCoordinate2DMake(latitude,longitude);;
+        [DataCollector sharedInstance].sourceLat = [NSString stringWithFormat:@"%f",latitude];
+        [DataCollector sharedInstance].sourceLon = [NSString stringWithFormat:@"%f",longitude];
         
         sourceMarker.position = CLLocationCoordinate2DMake(latitude,longitude);
         sourceMarker.map = mapView;
@@ -310,7 +316,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
             menuContainer.alpha = 0;
         }];
         
-        
+        self.kindSwitch.alpha = 0;
         
         if (requestType == Box) {
             [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
@@ -328,6 +334,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
         double latitude =  mapView.camera.target.latitude;
         double longitude = mapView.camera.target.longitude;
         self.pinLocationDestination = CLLocationCoordinate2DMake(latitude,longitude);;
+        [DataCollector sharedInstance].destinationLat = [NSString stringWithFormat:@"%f",latitude];
+        [DataCollector sharedInstance].destinationLon = [NSString stringWithFormat:@"%f",longitude];
         desmarker.position = CLLocationCoordinate2DMake(latitude,longitude);
         desmarker.map = mapView;
         desmarker.icon =  [UIImage imageWithPDFNamed:@"destinationmarker.pdf"
@@ -368,15 +376,20 @@ typedef NS_ENUM(NSInteger, RequestType) {
     }
     else if (orderState == DestinationStep)
     {
-        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
+        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
         DestinationDetails *destinationView = [[DestinationDetails alloc]initWithFrame:customView.frame];
         destinationView.delegate = self;
         [customView addSubview:destinationView];
     
     }
+    else if(orderState == SummaryStep)
+    {
+        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 350)];
+        SummaryView *summaryView = [[SummaryView alloc]initWithFrame:customView.frame];
+        summaryView.delegate = self;
+        [customView addSubview:summaryView];
+    }
    
- 
-    
     self.popupController = [[CNPPopupController alloc] initWithContents:@[customView]];
     self.popupController.theme = [CNPPopupTheme defaultTheme];
     self.popupController.theme.popupStyle = popupStyle;
@@ -391,9 +404,31 @@ typedef NS_ENUM(NSInteger, RequestType) {
     DataCollector *instance = [DataCollector sharedInstance];
     NSString *test = instance.sourceBell;
     
-    orderState = DestinationStep;
+    if (orderState != SummaryStep) {
+        
+        [self.popupController dismissPopupControllerAnimated:YES];
+    }
     
-    [self.popupController dismissPopupControllerAnimated:YES];
+    if (orderState == SourceView) {
+        orderState = DestinationStep;
+    }
+    else if (orderState == DestinationStep) {
+        orderState = SummaryStep;
+        [self showPopupWithStyle:CNPPopupStyleActionSheet];
+    }
+    else if (orderState == SummaryStep)
+    {
+        orderState = FindEmployee;
+    
+    }
+    else if (orderState == FindEmployee)
+    {
+        orderState = SourceStep;
+        [self.popupController dismissPopupControllerAnimated:YES];
+        
+    }
+    
+    
 }
 
 -(void)BackwardClicked

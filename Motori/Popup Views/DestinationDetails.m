@@ -38,7 +38,7 @@
         [self addSubview:sepratorView];
         
         
-        plateTextField = [[UITextField alloc]initWithFrame:CGRectMake(3*(frame.size.width/4)-35, 54, 70, 30)];
+        plateTextField = [[UITextField alloc]initWithFrame:CGRectMake(3*(frame.size.width/4)-35, 50, 70, 30)];
         plateTextField.keyboardType = UIKeyboardTypeDefault;
         plateTextField.font = [UIFont fontWithName:@"IRANSans" size:14];
         plateTextField.borderStyle = UITextBorderStyleNone;
@@ -54,7 +54,7 @@
         [self addSubview:plateTextFieldView];
         
         
-        bellTextField = [[UITextField alloc]initWithFrame:CGRectMake(frame.size.width/4-35, 54, 70, 30)];
+        bellTextField = [[UITextField alloc]initWithFrame:CGRectMake(frame.size.width/4-35, 50, 70, 30)];
         bellTextField.keyboardType = UIKeyboardTypeDefault;
         bellTextField.font = [UIFont fontWithName:@"IRANSans" size:14];
         bellTextField.borderStyle = UITextBorderStyleNone;
@@ -69,6 +69,35 @@
         bellTextFieldView.alpha = .3f;
         [self addSubview:bellTextFieldView];
         
+        nameTextField = [[UITextField alloc]initWithFrame:CGRectMake(3*(frame.size.width/4)-50, 92, 100, 30)];
+        nameTextField.keyboardType = UIKeyboardTypeDefault;
+        nameTextField.font = [UIFont fontWithName:@"IRANSans" size:14];
+        nameTextField.borderStyle = UITextBorderStyleNone;
+        nameTextField.returnKeyType = UIReturnKeyDone;
+        nameTextField.textAlignment = NSTextAlignmentCenter;
+        nameTextField.placeholder = @"نام گیرنده";
+        [self addSubview:nameTextField];
+        
+        UIView *nameTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(nameTextField.frame.origin.x, nameTextField.frame.origin.y+30, 90 , 1)];
+        [nameTextFieldView setBackgroundColor:[UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1]];
+        nameTextFieldView.userInteractionEnabled = NO;
+        nameTextFieldView.alpha = .3f;
+        [self addSubview:nameTextFieldView];
+        
+        phoneTextField = [[UITextField alloc]initWithFrame:CGRectMake(frame.size.width/4-50, 92, 100, 30)];
+        phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
+        phoneTextField.font = [UIFont fontWithName:@"IRANSans" size:11];
+        phoneTextField.borderStyle = UITextBorderStyleNone;
+        phoneTextField.returnKeyType = UIReturnKeyDone;
+        phoneTextField.textAlignment = NSTextAlignmentCenter;
+        phoneTextField.placeholder = @"شماره تماس";
+        [self addSubview:phoneTextField];
+        
+        UIView *phoneTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(phoneTextField.frame.origin.x, phoneTextField.frame.origin.y+30, 90 , 1)];
+        [phoneTextFieldView setBackgroundColor:[UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1]];
+        phoneTextFieldView.userInteractionEnabled = NO;
+        phoneTextFieldView.alpha = .3f;
+        [self addSubview:phoneTextFieldView];
         
         CNPPopupButton *button = [[CNPPopupButton alloc] initWithFrame:CGRectMake(0, frame.size.height-50, frame.size.width, 50)];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

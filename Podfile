@@ -17,7 +17,8 @@ pod 'AnimatedGIFImageSerialization'
 pod 'LMSideBarController'
 pod 'OHPDFImage'
 pod 'CNPPopupController'
-
+pod 'LUNSegmentedControl'
+pod "OCGoogleDirectionsAPI", "~> 0.1.7"
   # Pods for Motori
 
 end
