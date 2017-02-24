@@ -45,6 +45,7 @@
         plateTextField.returnKeyType = UIReturnKeyDone;
         plateTextField.textAlignment = NSTextAlignmentCenter;
         plateTextField.placeholder = @"پلاک";
+        plateTextField.text =[DataCollector sharedInstance].destinationPlate;
         [self addSubview:plateTextField];
         
         UIView *plateTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(plateTextField.frame.origin.x, plateTextField.frame.origin.y+30, 70 , 1)];
@@ -61,6 +62,7 @@
         bellTextField.returnKeyType = UIReturnKeyDone;
         bellTextField.textAlignment = NSTextAlignmentCenter;
         bellTextField.placeholder = @"واحد / زنگ";
+        bellTextField.text =[DataCollector sharedInstance].destinationBell;
         [self addSubview:bellTextField];
         
         UIView *bellTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(bellTextField.frame.origin.x, bellTextField.frame.origin.y+30, 70 , 1)];
@@ -76,6 +78,7 @@
         nameTextField.returnKeyType = UIReturnKeyDone;
         nameTextField.textAlignment = NSTextAlignmentCenter;
         nameTextField.placeholder = @"نام گیرنده";
+        nameTextField.text =[DataCollector sharedInstance].destinationFullName;
         [self addSubview:nameTextField];
         
         UIView *nameTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(nameTextField.frame.origin.x, nameTextField.frame.origin.y+30, 90 , 1)];
@@ -91,6 +94,7 @@
         phoneTextField.returnKeyType = UIReturnKeyDone;
         phoneTextField.textAlignment = NSTextAlignmentCenter;
         phoneTextField.placeholder = @"شماره تماس";
+        phoneTextField.text =[DataCollector sharedInstance].destinationPhoneNumber;
         [self addSubview:phoneTextField];
         
         UIView *phoneTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(phoneTextField.frame.origin.x, phoneTextField.frame.origin.y+30, 90 , 1)];
@@ -121,7 +125,8 @@
     {
         [DataCollector sharedInstance].destinationBell = bellTextField.text;
         [DataCollector sharedInstance].destinationPlate = plateTextField.text;
-        
+        [DataCollector sharedInstance].destinationPhoneNumber =phoneTextField.text;
+        [DataCollector sharedInstance].destinationFullName =nameTextField.text;
         
         [self.delegate ForwardClicked];
         

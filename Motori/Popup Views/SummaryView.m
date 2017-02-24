@@ -10,6 +10,8 @@
 #import "DataCollector.h"
 #import "UIView+YGPulseView.h"
 #import <OCGoogleDirectionsAPI/OCGoogleDirectionsAPI.h>
+#import "RadarView.h"
+#define DEGREES_TO_RADIANS(angle) (angle/180.0*M_PI)
 
 @implementation SummaryView
 
@@ -67,7 +69,7 @@
         priceCircleView.backgroundColor = [UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1];
         priceCircleView.clipsToBounds = YES;
         priceCircleView.alpha = .96;
-        [mainView addSubview:priceCircleView];
+        [self addSubview:priceCircleView];
         
         priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, priceCircleView.frame.size.height/2-7.5f, priceCircleView.frame.size.width-10, 15)];
         priceLabel.backgroundColor = [UIColor clearColor];
@@ -82,7 +84,7 @@
         timeCircleView.backgroundColor = [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
         timeCircleView.clipsToBounds = YES;
         timeCircleView.alpha = .96;
-        [mainView addSubview:timeCircleView];
+        [self addSubview:timeCircleView];
         
         timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, timeCircleView.frame.size.height/2-7.5f, timeCircleView.frame.size.width-10, 15)];
         timeLabel.backgroundColor = [UIColor clearColor];
@@ -222,17 +224,37 @@
         mainButton.selectionHandler = ^(CNPPopupButton *button){
             [self ForwardClicked];
             
-            [UIView animateWithDuration:.3 animations:^(){
+            [UIView animateWithDuration:.5 animations:^(){
                 
                 [mainButton setTitle:@"لغو درخواست" forState:UIControlStateNormal];
                 mainButton.backgroundColor = [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
-                //[gradient removeFromSuperlayer]
-                mainView.alpha = 0.5;
+                
+                mainView.alpha = 0.0;
                 mainView.userInteractionEnabled = NO;
                 
+                [timeCircleView stopPulse];
+                [priceCircleView stopPulse];
+                timeLabel.text = @"";
                 
-               
+                priceCircleView.frame = CGRectMake(0, 0, frame.size.width,frame.size.height-50);
+                priceCircleView.backgroundColor = [UIColor blackColor];
+                priceCircleView.alpha = .7;
+                priceCircleView.layer.cornerRadius = 0;
+                timeCircleView.alpha = 0;
+                priceLabel.frame = CGRectMake(5, priceCircleView.frame.size.height/2-10.f, priceCircleView.frame.size.width-10, 20);
+                priceLabel.text = @"در حال جستجوی نزدیکترین کاسکت";
+                priceLabel.font = [UIFont fontWithName:@"IRANSans-Bold" size:15];
+                
+                RadarView *radar = [[RadarView alloc]initWithFrame:CGRectMake(frame.size.width/2 - 140, 10, 280, 280)];
+                [self addSubview:radar];
+            
+                self.backgroundColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:1];
+                
+                [self bringSubviewToFront:priceCircleView];
+          
             }];
+            
+            
             
             gradient.colors =  [NSArray arrayWithObjects:(id)([UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1].CGColor),(id)( [UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1].CGColor),(id)([UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1].CGColor),nil];
            // gradient.colors = [NSArray arrayWithObjects:(id)([UIColor colorWithRed:70/255.f green:70/255.f blue:70/255.f alpha:1].CGColor),(id)( [UIColor colorWithRed:255/255.f green:0/255.f blue:66/255.f alpha:.1].CGColor),nil];
@@ -384,10 +406,11 @@
 {
     if (segmentedControl == paymentSegmentedControl)
     {
-        
+        [DataCollector sharedInstance].payInDestination = [NSString stringWithFormat:@"%d",toIndex];
     }
     else
     {
+        [DataCollector sharedInstance].haveReturn = [NSString stringWithFormat:@"%d",toIndex];
         if (toIndex == 0) {
             [self GetTime:NO];
         }
@@ -404,6 +427,7 @@
     [priceCircleView startPulseWithColor:priceCircleView.backgroundColor animation:YGPulseViewAnimationTypeRadarPulsing];
     
      [timeCircleView startPulseWithColor:timeCircleView.backgroundColor animation:YGPulseViewAnimationTypeRadarPulsing];
+    
 }
 
 -(void)ForwardClicked

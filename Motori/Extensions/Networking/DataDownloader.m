@@ -196,7 +196,7 @@ NSMutableDictionary *receivedData;
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/cancelorder",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/cancelorder",URLaddress];
     
     NSDictionary *parameters = @{@"orderId": orderId};
     
@@ -225,7 +225,7 @@ NSMutableDictionary *receivedData;
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/orderhistory",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/orderhistory",URLaddress];
     
     NSDictionary *parameters = @{@"page": page};
     
@@ -283,7 +283,7 @@ NSMutableDictionary *receivedData;
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/Notifications",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/Notifications",URLaddress];
     
     NSDictionary *parameters = @{@"page": page};
     
@@ -308,13 +308,28 @@ NSMutableDictionary *receivedData;
     }];
 }
 
-- (void)Order:(NSString*)token Car:(NSString*)car WashType:(NSString*)washType Wax:(NSString*)wax Lat:(NSString*)lat Lon:(NSString*)lon Day:(NSString*)day Hour:(NSString*)hour Price:(NSString*)price Plate:(NSString*)plate Address:(NSString*)address OffCode:(NSString*)offCode withCallback:(RequestCompleteBlock)callback
+- (void)Order:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType SourceNum:(NSString*)sourceNum SourceBell:(NSString*)sourceBell DestinationNum:(NSString*)destinationNum DestinationBell:(NSString*)destinationBell DestinationFullName:(NSString*)destinationFullName DestinationPhoneNumber:(NSString*)destinationPhoneNumber PayInDestination:(NSString*)payInDestination SourceAddress:(NSString*)sourceAddress DestinationAddress:(NSString*)destinationAddress Offcode:(NSString*)offcode  withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
-    NSDictionary *parameters = @{@"car": car,@"washType": washType,@"wax": wax,@"lat": lat,@"lon": lon,@"day": day,@"hour": hour,@"price": price,@"plate":plate,@"address":address,@"offCode":offCode};
+    NSDictionary *parameters = @{@"sourceLat": sourceLat == nil ? @"" : sourceLat,
+                                 @"sourceLon": sourceLon== nil ? @"" : sourceLon,
+                                 @"destinationLat": destinationLat== nil ? @"" : destinationLat,
+                                 @"destinationLon": destinationLon== nil ? @"" : destinationLon,
+                                 @"haveReturn": [haveReturn isEqualToString:@"1"] ? @"true" : @"false",
+                                 @"orderType": orderType== nil ? @"" : orderType,
+                                 @"source_num": sourceNum== nil ? @"" : sourceNum,
+                                 @"source_bell": sourceBell== nil ? @"" : sourceBell,
+                                 @"destination_num":destinationNum== nil ? @"" : destinationNum,
+                                 @"destination_bell":destinationBell== nil ? @"" : destinationBell,
+                                 @"destination_fullName":destinationFullName== nil ? @"" : destinationFullName,
+                                 @"destination_PhoneNumber":destinationPhoneNumber== nil ? @"" : destinationPhoneNumber,
+                                 @"PayInDestination":[payInDestination isEqualToString:@"1"] ? @"true" : @"false",
+                                 @"sourceAddress":sourceAddress== nil ? @"" : sourceAddress,
+                                 @"destinationAddress":destinationAddress== nil ? @"" : destinationAddress,
+                                 @"offcode":offcode== nil ? @"" : offcode};
     
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/GetOrder",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/GetOrder",URLaddress];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

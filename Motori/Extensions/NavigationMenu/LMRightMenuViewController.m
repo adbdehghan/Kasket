@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
     
-    self.menuTitles = @[@"افزایش اعتبار", @"آرشیو فعالیت ها",@"پیام ها", @"کد هدیه", @"مکان های منتخب", @"درباره ما",@"خروج"];
+    self.menuTitles = @[@"افزایش اعتبار", @"فعالیت ها",@"پیام ها", @"کد هدیه", @"مکان های منتخب", @"درباره ما",@"خروج"];
     self.menuImages = @[@"creditcard",@"archive",@"notification",@"giftcode",@"adress",@"aboutus",@"logout"];
     self.avatarImageView.clipsToBounds = YES;
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2;
@@ -79,9 +79,10 @@
             
             break;
         case 1:
-            
+            [self performSegueWithIdentifier:@"activities" sender:self];
             break;
         case 2:
+            [self performSegueWithIdentifier:@"notification" sender:self];
             
             break;
         case 3:

@@ -23,4 +23,7 @@
 @property (nonatomic,strong) NSString *destinationPhoneNumber;
 @property (nonatomic,strong) NSString *destinationFullName;
 @property (nonatomic,strong) NSString *orderType;
+@property (nonatomic,strong) NSString *haveReturn;
+@property (nonatomic,strong) NSString *payInDestination;
+@property (nonatomic,strong) NSString *offCode;
 @end

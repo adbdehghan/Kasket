@@ -45,6 +45,7 @@
         plateTextField.returnKeyType = UIReturnKeyDone;
         plateTextField.textAlignment = NSTextAlignmentCenter;
         plateTextField.placeholder = @"پلاک";
+        plateTextField.text = [DataCollector sharedInstance].sourcePlate;;
         [self addSubview:plateTextField];
         
         UIView *plateTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(plateTextField.frame.origin.x, plateTextField.frame.origin.y+30, 70 , 1)];
@@ -61,6 +62,7 @@
         bellTextField.returnKeyType = UIReturnKeyDone;
         bellTextField.textAlignment = NSTextAlignmentCenter;
         bellTextField.placeholder = @"واحد / زنگ";
+        bellTextField.text = [DataCollector sharedInstance].sourceBell;;
         [self addSubview:bellTextField];
         
         UIView *bellTextFieldView = [[UIImageView alloc] initWithFrame:CGRectMake(bellTextField.frame.origin.x, bellTextField.frame.origin.y+30, 70 , 1)];

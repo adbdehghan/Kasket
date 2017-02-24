@@ -132,6 +132,18 @@
 		648316251E2BE6C10067C4EF /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648316241E2BE6C10067C4EF /* MapViewController.m */; };
 		6483162C1E2BEAB70067C4EF /* ASJDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6483162B1E2BEAB70067C4EF /* ASJDropDownMenu.m */; };
 		64E18DBC1E58FF8F00CB4A12 /* UIView+YGPulseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E18DBB1E58FF8F00CB4A12 /* UIView+YGPulseView.m */; };
+		64E6864D1E5E8B2D00DA0631 /* RadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E6864C1E5E8B2D00DA0631 /* RadarView.m */; };
+		64E686541E5E8B4300DA0631 /* Arcs.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E6864F1E5E8B4300DA0631 /* Arcs.m */; };
+		64E686551E5E8B4300DA0631 /* Dot.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686511E5E8B4300DA0631 /* Dot.m */; };
+		64E686561E5E8B4300DA0631 /* Radar.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686531E5E8B4300DA0631 /* Radar.m */; };
+		64E686591E5E8C9B00DA0631 /* AngleGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686581E5E8C9B00DA0631 /* AngleGradientLayer.m */; };
+		64E6865D1E5EC47C00DA0631 /* KLCPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E6865C1E5EC47C00DA0631 /* KLCPopup.m */; };
+		64E686601E5EC99500DA0631 /* Myself.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E6865E1E5EC99500DA0631 /* Myself.pdf */; };
+		64E686611E5EC99500DA0631 /* BoxNoti.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E6865F1E5EC99500DA0631 /* BoxNoti.pdf */; };
+		64E686651E5FAB4500DA0631 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686631E5FAB4500DA0631 /* NotificationsTableViewController.m */; };
+		64E686671E5FABED00DA0631 /* nevertoolate@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 64E686661E5FABED00DA0631 /* nevertoolate@2x.gif */; };
+		64E686691E5FAC3E00DA0631 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E686681E5FAC3E00DA0631 /* close.png */; };
+		64E6866D1E5FB2C300DA0631 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E6866B1E5FB2C300DA0631 /* HistoryTableViewController.m */; };
 		64E871CC1E2D9D5300C48548 /* mypic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64E871CB1E2D9D5300C48548 /* mypic.jpg */; };
 		64E871D81E2DA5B800C48548 /* LNERadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */; };
 		64E871D91E2DA5B800C48548 /* JTNumberScrollAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871D21E2DA5B800C48548 /* JTNumberScrollAnimatedView.m */; };
@@ -354,6 +366,26 @@
 		6483162B1E2BEAB70067C4EF /* ASJDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASJDropDownMenu.m; sourceTree = "<group>"; };
 		64E18DBA1E58FF8F00CB4A12 /* UIView+YGPulseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YGPulseView.h"; sourceTree = "<group>"; };
 		64E18DBB1E58FF8F00CB4A12 /* UIView+YGPulseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YGPulseView.m"; sourceTree = "<group>"; };
+		64E6864B1E5E8B2D00DA0631 /* RadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadarView.h; sourceTree = "<group>"; };
+		64E6864C1E5E8B2D00DA0631 /* RadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadarView.m; sourceTree = "<group>"; };
+		64E6864E1E5E8B4300DA0631 /* Arcs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arcs.h; sourceTree = "<group>"; };
+		64E6864F1E5E8B4300DA0631 /* Arcs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Arcs.m; sourceTree = "<group>"; };
+		64E686501E5E8B4300DA0631 /* Dot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dot.h; sourceTree = "<group>"; };
+		64E686511E5E8B4300DA0631 /* Dot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dot.m; sourceTree = "<group>"; };
+		64E686521E5E8B4300DA0631 /* Radar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Radar.h; sourceTree = "<group>"; };
+		64E686531E5E8B4300DA0631 /* Radar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Radar.m; sourceTree = "<group>"; };
+		64E686571E5E8C9B00DA0631 /* AngleGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleGradientLayer.h; sourceTree = "<group>"; };
+		64E686581E5E8C9B00DA0631 /* AngleGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleGradientLayer.m; sourceTree = "<group>"; };
+		64E6865B1E5EC47C00DA0631 /* KLCPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLCPopup.h; sourceTree = "<group>"; };
+		64E6865C1E5EC47C00DA0631 /* KLCPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLCPopup.m; sourceTree = "<group>"; };
+		64E6865E1E5EC99500DA0631 /* Myself.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Myself.pdf; sourceTree = "<group>"; };
+		64E6865F1E5EC99500DA0631 /* BoxNoti.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = BoxNoti.pdf; sourceTree = "<group>"; };
+		64E686631E5FAB4500DA0631 /* NotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsTableViewController.m; sourceTree = "<group>"; };
+		64E686641E5FAB4500DA0631 /* NotificationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsTableViewController.h; sourceTree = "<group>"; };
+		64E686661E5FABED00DA0631 /* nevertoolate@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "nevertoolate@2x.gif"; sourceTree = "<group>"; };
+		64E686681E5FAC3E00DA0631 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		64E6866B1E5FB2C300DA0631 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
+		64E6866C1E5FB2C300DA0631 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
 		64E871CB1E2D9D5300C48548 /* mypic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mypic.jpg; sourceTree = "<group>"; };
 		64E871CE1E2DA5B800C48548 /* LNERadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNERadialMenu.h; sourceTree = "<group>"; };
 		64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNERadialMenu.m; sourceTree = "<group>"; };
@@ -397,6 +429,10 @@
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64E686681E5FAC3E00DA0631 /* close.png */,
+				64E686661E5FABED00DA0631 /* nevertoolate@2x.gif */,
+				64E6865E1E5EC99500DA0631 /* Myself.pdf */,
+				64E6865F1E5EC99500DA0631 /* BoxNoti.pdf */,
 				646C96961E4A87700090962A /* back.pdf */,
 				646C968A1E4A7EC00090962A /* sourcecompass.pdf */,
 				646C968B1E4A7EC00090962A /* destinationcompass.png */,
@@ -478,6 +514,8 @@
 				648316261E2BE6D30067C4EF /* LoginViews */,
 				6404126D1E4FCACD00D29680 /* Popup Views */,
 				648316281E2BE7040067C4EF /* MapView */,
+				64E686621E5FAB2000DA0631 /* Notification */,
+				64E6866A1E5FB28900DA0631 /* Activities */,
 				643439E41E16AF2F00B4FE3F /* Main.storyboard */,
 				643439E71E16AF2F00B4FE3F /* Assets.xcassets */,
 				643439E91E16AF2F00B4FE3F /* LaunchScreen.storyboard */,
@@ -498,6 +536,8 @@
 		643439FB1E16B0D600B4FE3F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				64E6865A1E5EC47C00DA0631 /* KLCPopup */,
+				64E6864A1E5E8B1E00DA0631 /* Radar View */,
 				64E18DB91E58FF8F00CB4A12 /* YGPulseView */,
 				642017FE1E4FBEB000AF7819 /* RSCameraSwitch */,
 				646C96981E4AA2E50090962A /* MapStyle */,
@@ -827,6 +867,50 @@
 			path = YGPulseView;
 			sourceTree = "<group>";
 		};
+		64E6864A1E5E8B1E00DA0631 /* Radar View */ = {
+			isa = PBXGroup;
+			children = (
+				64E686571E5E8C9B00DA0631 /* AngleGradientLayer.h */,
+				64E686581E5E8C9B00DA0631 /* AngleGradientLayer.m */,
+				64E6864E1E5E8B4300DA0631 /* Arcs.h */,
+				64E6864F1E5E8B4300DA0631 /* Arcs.m */,
+				64E686501E5E8B4300DA0631 /* Dot.h */,
+				64E686511E5E8B4300DA0631 /* Dot.m */,
+				64E686521E5E8B4300DA0631 /* Radar.h */,
+				64E686531E5E8B4300DA0631 /* Radar.m */,
+				64E6864B1E5E8B2D00DA0631 /* RadarView.h */,
+				64E6864C1E5E8B2D00DA0631 /* RadarView.m */,
+			);
+			path = "Radar View";
+			sourceTree = "<group>";
+		};
+		64E6865A1E5EC47C00DA0631 /* KLCPopup */ = {
+			isa = PBXGroup;
+			children = (
+				64E6865B1E5EC47C00DA0631 /* KLCPopup.h */,
+				64E6865C1E5EC47C00DA0631 /* KLCPopup.m */,
+			);
+			path = KLCPopup;
+			sourceTree = "<group>";
+		};
+		64E686621E5FAB2000DA0631 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				64E686641E5FAB4500DA0631 /* NotificationsTableViewController.h */,
+				64E686631E5FAB4500DA0631 /* NotificationsTableViewController.m */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
+		64E6866A1E5FB28900DA0631 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				64E6866C1E5FB2C300DA0631 /* HistoryTableViewController.h */,
+				64E6866B1E5FB2C300DA0631 /* HistoryTableViewController.m */,
+			);
+			name = Activities;
+			sourceTree = "<group>";
+		};
 		64E871CD1E2DA5B800C48548 /* RadialMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -940,6 +1024,7 @@
 				3A673A1B1E30609D00160478 /* staticpin.png in Resources */,
 				64343AD61E16B0D600B4FE3F /* NavBarIconSearchBar2_blue@2x.png in Resources */,
 				64343AEB1E16B17D00B4FE3F /* IRANSans_Light.ttf in Resources */,
+				64E686611E5EC99500DA0631 /* BoxNoti.pdf in Resources */,
 				64343AED1E16B17D00B4FE3F /* IRANSans_UltraLight.ttf in Resources */,
 				646C96921E4A7EC00090962A /* destinationpin.pdf in Resources */,
 				646C96911E4A7EC00090962A /* destinationcompass.png in Resources */,
@@ -971,6 +1056,7 @@
 				64343AD71E16B0D600B4FE3F /* NavBarIconSearchBar_blue.png in Resources */,
 				64FFA1741E2409C200DB26F3 /* teh.png in Resources */,
 				646C96941E4A7EC00090962A /* sourcepin.pdf in Resources */,
+				64E686601E5EC99500DA0631 /* Myself.pdf in Resources */,
 				64343AD91E16B0D600B4FE3F /* NavBarIconSearchCircle_blue.png in Resources */,
 				646C969A1E4AA30C0090962A /* MapStyle.json in Resources */,
 				3A673A1D1E306C7B00160478 /* menu.png in Resources */,
@@ -979,6 +1065,8 @@
 				642018031E4FBEB000AF7819 /* back@2x.png in Resources */,
 				3A99B8011E1812FA00CF38F6 /* number.png in Resources */,
 				3AB5B19D1E33BC36002AE9F2 /* lock.png in Resources */,
+				64E686671E5FABED00DA0631 /* nevertoolate@2x.gif in Resources */,
+				64E686691E5FAC3E00DA0631 /* close.png in Resources */,
 				64343AD11E16B0D600B4FE3F /* NavBarIconSearch_blue.png in Resources */,
 				3AB5B19E1E33BC36002AE9F2 /* mail.png in Resources */,
 				64343AEC1E16B17D00B4FE3F /* IRANSans_Medium.ttf in Resources */,
@@ -1044,6 +1132,7 @@
 			files = (
 				64E871DB1E2DA5B800C48548 /* PulsingHaloLayer.m in Sources */,
 				64343AD01E16B0D600B4FE3F /* INSSearchBar.m in Sources */,
+				64E686651E5FAB4500DA0631 /* NotificationsTableViewController.m in Sources */,
 				64343ACA1E16B0D600B4FE3F /* UIImage+MultiFormat.m in Sources */,
 				64343AC41E16B0D600B4FE3F /* SDWebImageDownloader.m in Sources */,
 				64343ACB1E16B0D600B4FE3F /* UIImage+WebP.m in Sources */,
@@ -1069,9 +1158,11 @@
 				64343AA81E16B0D600B4FE3F /* FMDatabaseAdditions.m in Sources */,
 				64E871D91E2DA5B800C48548 /* JTNumberScrollAnimatedView.m in Sources */,
 				64343ACC1E16B0D600B4FE3F /* UIImageView+HighlightedWebCache.m in Sources */,
+				64E6864D1E5E8B2D00DA0631 /* RadarView.m in Sources */,
 				64343ABD1E16B0D600B4FE3F /* JCDHTTPConnection.m in Sources */,
 				64343AC81E16B0D600B4FE3F /* UIButton+WebCache.m in Sources */,
 				3AD970411E5759FC002B7888 /* SummaryView.m in Sources */,
+				64E6865D1E5EC47C00DA0631 /* KLCPopup.m in Sources */,
 				64343AB71E16B0D600B4FE3F /* SBJsonBase.m in Sources */,
 				64343AA51E16B0D600B4FE3F /* DBManager.m in Sources */,
 				64343ABB1E16B0D600B4FE3F /* UzysAnimtedGifLoadMoreView.m in Sources */,
@@ -1080,6 +1171,7 @@
 				64343A9F1E16B0D600B4FE3F /* AFURLRequestSerialization.m in Sources */,
 				64E18DBC1E58FF8F00CB4A12 /* UIView+YGPulseView.m in Sources */,
 				3AD9703E1E53CF26002B7888 /* DestinationDetails.m in Sources */,
+				64E686561E5E8B4300DA0631 /* Radar.m in Sources */,
 				643439FA1E16AF8F00B4FE3F /* SplashViewController.m in Sources */,
 				64343AA01E16B0D600B4FE3F /* AFURLResponseSerialization.m in Sources */,
 				64343ADF1E16B0D600B4FE3F /* HomeTableViewCell.m in Sources */,
@@ -1103,6 +1195,7 @@
 				64343A9D1E16B0D600B4FE3F /* AFSecurityPolicy.m in Sources */,
 				64343AC21E16B0D600B4FE3F /* SDWebImageCompat.m in Sources */,
 				64343AB81E16B0D600B4FE3F /* SBJsonParser.m in Sources */,
+				64E6866D1E5FB2C300DA0631 /* HistoryTableViewController.m in Sources */,
 				643439F71E16AF6D00B4FE3F /* SignUpViewController.m in Sources */,
 				64343AA21E16B0D600B4FE3F /* Notification.m in Sources */,
 				64343ABE1E16B0D600B4FE3F /* Reachability.m in Sources */,
@@ -1111,6 +1204,7 @@
 				64343AAF1E16B0D600B4FE3F /* MBSpinningCircle.m in Sources */,
 				6483162C1E2BEAB70067C4EF /* ASJDropDownMenu.m in Sources */,
 				64343AC71E16B0D600B4FE3F /* SDWebImagePrefetcher.m in Sources */,
+				64E686541E5E8B4300DA0631 /* Arcs.m in Sources */,
 				643439DD1E16AF2F00B4FE3F /* main.m in Sources */,
 				64E871D81E2DA5B800C48548 /* LNERadialMenu.m in Sources */,
 				64343AE11E16B0D600B4FE3F /* iconCollectionViewCell.m in Sources */,
@@ -1120,9 +1214,11 @@
 				3AB5B1941E33AE96002AE9F2 /* LMMainNavigationController.m in Sources */,
 				64343AC11E16B0D600B4FE3F /* SDImageCache.m in Sources */,
 				64343ADC1E16B0D600B4FE3F /* BWSegmentedControl.m in Sources */,
+				64E686591E5E8C9B00DA0631 /* AngleGradientLayer.m in Sources */,
 				640412701E4FCAEA00D29680 /* sourceDetails.m in Sources */,
 				64343A9B1E16B0D600B4FE3F /* AFHTTPSessionManager.m in Sources */,
 				64E871DA1E2DA5B800C48548 /* MultiplePulsingHaloLayer.m in Sources */,
+				64E686551E5E8B4300DA0631 /* Dot.m in Sources */,
 				64343AE41E16B0D600B4FE3F /* TransactionTableViewCell.m in Sources */,
 				64343ABA1E16B0D600B4FE3F /* UIScrollView+UzysAnimatedGifLoadMore.m in Sources */,
 			);

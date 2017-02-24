@@ -23,7 +23,7 @@ typedef void (^ImageRequestCompleteBlock) (BOOL wasSuccessful,UIImage *image);
 
 - (void)GetPrice:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType withCallback:(RequestCompleteBlock)callback;
 
-- (void)Order:(NSString*)token Car:(NSString*)car WashType:(NSString*)washType Wax:(NSString*)wax Lat:(NSString*)lat Lon:(NSString*)lon Day:(NSString*)day Hour:(NSString*)hour Price:(NSString*)price Plate:(NSString*)plate Address:(NSString*)address OffCode:(NSString*)offCode withCallback:(RequestCompleteBlock)callback;
+- (void)Order:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType SourceNum:(NSString*)sourceNum SourceBell:(NSString*)sourceBell DestinationNum:(NSString*)destinationNum DestinationBell:(NSString*)destinationBell DestinationFullName:(NSString*)destinationFullName DestinationPhoneNumber:(NSString*)destinationPhoneNumber PayInDestination:(NSString*)payInDestination SourceAddress:(NSString*)sourceAddress DestinationAddress:(NSString*)destinationAddress Offcode:(NSString*)offcode  withCallback:(RequestCompleteBlock)callback;
 
 - (void)OrderHistory:(NSString*)token Page:(NSString*)page withCallback:(RequestCompleteBlock)callback;
 

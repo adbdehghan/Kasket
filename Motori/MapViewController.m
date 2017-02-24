@@ -26,6 +26,7 @@
 #import "DataCollector.h"
 #import "DestinationDetails.h"
 #import "SummaryView.h"
+#import "KLCPopup.h"
 
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -33,6 +34,7 @@
 typedef NS_ENUM(NSInteger, OrderState) {
     SourceStep,
     SourceView,
+    SelectDestination,
     DestinationStep,
     SummaryStep,
     FindEmployee
@@ -66,11 +68,13 @@ typedef NS_ENUM(NSInteger, RequestType) {
     UIImageView *compassImage;
     CABasicAnimation* rotationAnimation;
     BOOL isIdle;
+    BOOL isFirst;
     GMSMarker *desmarker;
     GMSMarker *sourceMarker;
     UIButton *menuButton;
     UIButton *backButton;
     GMSPlacesClient *_placesClient;
+    UIImageView *menuImage;
 }
 @property (nonatomic) CLLocation *myLocation;
 @property (nonatomic) CLLocation *deviceLocation;
@@ -102,7 +106,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    isFirst = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     [self setupMapView];
     [self CustomizeNavigationBar];
@@ -135,6 +139,11 @@ typedef NS_ENUM(NSInteger, RequestType) {
     requestType = Box;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+}
+
 - (void)clicked:(BOOL)isFront
 {
     if (isFront) {
@@ -144,6 +153,61 @@ typedef NS_ENUM(NSInteger, RequestType) {
         [DataCollector sharedInstance].orderType = @"1";
         requestType = Human;
     }
+    
+    if (!isFirst) {
+        [self ShowOrderType:isFront];
+    }
+    
+    isFirst = NO;
+}
+
+-(void)ShowOrderType:(BOOL)isBox
+{
+    // Generate content view to present
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    contentView.backgroundColor = [UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1];
+    contentView.layer.cornerRadius = 12.0;
+    contentView.alpha = .9;
+    UIImageView *signImage = [[UIImageView alloc]initWithFrame:CGRectMake(contentView.frame.size.width/2 - 20,20, 40, 40)];
+    signImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [contentView addSubview:signImage];
+    
+    UILabel* dismissLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 70, contentView.frame.size.width - 10, 15)];
+    dismissLabel.backgroundColor = [UIColor clearColor];
+    dismissLabel.textAlignment = NSTextAlignmentCenter;
+    dismissLabel.textColor = [UIColor whiteColor];
+    dismissLabel.font = [UIFont fontWithName:@"IRANSans-Bold" size:14];
+    
+    if (isBox) {
+        dismissLabel.text = @"ارسال بسته";
+        signImage.image = [UIImage imageWithPDFNamed:@"BoxNoti.pdf"
+                                           fitInSize:CGSizeMake(40, 40)];
+        
+        [contentView addSubview:signImage];
+    }
+    else
+    {
+    dismissLabel.text = @"خودم میرم";
+        signImage.image = [UIImage imageWithPDFNamed:@"Myself"
+                                           fitInSize:CGSizeMake(20, 40)];
+        
+        [contentView addSubview:signImage];
+    }
+    
+    [contentView addSubview:dismissLabel];
+    
+    KLCPopup* popup = [KLCPopup popupWithContentView:contentView
+                                            showType:KLCPopupShowTypeShrinkIn
+                                         dismissType:KLCPopupDismissTypeShrinkOut
+                                            maskType:KLCPopupMaskTypeClear
+                            dismissOnBackgroundTouch:YES
+                               dismissOnContentTouch:YES];
+    
+            
+    //[popup showAtCenter:self.view.center inView:self.view];
+    [popup showWithDuration:1];
+
 }
 
 
@@ -252,7 +316,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 -(void)InitBackButton
 {
-    UIImageView *menuImage = [[UIImageView alloc]initWithFrame:CGRectMake(25,35, 16, 14)];
+    menuImage = [[UIImageView alloc]initWithFrame:CGRectMake(25,35, 16, 14)];
     menuImage.image = [UIImage imageWithPDFNamed:@"back.pdf"
                                        fitInSize:CGSizeMake(16, 14)];
 
@@ -269,6 +333,19 @@ typedef NS_ENUM(NSInteger, RequestType) {
     backButton.userInteractionEnabled = YES;
     backButton.frame = CGRectMake(15, 35, 30, 30);
     [[UIApplication sharedApplication].keyWindow addSubview:backButton];
+    
+    [[UIApplication sharedApplication].keyWindow bringSubviewToFront:menuImage];
+    [[UIApplication sharedApplication].keyWindow bringSubviewToFront:backButton];
+    
+}
+
+-(void)RemoveBackButton
+{
+    [UIView animateWithDuration:.3 animations:^(){
+        [menuImage removeFromSuperview];
+        backButton.alpha = 0;
+    }];
+
 }
 
 
@@ -314,13 +391,19 @@ typedef NS_ENUM(NSInteger, RequestType) {
         [UIView animateWithDuration:.3 animations:^(){
             
             menuContainer.alpha = 0;
+            self.kindSwitch.alpha = 0;
         }];
         
-        self.kindSwitch.alpha = 0;
+        
         
         if (requestType == Box) {
             [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
             [self showPopupWithStyle:CNPPopupStyleActionSheet];
+        }
+        else
+        {
+            orderState = SelectDestination;
+            [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
         }
         
         [self InitBackButton];
@@ -330,7 +413,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
         desmarker = [[GMSMarker alloc] init];
         desmarker.appearAnimation = YES;
         desmarker.flat = YES;
-        
+        orderState = DestinationStep;
         double latitude =  mapView.camera.target.latitude;
         double longitude = mapView.camera.target.longitude;
         self.pinLocationDestination = CLLocationCoordinate2DMake(latitude,longitude);;
@@ -356,6 +439,13 @@ typedef NS_ENUM(NSInteger, RequestType) {
         if (requestType == Box) {
             [DataCollector sharedInstance].destinationAddress = self.searchBarWithDelegate.searchField.text;
             [self showPopupWithStyle:CNPPopupStyleActionSheet];
+        }
+        else
+        {
+            orderState = SummaryStep;
+            [DataCollector sharedInstance].destinationAddress = self.searchBarWithDelegate.searchField.text;
+            [self showPopupWithStyle:CNPPopupStyleActionSheet];
+            
         }
         
         [UIView animateWithDuration:.3 animations:^(){
@@ -396,7 +486,9 @@ typedef NS_ENUM(NSInteger, RequestType) {
     self.popupController.delegate = self;
     [self.popupController presentPopupControllerAnimated:YES];
     
+    [[UIApplication sharedApplication].keyWindow bringSubviewToFront:menuImage];
     [[UIApplication sharedApplication].keyWindow bringSubviewToFront:backButton];
+    
 }
 
 -(void)ForwardClicked
@@ -404,13 +496,13 @@ typedef NS_ENUM(NSInteger, RequestType) {
     DataCollector *instance = [DataCollector sharedInstance];
     NSString *test = instance.sourceBell;
     
-    if (orderState != SummaryStep) {
+    if (orderState != SummaryStep || orderState == FindEmployee) {
         
         [self.popupController dismissPopupControllerAnimated:YES];
     }
     
     if (orderState == SourceView) {
-        orderState = DestinationStep;
+        orderState = SelectDestination;
     }
     else if (orderState == DestinationStep) {
         orderState = SummaryStep;
@@ -419,24 +511,190 @@ typedef NS_ENUM(NSInteger, RequestType) {
     else if (orderState == SummaryStep)
     {
         orderState = FindEmployee;
+        [self RemoveBackButton];
+        [self PushOrder];
     
     }
     else if (orderState == FindEmployee)
     {
         orderState = SourceStep;
-        [self.popupController dismissPopupControllerAnimated:YES];
-        
+        [self CancelOrder];
     }
-    
-    
 }
 
 -(void)BackwardClicked
 {
+    [self.popupController dismissPopupControllerAnimated:YES];
+    
+    if (requestType == Box) {
+        
+        if (orderState == SourceView) {
+            orderState = SourceStep;
+            [self ResetEverything];
+        }
+        else if (orderState == SelectDestination) {
+            orderState = SourceView;
+            [self showPopupWithStyle:CNPPopupStyleActionSheet];
+            
+        }
+        else if (orderState == DestinationStep) {
+            orderState = SelectDestination;
+            [self ResetToSelectDestination];
+        }
+        else if (orderState == SummaryStep)
+        {
+            orderState = DestinationStep;
+            [self showPopupWithStyle:CNPPopupStyleActionSheet];
+        }
+    }
+    else{
+        
+        if (orderState == SelectDestination) {
+            orderState = SourceStep;
+            [self ResetEverything];
+            
+        }
+        else if (orderState == SummaryStep)
+        {
+            orderState = SelectDestination;
+            
+            [self ResetToSelectDestination];
+        }
+    }
+}
+
+-(void)ResetEverything
+{
+    orderState = SourceStep;
+    [self.popupController dismissPopupControllerAnimated:YES];
+    
+    [mapView clear];
+    self.HumanPin.image = [UIImage imageWithPDFNamed:@"sourcepin.pdf"
+                                           fitInSize:self.HumanPin.bounds.size];
+    compassImage.image = [UIImage imageWithPDFNamed:@"sourcecompass.pdf"
+                                          fitInSize:compassImage.frame.size];
+    [stepButton setTitle:@"تأیید مبدأ" forState:UIControlStateNormal];
+    
+    [UIView animateWithDuration:.1 animations:^(){
+        self.HumanPin.alpha = 1;
+        menuContainer.alpha = 1;
+        self.myLocationButton.hidden = NO;
+        stepButton.hidden = NO;
+        self.searchBarWithDelegate.alpha = 1;
+        self.kindSwitch.alpha = 1;
+    }];
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.pinLocationSource.latitude
+                                                            longitude:self.pinLocationSource.longitude
+                                                                 zoom:17.0];
+    [mapView animateToCameraPosition:camera];
+    
+    [self RemoveBackButton];
+    
+}
+
+-(void)ResetToSelectDestination
+{
+    desmarker.map = nil;
+    [UIView animateWithDuration:.1 animations:^(){
+        self.HumanPin.alpha = 1;
+        menuContainer.alpha = 1;
+        self.myLocationButton.hidden = NO;
+        stepButton.hidden = NO;
+        self.searchBarWithDelegate.alpha = 1;
+    }];
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.pinLocationDestination.latitude
+                                                            longitude:self.pinLocationDestination.longitude
+                                                                 zoom:17.0];
+    [mapView animateToCameraPosition:camera];
 
 }
 
-- (UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size
+-(void)PushOrder
+{
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            
+            NSString *status =[NSString stringWithFormat:@"%@",[data valueForKey:@"status"]];
+            
+            if ([status isEqualToString:@"1"]) {
+                
+               
+            }
+            else
+            {
+                [self ResetEverything];
+                FCAlertView *alert = [[FCAlertView alloc] init];
+                [alert makeAlertTypeCaution];
+                
+                [alert showAlertInView:self
+                             withTitle:nil
+                          withSubtitle:@"متاسفانه این سرویس در محل شما ارائه نمی شود"
+                       withCustomImage:[UIImage imageNamed:@"alert.png"]
+                   withDoneButtonTitle:@"خب"
+                            andButtons:nil];
+             
+            }
+        }
+        
+        else
+        {
+            
+          [self ResetEverything];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            NSLog( @"Unable to fetch Data. Try again.");
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+
+    DataCollector *instance = [DataCollector sharedInstance];
+    
+    [self.getData Order:st.accesstoken SourceLat:instance.sourceLat SourceLon:instance.sourceLon DestinationLat:instance.destinationLat DestinationLon:instance.destinationLon HaveReturn:instance.haveReturn OrderType:instance.orderType SourceNum:instance.sourcePlate SourceBell:instance.sourceBell DestinationNum:instance.destinationPlate DestinationBell:instance.destinationBell DestinationFullName:instance.destinationFullName DestinationPhoneNumber:instance.destinationPhoneNumber PayInDestination:instance.payInDestination SourceAddress:instance.sourceAddress DestinationAddress:instance.destinationAddress Offcode:@"" withCallback:callback];
+}
+
+-(void)CancelOrder
+{
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            [self.popupController dismissPopupControllerAnimated:YES];
+            [self ResetEverything];
+            
+        }
+        
+        else
+        {
+            [self.popupController dismissPopupControllerAnimated:YES];
+            [self ResetEverything];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            //[alert show];
+            
+            NSLog( @"Unable to fetch Data. Try again.");
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    st = [DBManager selectSetting][0];
+    
+    [self.getData CancelOrder:st.accesstoken OrderId:@"0" withCallback:callback];
+}
+
+- (UIImage*)image:(UIImage*)originalImage scaledToSize:(CGSize)size
 {
     //avoid redundant drawing
     if (CGSizeEqualToSize(originalImage.size, size))
