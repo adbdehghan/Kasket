@@ -21,6 +21,8 @@
     NSMutableArray *tableItems;
     UIActivityIndicatorView *activityIndicator;
     UILabel *clearMessage;
+    NSIndexPath *selectedIndexPath;
+    BOOL isExpanded;
 }
 @property (strong, nonatomic) DataDownloader *getData;
 @property (nonatomic, assign) int currentPage;
@@ -64,7 +66,7 @@
     [self.view addSubview:activityIndicator];
     activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
     [activityIndicator startAnimating];
-    
+    self.tableView.estimatedRowHeight = 80;
     __weak typeof(self) weakSelf =self;
     [self.tableView addLoadMoreActionHandler:^{
         typeof(self) strongSelf = weakSelf;
@@ -106,13 +108,16 @@
                 
                 for (NSDictionary *item in (NSMutableArray*)data) {
                     OrderHistory *order = [[OrderHistory alloc]init];
-                    order.Fullname = [item valueForKey:@"fullName"];
-                    order.Address =[item valueForKey:@"address"];
-                    order.OrderTime =[item valueForKey:@"ordertime"];
-                    order.Price = [item valueForKey:@"price"];
-                    order.lat = [item valueForKey:@"lat"];
-                    order.lon = [item valueForKey:@"lon"];
-                    self.totalPages = [[item valueForKey:@"totalpage"] integerValue];
+                    order.destinationFullName = [item valueForKey:@"fullName"];
+                    order.sourceAddress =[item valueForKey:@"sourceAddress"];
+                    order.destinationAddress =[item valueForKey:@"destinationAddress"];
+                    order.orderTime =[item valueForKey:@"ordertime"];
+                    order.price = [item valueForKey:@"price"];
+                    order.sourceLat = [item valueForKey:@"sourceLat"];
+                    order.sourceLon = [item valueForKey:@"sourceLon"];
+                    order.destinationLat = [item valueForKey:@"destinationLat"];
+                    order.destinationLon = [item valueForKey:@"destinationLon"];
+                    //self.totalPages = [[item valueForKey:@"totalpage"] integerValue];
                     
                     [tableItems addObject:order];
                     [temp addObject:order];
@@ -121,7 +126,7 @@
                 [activityIndicator stopAnimating];
                 
                 if (temp.count == 0) {
-                    clearMessage.alpha = 1;
+                  //  clearMessage.alpha = 1;
                 }
                 else
                     clearMessage.alpha = 0;
@@ -190,7 +195,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return tableItems.count;
+    //return tableItems.count;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -200,42 +206,74 @@
         cell = [[HistoryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
     
     OrderHistory *item = [[OrderHistory alloc]init];
-    item = [tableItems objectAtIndex:indexPath.row];
+   // item = [tableItems objectAtIndex:indexPath.row];
     
-    cell.fullnameLabel.text = item.Fullname;
-    cell.washTypeLabel.text = item.WashType;
-    cell.carLabel.text = item.Car;
-    cell.addressLabel.text = item.Address;
-    cell.dateTimeLabel.text = item.OrderTime;
+    cell.fullnameLabel.text = item.destinationFullName;
+    cell.addressLabel.text = item.sourceAddress;
+    cell.dateTimeLabel.text = item.orderTime;
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:[item.Price integerValue]]];
+    NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:[item.price integerValue]]];
     cell.priceLabel.text =[NSString stringWithFormat:@"%@",formatted];
     
     if (cell.mapView.subviews.count == 0) {
         GMSMapView *mapView;
-        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:[item.lat doubleValue]
-                                                                longitude:[item.lon doubleValue]
+        GMSCameraPosition *mainCamera = [GMSCameraPosition cameraWithLatitude:[item.sourceLat doubleValue]
+                                                                longitude:[item.sourceLon doubleValue]
                                                                      zoom:15];
         
-        mapView = [GMSMapView mapWithFrame:CGRectMake(0, 0, 142, 128) camera:camera];
+        mapView = [GMSMapView mapWithFrame:CGRectMake(0, 0, cell.mapView.frame.size.width, cell.mapView.frame.size.height) camera:mainCamera];
         
         mapView.myLocationEnabled = NO;
         mapView.userInteractionEnabled = NO;
         
         [cell.mapView addSubview:mapView];
         
-        GMSMarker *marker = [[GMSMarker alloc] init];
         
-        marker.position = CLLocationCoordinate2DMake([item.lat doubleValue],[item.lon doubleValue]);
+        GMSMarker *marker = [[GMSMarker alloc] init];
+        marker.position = CLLocationCoordinate2DMake([item.sourceLat doubleValue],[item.sourceLon doubleValue]);
         marker.snippet = @"";
         marker.appearAnimation = kGMSMarkerAnimationPop;
         marker.icon =[UIImage imageWithPDFNamed:@"sourcemarker.pdf"
                                       fitInSize:CGSizeMake(50, 50)];
         marker.map = mapView;
+        
+        GMSMarker *desmarker = [[GMSMarker alloc] init];
+        desmarker.appearAnimation = YES;
+        desmarker.flat = YES;
+        desmarker.position = CLLocationCoordinate2DMake([item.destinationLat doubleValue],[item.destinationLon doubleValue]);
+        desmarker.map = mapView;
+        desmarker.icon =  [UIImage imageWithPDFNamed:@"destinationmarker.pdf"
+                                           fitInSize:CGSizeMake(50, 50)];
+        
+        GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:marker.position coordinate:desmarker.position];
+        GMSCameraPosition *camera = [mapView cameraForBounds:bounds insets:UIEdgeInsetsMake(30, 30, 30, 30)];
+        
+        [mapView animateToCameraPosition:camera];
+        
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    selectedIndexPath = indexPath;
+    [tableView beginUpdates];
+    [tableView endUpdates];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([indexPath compare:selectedIndexPath] == NSOrderedSame) {
+        
+        return  300;
+    }
+    else
+    {
+        
+        return 150;
+    } 
 }
 
 -(void)CustomizeNavigationTitle

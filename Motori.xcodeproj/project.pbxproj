@@ -144,6 +144,11 @@
 		64E686671E5FABED00DA0631 /* nevertoolate@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 64E686661E5FABED00DA0631 /* nevertoolate@2x.gif */; };
 		64E686691E5FAC3E00DA0631 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E686681E5FAC3E00DA0631 /* close.png */; };
 		64E6866D1E5FB2C300DA0631 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E6866B1E5FB2C300DA0631 /* HistoryTableViewController.m */; };
+		64E686711E5FD6D100DA0631 /* RaiseCreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E6866F1E5FD6D100DA0631 /* RaiseCreditViewController.m */; };
+		64E686741E60F02000DA0631 /* KasketView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686731E60F02000DA0631 /* KasketView.m */; };
+		64E686771E60F96100DA0631 /* MapCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686761E60F96100DA0631 /* MapCharacter.m */; };
+		64E686791E6129DA00DA0631 /* MapHelmet.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E686781E6129DA00DA0631 /* MapHelmet.pdf */; };
+		64E6867B1E613E7C00DA0631 /* avatar.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E6867A1E613E7C00DA0631 /* avatar.pdf */; };
 		64E871CC1E2D9D5300C48548 /* mypic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64E871CB1E2D9D5300C48548 /* mypic.jpg */; };
 		64E871D81E2DA5B800C48548 /* LNERadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */; };
 		64E871D91E2DA5B800C48548 /* JTNumberScrollAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871D21E2DA5B800C48548 /* JTNumberScrollAnimatedView.m */; };
@@ -386,6 +391,14 @@
 		64E686681E5FAC3E00DA0631 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		64E6866B1E5FB2C300DA0631 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
 		64E6866C1E5FB2C300DA0631 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
+		64E6866F1E5FD6D100DA0631 /* RaiseCreditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaiseCreditViewController.m; sourceTree = "<group>"; };
+		64E686701E5FD6D100DA0631 /* RaiseCreditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaiseCreditViewController.h; sourceTree = "<group>"; };
+		64E686721E60F02000DA0631 /* KasketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KasketView.h; sourceTree = "<group>"; };
+		64E686731E60F02000DA0631 /* KasketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KasketView.m; sourceTree = "<group>"; };
+		64E686751E60F96100DA0631 /* MapCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCharacter.h; sourceTree = "<group>"; };
+		64E686761E60F96100DA0631 /* MapCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCharacter.m; sourceTree = "<group>"; };
+		64E686781E6129DA00DA0631 /* MapHelmet.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = MapHelmet.pdf; sourceTree = "<group>"; };
+		64E6867A1E613E7C00DA0631 /* avatar.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = avatar.pdf; sourceTree = "<group>"; };
 		64E871CB1E2D9D5300C48548 /* mypic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mypic.jpg; sourceTree = "<group>"; };
 		64E871CE1E2DA5B800C48548 /* LNERadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNERadialMenu.h; sourceTree = "<group>"; };
 		64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNERadialMenu.m; sourceTree = "<group>"; };
@@ -429,6 +442,8 @@
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64E6867A1E613E7C00DA0631 /* avatar.pdf */,
+				64E686781E6129DA00DA0631 /* MapHelmet.pdf */,
 				64E686681E5FAC3E00DA0631 /* close.png */,
 				64E686661E5FABED00DA0631 /* nevertoolate@2x.gif */,
 				64E6865E1E5EC99500DA0631 /* Myself.pdf */,
@@ -473,6 +488,8 @@
 				3AD9703D1E53CF26002B7888 /* DestinationDetails.m */,
 				3AD9703F1E5759FC002B7888 /* SummaryView.h */,
 				3AD970401E5759FC002B7888 /* SummaryView.m */,
+				64E686721E60F02000DA0631 /* KasketView.h */,
+				64E686731E60F02000DA0631 /* KasketView.m */,
 			);
 			path = "Popup Views";
 			sourceTree = "<group>";
@@ -516,6 +533,7 @@
 				648316281E2BE7040067C4EF /* MapView */,
 				64E686621E5FAB2000DA0631 /* Notification */,
 				64E6866A1E5FB28900DA0631 /* Activities */,
+				64E6866E1E5FD6AB00DA0631 /* RaiseCredit */,
 				643439E41E16AF2F00B4FE3F /* Main.storyboard */,
 				643439E71E16AF2F00B4FE3F /* Assets.xcassets */,
 				643439E91E16AF2F00B4FE3F /* LaunchScreen.storyboard */,
@@ -609,6 +627,8 @@
 				64343A171E16B0D600B4FE3F /* Transaction.m */,
 				3AD970391E539FF2002B7888 /* DataCollector.h */,
 				3AD9703A1E539FF2002B7888 /* DataCollector.m */,
+				64E686751E60F96100DA0631 /* MapCharacter.h */,
+				64E686761E60F96100DA0631 /* MapCharacter.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -911,6 +931,15 @@
 			name = Activities;
 			sourceTree = "<group>";
 		};
+		64E6866E1E5FD6AB00DA0631 /* RaiseCredit */ = {
+			isa = PBXGroup;
+			children = (
+				64E686701E5FD6D100DA0631 /* RaiseCreditViewController.h */,
+				64E6866F1E5FD6D100DA0631 /* RaiseCreditViewController.m */,
+			);
+			name = RaiseCredit;
+			sourceTree = "<group>";
+		};
 		64E871CD1E2DA5B800C48548 /* RadialMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +1064,7 @@
 				643D6B601E340A1B003E26EA /* logout.png in Resources */,
 				3AB5B1A61E33BD7C002AE9F2 /* archive.png in Resources */,
 				3A6739E91E305B3A00160478 /* pin.gif in Resources */,
+				64E6867B1E613E7C00DA0631 /* avatar.pdf in Resources */,
 				646C96951E4A7EC00090962A /* sourcemarker.pdf in Resources */,
 				3AB5B19C1E33BC36002AE9F2 /* creditcard.png in Resources */,
 				64343AEA1E16B17D00B4FE3F /* IRANSans_Bold.ttf in Resources */,
@@ -1066,6 +1096,7 @@
 				3A99B8011E1812FA00CF38F6 /* number.png in Resources */,
 				3AB5B19D1E33BC36002AE9F2 /* lock.png in Resources */,
 				64E686671E5FABED00DA0631 /* nevertoolate@2x.gif in Resources */,
+				64E686791E6129DA00DA0631 /* MapHelmet.pdf in Resources */,
 				64E686691E5FAC3E00DA0631 /* close.png in Resources */,
 				64343AD11E16B0D600B4FE3F /* NavBarIconSearch_blue.png in Resources */,
 				3AB5B19E1E33BC36002AE9F2 /* mail.png in Resources */,
@@ -1142,6 +1173,7 @@
 				64343AB21E16B0D600B4FE3F /* YzdHUDImageView.m in Sources */,
 				64343ACD1E16B0D600B4FE3F /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
 				64343AC01E16B0D600B4FE3F /* NSData+ImageContentType.m in Sources */,
+				64E686741E60F02000DA0631 /* KasketView.m in Sources */,
 				3AD9703B1E539FF2002B7888 /* DataCollector.m in Sources */,
 				64343ABC1E16B0D600B4FE3F /* DataDownloader.m in Sources */,
 				64343AC51E16B0D600B4FE3F /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1158,6 +1190,7 @@
 				64343AA81E16B0D600B4FE3F /* FMDatabaseAdditions.m in Sources */,
 				64E871D91E2DA5B800C48548 /* JTNumberScrollAnimatedView.m in Sources */,
 				64343ACC1E16B0D600B4FE3F /* UIImageView+HighlightedWebCache.m in Sources */,
+				64E686711E5FD6D100DA0631 /* RaiseCreditViewController.m in Sources */,
 				64E6864D1E5E8B2D00DA0631 /* RadarView.m in Sources */,
 				64343ABD1E16B0D600B4FE3F /* JCDHTTPConnection.m in Sources */,
 				64343AC81E16B0D600B4FE3F /* UIButton+WebCache.m in Sources */,
@@ -1190,6 +1223,7 @@
 				64343AB51E16B0D600B4FE3F /* NSObject+SBJSON.m in Sources */,
 				64343A9A1E16B0D600B4FE3F /* AFHTTPRequestOperationManager.m in Sources */,
 				64343ADB1E16B0D600B4FE3F /* BWSegment.m in Sources */,
+				64E686771E60F96100DA0631 /* MapCharacter.m in Sources */,
 				64343ACF1E16B0D600B4FE3F /* UIView+WebCacheOperation.m in Sources */,
 				64343AE01E16B0D600B4FE3F /* iconCollectionTableViewCell.m in Sources */,
 				64343A9D1E16B0D600B4FE3F /* AFSecurityPolicy.m in Sources */,

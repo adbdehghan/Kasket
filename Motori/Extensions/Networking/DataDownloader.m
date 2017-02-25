@@ -136,6 +136,31 @@ NSMutableDictionary *receivedData;
     }];
 }
 
+- (void)Credit:(NSString*)token withCallback:(RequestCompleteBlock)callback
+{
+    receivedData = [[NSMutableDictionary alloc]init];
+    
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/Credit",URLaddress];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:sample parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Success %@", responseObject);
+        
+        callback(YES,responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        callback(NO,nil);
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+}
+
+
 - (void)OffCode:(NSString*)token Code:(NSString*)code withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
@@ -164,11 +189,11 @@ NSMutableDictionary *receivedData;
     
 }
 
-- (void)CheckCleaner:(NSString*)token OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback
+- (void)CheckKasket:(NSString*)token OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/checkcleaner",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/checkcleaner",URLaddress];
     
     NSDictionary *parameters = @{@"orderId": orderId};
     
@@ -191,6 +216,63 @@ NSMutableDictionary *receivedData;
     }];
     
 }
+
+- (void)GetOrderStatus:(NSString*)token OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback
+{
+    receivedData = [[NSMutableDictionary alloc]init];
+    
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/orderstatus",URLaddress];
+    
+    NSDictionary *parameters = @{@"orderid": orderId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:sample parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Success %@", responseObject);
+        
+        callback(YES,responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        callback(NO,nil);
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+}
+
+- (void)Rating:(NSString*)token Score:(NSString*)score OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback
+{
+    receivedData = [[NSMutableDictionary alloc]init];
+    
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/SetScore",URLaddress];
+    
+    NSDictionary *parameters = @{@"score": score,
+                                 @"orderId":orderId};
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:sample parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Success %@", responseObject);
+        
+        
+        
+        callback(YES,responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        callback(NO,nil);
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+}
+
 
 - (void)CancelOrder:(NSString*)token OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback
 {

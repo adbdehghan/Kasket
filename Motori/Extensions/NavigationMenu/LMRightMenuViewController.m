@@ -76,7 +76,7 @@
     
     switch (indexPath.row) {
         case 0:
-            
+            [self performSegueWithIdentifier:@"credit" sender:self];
             break;
         case 1:
             [self performSegueWithIdentifier:@"activities" sender:self];

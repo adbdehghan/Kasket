@@ -430,4 +430,21 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
     return defaultTheme;
 }
 
++ (CNPPopupTheme *)kasketTheme {
+    CNPPopupTheme *defaultTheme = [[CNPPopupTheme alloc] init];
+    defaultTheme.backgroundColor = [UIColor whiteColor];
+    defaultTheme.cornerRadius = 4.0f;
+    defaultTheme.popupContentInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    defaultTheme.popupStyle = CNPPopupStyleActionSheet;
+    defaultTheme.presentationStyle = CNPPopupPresentationStyleSlideInFromBottom;
+    defaultTheme.dismissesOppositeDirection = NO;
+    defaultTheme.maskType = CNPPopupMaskTypeClear;
+    defaultTheme.shouldDismissOnBackgroundTouch = NO;
+    defaultTheme.movesAboveKeyboard = YES;
+    defaultTheme.contentVerticalPadding = 0.0f;
+    defaultTheme.maxPopupWidth = 600.0f;
+    defaultTheme.animationDuration = 0.3f;
+    return defaultTheme;
+}
+
 @end

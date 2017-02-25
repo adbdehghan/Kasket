@@ -32,6 +32,7 @@
     UILabel *priceLabel;
     UILabel *timeLabel;
     DGActivityIndicatorView *timeActivityIndicatorView;
+    DGActivityIndicatorView *priceActivityIndicatorView;
     int time;
     CNPPopupButton *mainButton;
     CAGradientLayer *gradient;

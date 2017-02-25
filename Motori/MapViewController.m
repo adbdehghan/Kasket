@@ -26,7 +26,9 @@
 #import "DataCollector.h"
 #import "DestinationDetails.h"
 #import "SummaryView.h"
+#import "KasketView.h"
 #import "KLCPopup.h"
+#import "UIWindow+YzdHUD.h"
 
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -37,7 +39,8 @@ typedef NS_ENUM(NSInteger, OrderState) {
     SelectDestination,
     DestinationStep,
     SummaryStep,
-    FindEmployee
+    FindEmployee,
+    KasketViewStep
 };
 
 typedef NS_ENUM(NSInteger, RequestType) {
@@ -48,7 +51,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface MapViewController ()<GMSMapViewDelegate,CLLocationManagerDelegate,UIGestureRecognizerDelegate,INSSearchBarDelegate,RSCameraSwitchDelegate,CNPPopupControllerDelegate,sourceDelegate,DestinationDelegate,SummaryDelegate>
+@interface MapViewController ()<GMSMapViewDelegate,CLLocationManagerDelegate,UIGestureRecognizerDelegate,INSSearchBarDelegate,RSCameraSwitchDelegate,CNPPopupControllerDelegate,sourceDelegate,DestinationDelegate,SummaryDelegate,KasketDelegate>
 {
     GMSMapView *mapView;
     NSString *str2;
@@ -75,6 +78,13 @@ typedef NS_ENUM(NSInteger, RequestType) {
     UIButton *backButton;
     GMSPlacesClient *_placesClient;
     UIImageView *menuImage;
+    NSTimer *orderTimer;
+    CLLocationCoordinate2D kasketCoordinate;
+    BOOL isArrived;
+    GMSMarker *myCarmarker;
+    FCAlertView *ratingView;
+    NSString *localCost;
+    Settings *sti;
 }
 @property (nonatomic) CLLocation *myLocation;
 @property (nonatomic) CLLocation *deviceLocation;
@@ -105,6 +115,9 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    sti = [[Settings alloc]init];
+    sti = [DBManager selectSetting][0];
     
     isFirst = YES;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -479,9 +492,18 @@ typedef NS_ENUM(NSInteger, RequestType) {
         summaryView.delegate = self;
         [customView addSubview:summaryView];
     }
+    else if(orderState == KasketViewStep)
+    {
+        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
+        KasketView *kasketView = [[KasketView alloc]initWithFrame:customView.frame];
+        kasketView.delegate = self;
+        [customView addSubview:kasketView];
+    }
    
     self.popupController = [[CNPPopupController alloc] initWithContents:@[customView]];
     self.popupController.theme = [CNPPopupTheme defaultTheme];
+    if (orderState == KasketViewStep)
+        self.popupController.theme = [CNPPopupTheme kasketTheme];
     self.popupController.theme.popupStyle = popupStyle;
     self.popupController.delegate = self;
     [self.popupController presentPopupControllerAnimated:YES];
@@ -563,8 +585,16 @@ typedef NS_ENUM(NSInteger, RequestType) {
     }
 }
 
+-(void)CancelClicked
+{
+    [self CancelOrder];
+}
+
 -(void)ResetEverything
 {
+    [orderTimer invalidate];
+    self.isCanceled = NO;
+    _orderId = nil;
     orderState = SourceStep;
     [self.popupController dismissPopupControllerAnimated:YES];
     
@@ -619,8 +649,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
             NSString *status =[NSString stringWithFormat:@"%@",[data valueForKey:@"status"]];
             
             if ([status isEqualToString:@"1"]) {
-                
-               
+                self.isCanceled = NO;
+                [self CheckKasket:@"0"];
             }
             else
             {
@@ -667,15 +697,14 @@ typedef NS_ENUM(NSInteger, RequestType) {
 {
     RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
         if (wasSuccessful) {
-            [self.popupController dismissPopupControllerAnimated:YES];
             [self ResetEverything];
-            
+            self.isCanceled = YES;
         }
         
         else
         {
-            [self.popupController dismissPopupControllerAnimated:YES];
             [self ResetEverything];
+            self.isCanceled = YES;
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
@@ -691,7 +720,210 @@ typedef NS_ENUM(NSInteger, RequestType) {
     Settings *st = [[Settings alloc]init];
     st = [DBManager selectSetting][0];
     
-    [self.getData CancelOrder:st.accesstoken OrderId:@"0" withCallback:callback];
+    [self.getData CancelOrder:st.accesstoken OrderId:_orderId == nil ? @"0":_orderId withCallback:callback];
+}
+
+-(void)CheckKasket:(NSString*)OrderId
+{
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            if ([[data valueForKey:@"status"]isEqualToString:@"ok"]) {
+                [self.popupController dismissPopupControllerAnimated:YES];
+                orderState = KasketViewStep;
+                [self SaveOrder:[data valueForKey:@"data"]];
+                [self showPopupWithStyle:CNPPopupStyleActionSheet];
+                
+                orderTimer  =  [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                                target:self
+                                                              selector:@selector(CheckOrderStatus)
+                                                              userInfo:nil
+                                                               repeats:YES];
+
+            }
+        }
+        else
+        {
+            if (!self.isCanceled)
+            {
+                [self ResetEverything];
+                FCAlertView *alert = [[FCAlertView alloc] init];
+                
+                [alert showAlertInView:self
+                             withTitle:nil
+                          withSubtitle:@"متاسفانه سرویس دهنده ای درخواست شما را قبول نکرد"
+                       withCustomImage:[UIImage imageNamed:@"alert.png"]
+                   withDoneButtonTitle:@"خب"
+                            andButtons:nil];
+            }
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.getData CheckKasket:st.accesstoken OrderId:OrderId withCallback:callback];
+}
+
+-(void)CheckOrderStatus
+{
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            
+            NSString *status = [NSString stringWithFormat:@"%@",[data valueForKey:@"status"]];
+            NSString *latitude = [data valueForKey:@"mlat"];
+            NSString *longitude = [data valueForKey:@"mlng"];
+            localCost = [data valueForKey:@"totalPrice"];
+            [self.HumanPin setAlpha:0];
+            
+            if ([status isEqualToString:@"6"]) {
+                [orderTimer invalidate];
+                [self ResetEverything];
+                self.isCanceled = YES;
+                isArrived = NO;
+                myCarmarker = nil;
+                
+                FCAlertView *alert = [[FCAlertView alloc] init];
+                [alert makeAlertTypeCaution];
+                [alert showAlertInView:self
+                             withTitle:nil
+                          withSubtitle:@"متاسفانه درخواست شما از طرف پذیرنده لغو شد، لطفا دوباره درخواست دهید"
+                       withCustomImage:[UIImage imageNamed:@"alert.png"]
+                   withDoneButtonTitle:@"خب"
+                            andButtons:nil];
+                
+            }
+            else if([status isEqualToString:@"5"])
+            {
+                [orderTimer invalidate];
+                [self ResetEverything];
+                self.isCanceled = YES;
+                [self ShowRatingView];
+                isArrived = NO;
+                myCarmarker = nil;
+            }
+            else if([status isEqualToString:@"3"])
+            {
+                if (!isArrived) {
+                    isArrived = YES;
+                    
+                    FCAlertView *alert = [[FCAlertView alloc] init];
+                    [alert makeAlertTypeSuccess];
+                    [alert showAlertInView:self
+                                 withTitle:nil
+                              withSubtitle:@"کاسکت شما رسید"
+                           withCustomImage:[UIImage imageNamed:@"alert.png"]
+                       withDoneButtonTitle:@"خب"
+                                andButtons:nil];
+                }
+            }
+            else
+            {
+                kasketCoordinate = CLLocationCoordinate2DMake([latitude doubleValue],[longitude doubleValue]);
+                if (kasketCoordinate.latitude != 0 && kasketCoordinate.latitude !=0) {
+                    
+                    
+                    if (myCarmarker == nil) {
+                        
+                        
+                        myCarmarker = [[GMSMarker alloc] init];
+                        
+                        myCarmarker.position = kasketCoordinate;
+                        myCarmarker.snippet = @"";
+                        myCarmarker.appearAnimation = kGMSMarkerAnimationPop;
+                        myCarmarker.icon =[UIImage imageWithPDFNamed:@"MapHelmet.pdf"
+                                                           fitInSize:CGSizeMake(30, 30)];
+                        myCarmarker.map = mapView;
+                    }
+                    
+                    [CATransaction begin];
+                    [CATransaction setAnimationDuration:1.6];
+                    myCarmarker.position = kasketCoordinate;
+                    [CATransaction commit];
+                    
+                    
+                    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:kasketCoordinate.latitude
+                                                                            longitude:kasketCoordinate.longitude
+                                                                                 zoom:18.0];
+                    [mapView animateToCameraPosition:camera];
+                }
+            }
+        }
+        
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            // [alert show];
+            
+            NSLog( @"Unable to fetch Data. Try again.");
+        }
+    };
+    
+    
+    
+    
+    [self.getData GetOrderStatus:sti.accesstoken OrderId:_orderId withCallback:callback];
+}
+
+-(void)ShowRatingView
+{
+    if (_orderId == nil) {
+        _orderId = [self OrderId];
+    }
+    
+    __block NSInteger rate;
+    rate = 0;
+    ratingView = [[FCAlertView alloc] init];
+    ratingView.blurBackground = 1;
+    ratingView.bounceAnimations = 1;
+    ratingView.fullCircleCustomImage = NO;
+    [ratingView makeAlertTypeRateStars:^(NSInteger rating) {
+        
+        rate = (long)rating;
+        NSLog(@"Your Rating: %ld", (long)rating); // Use the Rating as you'd like
+        
+    }];
+    
+    [ratingView showAlertInView:self
+                      withTitle:@""
+                   withSubtitle:@"لطفا میزان رضایتمندی خود را از سرویس ما مشخص کنید"
+                withCustomImage:nil
+            withDoneButtonTitle:@"تایید"
+                     andButtons:nil];
+    
+    [ratingView doneActionBlock:^{
+        
+        RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+            if (wasSuccessful) {
+                
+                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+                
+            }
+            else
+            {
+                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                                message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"خب"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        };
+        
+        Settings *st = [[Settings alloc]init];
+        
+        st = [DBManager selectSetting][0];
+        
+        [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
+        [self.getData Rating:st.accesstoken Score:[NSString stringWithFormat:@"%ld",(long)rate] OrderId:_orderId withCallback:callback];
+        
+    }];
+    
 }
 
 - (UIImage*)image:(UIImage*)originalImage scaledToSize:(CGSize)size
@@ -883,12 +1115,12 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 -(void)pin
 {
-    [UIView animateWithDuration:0.8
+    [UIView animateWithDuration:0.3
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          
-                         stepButton.alpha = 1;
+                         [self UnFadeObjects];
                          
                      } completion:NULL];
 }
@@ -907,9 +1139,25 @@ typedef NS_ENUM(NSInteger, RequestType) {
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                       
-                         stepButton.alpha = 0;
+                         [self FadeObjects];
                          
                      } completion:NULL];
+}
+
+-(void)FadeObjects
+{
+    stepButton.alpha = 0;
+    self.kindSwitch.alpha = 0;
+    self.myLocationButton.alpha = 0;
+}
+
+-(void)UnFadeObjects
+{
+    stepButton.alpha = 1;
+    self.kindSwitch.alpha = 1;
+    self.myLocationButton.alpha = 1;
+
+
 }
 
 - (void)spinLayer:(CALayer *)inLayer duration:(CFTimeInterval)inDuration
@@ -1152,6 +1400,57 @@ typedef NS_ENUM(NSInteger, RequestType) {
     }
     
     return _getData;
+}
+
+- (void)SaveOrder:(NSMutableDictionary*)data
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"Order.plist"];
+    
+    [data writeToFile:plistPath atomically: TRUE];
+    _orderId = [data valueForKey:@"orderId"];
+}
+
+-(NSMutableDictionary*)OrderDetail
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"Order.plist"];
+    
+    NSMutableDictionary *array = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+    _orderId = [array valueForKey:@"orderId"];
+    return array;
+}
+
+-(NSString*)OrderId
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"orderid.plist"];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    
+    return (NSString*)array[0];
+}
+
+-(NSString*)IsRated
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"rating.plist"];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    
+    return (NSString*)array[0];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

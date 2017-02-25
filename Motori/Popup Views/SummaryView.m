@@ -79,6 +79,10 @@
         priceLabel.text =@"۸۰۰۰ تومان";
         [priceCircleView addSubview:priceLabel];
         
+        priceActivityIndicatorView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeBallScaleRipple tintColor:[UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:1] size:30.0f];
+        priceActivityIndicatorView.frame = CGRectMake(priceCircleView.frame.size.width/2-15,priceCircleView.frame.size.height/2 -15, 30.0f, 30.0f);
+        [priceCircleView addSubview:priceActivityIndicatorView];
+        
         timeCircleView = [[UIView alloc]initWithFrame:CGRectMake(frame.size.width+95 , 95, 80,80)];
         timeCircleView.layer.cornerRadius = timeCircleView.frame.size.width/2;
         timeCircleView.backgroundColor = [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
@@ -535,11 +539,11 @@
 
 -(void)GetPrice
 {
-    
+    [priceActivityIndicatorView startAnimating];
     RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
         
         paymentSegmentedControl.userInteractionEnabled = YES;
-        
+        [priceActivityIndicatorView stopAnimating];
         if (wasSuccessful) {
             
             price = [ data valueForKey:@"price"];

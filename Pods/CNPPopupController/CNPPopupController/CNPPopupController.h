@@ -82,6 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Factory method to help build a default theme
 + (CNPPopupTheme *)defaultTheme;
++ (CNPPopupTheme *)kasketTheme;
 
 @end
 NS_ASSUME_NONNULL_END

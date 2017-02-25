@@ -9,14 +9,22 @@
 #import <Foundation/Foundation.h>
 
 @interface OrderHistory : NSObject
-@property (nonatomic,strong)NSString *Fullname;
-@property (nonatomic,strong)NSString *Address;
-@property (nonatomic,strong)NSString *OrderTime;
-@property (nonatomic,strong)NSString *Car;
-@property (nonatomic,strong)NSString *WashType;
-@property (nonatomic,strong)NSString *CurrentPage;
-@property (nonatomic,strong)NSString *TotalPage;
-@property (nonatomic,strong)NSString *Price;
-@property (nonatomic,strong)NSString *lat;
-@property (nonatomic,strong)NSString *lon;
+@property (nonatomic,strong) NSString *sourceLat;
+@property (nonatomic,strong) NSString *sourceLon;
+@property (nonatomic,strong) NSString *sourceAddress;
+@property (nonatomic,strong) NSString *sourceBell;
+@property (nonatomic,strong) NSString *sourcePlate;
+@property (nonatomic,strong) NSString *destinationLat;
+@property (nonatomic,strong) NSString *destinationLon;
+@property (nonatomic,strong) NSString *destinationAddress;
+@property (nonatomic,strong) NSString *destinationBell;
+@property (nonatomic,strong) NSString *destinationPlate;
+@property (nonatomic,strong) NSString *destinationPhoneNumber;
+@property (nonatomic,strong) NSString *destinationFullName;
+@property (nonatomic,strong) NSString *orderType;
+@property (nonatomic,strong) NSString *haveReturn;
+@property (nonatomic,strong) NSString *payInDestination;
+@property (nonatomic,strong) NSString *offCode;
+@property (nonatomic,strong) NSString *price;
+@property (nonatomic,strong) NSString *orderTime;
 @end
