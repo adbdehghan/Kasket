@@ -54,8 +54,23 @@
     
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<> "]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
+    [self Save:token];
 }
+
+- (void)Save:(NSString*)token
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:token];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"token.plist"];
+    
+    [array writeToFile:plistPath atomically: TRUE];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

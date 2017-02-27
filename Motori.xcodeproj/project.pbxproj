@@ -149,6 +149,7 @@
 		64E686771E60F96100DA0631 /* MapCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686761E60F96100DA0631 /* MapCharacter.m */; };
 		64E686791E6129DA00DA0631 /* MapHelmet.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E686781E6129DA00DA0631 /* MapHelmet.pdf */; };
 		64E6867B1E613E7C00DA0631 /* avatar.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E6867A1E613E7C00DA0631 /* avatar.pdf */; };
+		64E6867D1E63BE3500DA0631 /* message.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E6867C1E63BE3500DA0631 /* message.png */; };
 		64E871CC1E2D9D5300C48548 /* mypic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64E871CB1E2D9D5300C48548 /* mypic.jpg */; };
 		64E871D81E2DA5B800C48548 /* LNERadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */; };
 		64E871D91E2DA5B800C48548 /* JTNumberScrollAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871D21E2DA5B800C48548 /* JTNumberScrollAnimatedView.m */; };
@@ -399,6 +400,7 @@
 		64E686761E60F96100DA0631 /* MapCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCharacter.m; sourceTree = "<group>"; };
 		64E686781E6129DA00DA0631 /* MapHelmet.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = MapHelmet.pdf; sourceTree = "<group>"; };
 		64E6867A1E613E7C00DA0631 /* avatar.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = avatar.pdf; sourceTree = "<group>"; };
+		64E6867C1E63BE3500DA0631 /* message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message.png; sourceTree = "<group>"; };
 		64E871CB1E2D9D5300C48548 /* mypic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mypic.jpg; sourceTree = "<group>"; };
 		64E871CE1E2DA5B800C48548 /* LNERadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNERadialMenu.h; sourceTree = "<group>"; };
 		64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNERadialMenu.m; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64E6867C1E63BE3500DA0631 /* message.png */,
 				64E6867A1E613E7C00DA0631 /* avatar.pdf */,
 				64E686781E6129DA00DA0631 /* MapHelmet.pdf */,
 				64E686681E5FAC3E00DA0631 /* close.png */,
@@ -1073,6 +1076,7 @@
 				643439EB1E16AF2F00B4FE3F /* LaunchScreen.storyboard in Resources */,
 				64343AD41E16B0D600B4FE3F /* NavBarIconSearch_white@2x.png in Resources */,
 				3AB5B1A51E33BD7C002AE9F2 /* adress.png in Resources */,
+				64E6867D1E63BE3500DA0631 /* message.png in Resources */,
 				646C96931E4A7EC00090962A /* destinationmarker.pdf in Resources */,
 				3AB5B19F1E33BC36002AE9F2 /* profile.png in Resources */,
 				64FFA1721E23F9A700DB26F3 /* arc.png in Resources */,

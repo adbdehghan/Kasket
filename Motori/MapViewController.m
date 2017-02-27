@@ -85,6 +85,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
     FCAlertView *ratingView;
     NSString *localCost;
     Settings *sti;
+    NSMutableDictionary *normal;
+    BOOL isLastOrder;
 }
 @property (nonatomic) CLLocation *myLocation;
 @property (nonatomic) CLLocation *deviceLocation;
@@ -118,21 +120,16 @@ typedef NS_ENUM(NSInteger, RequestType) {
     
     sti = [[Settings alloc]init];
     sti = [DBManager selectSetting][0];
+    [self Notificationkey];
     
     isFirst = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     [self setupMapView];
     [self CustomizeNavigationBar];
     
-    [self InitActivityIndicators];
+ 
     
-    [self AddDropDown];
-    [self InitPin];
-    [self InitLocationManager];
-    [self AddKindSwitch];
-    [self.view bringSubviewToFront:self.HumanPin];
-    [self.view bringSubviewToFront:self.myLocationButton];
-    [self.view bringSubviewToFront:self.addressContainerView];
+    [self CheckVersion];
     
     orderState = SourceStep;
     _placesClient = [GMSPlacesClient sharedClient];
@@ -155,6 +152,225 @@ typedef NS_ENUM(NSInteger, RequestType) {
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+}
+
+
+-(void)CheckVersion
+{
+    
+    NSString *tempConfirmed = [self IsConfirmed];
+    
+    if ([tempConfirmed isEqualToString:@"True"]) {
+        
+        [self InitialComponents];
+        
+        if ([[self Version] isEqualToString:@"true"]) {
+            
+            
+            [NSTimer scheduledTimerWithTimeInterval:.1f
+                                             target:self
+                                           selector:@selector(ShowVersionAlert)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
+    }
+    else
+    {
+        [NSTimer scheduledTimerWithTimeInterval:.1f
+                                         target:self
+                                       selector:@selector(ShowConfirmationAlert)
+                                       userInfo:nil
+                                        repeats:NO];
+    }
+}
+
+-(void)InitialComponents
+{
+    normal = [self OrderDetail];
+    
+    NSString *rating = [self IsRated];
+    
+    if ([rating isEqualToString:@"True"]) {
+        
+        [NSTimer scheduledTimerWithTimeInterval:.5f
+                                         target:self
+                                       selector:@selector(ShowRatingView)
+                                       userInfo:nil
+                                        repeats:NO];
+    }
+    
+    if ([normal valueForKey:@"orderId"]==nil || normal == nil)
+    {
+        [self InitActivityIndicators];
+        
+        [self AddDropDown];
+        [self InitPin];
+        [self InitLocationManager];
+        [self AddKindSwitch];
+        [self.view bringSubviewToFront:self.HumanPin];
+        [self.view bringSubviewToFront:self.myLocationButton];
+        [self.view bringSubviewToFront:self.addressContainerView];
+
+    }
+    else
+    {
+        orderState = KasketViewStep;
+        isLastOrder = YES;
+        [self showPopupWithStyle:CNPPopupStyleActionSheet];
+        orderTimer  =  [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                        target:self
+                                                      selector:@selector(CheckOrderStatus)
+                                                      userInfo:nil
+                                                       repeats:YES];
+    }
+
+}
+
+-(void)ShowVersionAlert
+{
+    FCAlertView *alert = [[FCAlertView alloc] init];
+    alert.bounceAnimations = 1;
+    alert.fullCircleCustomImage = NO;
+    [alert makeAlertTypeCaution];
+    
+    [alert showAlertInView:self
+                 withTitle:@""
+              withSubtitle:@"لطفا ورژن جدید را دانلود کنید"
+           withCustomImage:[UIImage imageNamed:@"alert.png"]
+       withDoneButtonTitle:@"خب"
+                andButtons:nil];
+}
+
+-(void)ShowConfirmationAlert
+{
+    FCAlertView *alert = [[FCAlertView alloc] init];
+    alert.blurBackground = 1;
+    alert.bounceAnimations = 1;
+    
+    alert.fullCircleCustomImage = NO;
+    [alert makeAlertTypeCaution];
+    
+    [alert addTextFieldWithPlaceholder:@"----" andTextReturnBlock:^(NSString *text) {
+        
+    }];
+    
+    UIButton *sendAgainButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [sendAgainButton setTitle:@"دوباره بفرست" forState:UIControlStateNormal];
+    [sendAgainButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sendAgainButton addTarget:self action:@selector(sendAgainPressed:) forControlEvents:UIControlEventTouchUpInside];
+    sendAgainButton.titleLabel.font =[UIFont fontWithName:@"IRANSans" size:15];
+    sendAgainButton.frame = CGRectMake(self.view.center.x-50, self.view.center.y+75, 100, 50);
+    
+    [alert addSubview:sendAgainButton];
+    
+    [alert showAlertInView:self
+                 withTitle:@""
+              withSubtitle:@"لطفا کد دریافتی را وارد نمایید"
+           withCustomImage:[UIImage imageNamed:@"alert.png"]
+       withDoneButtonTitle:@"تایید"
+                andButtons:nil];
+    
+    [alert doneActionBlock:^{
+        
+        [self ConfirmNumber:alert.textField.text];
+        
+    }];
+}
+
+-(void)ConfirmNumber:(NSString*)code
+{
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            
+            NSString *status = [data valueForKey:@"status"];
+            
+            if ([status isEqualToString:@"true"]) {
+                [self InitialComponents];
+                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            }
+            else
+            {
+                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+                FCAlertView *alert = [[FCAlertView alloc] init];
+                alert.blurBackground = 1;
+                alert.bounceAnimations = 1;
+                alert.fullCircleCustomImage = NO;
+                [alert makeAlertTypeWarning];
+                [alert addTextFieldWithPlaceholder:@"----" andTextReturnBlock:^(NSString *text) {
+                    
+                }];
+                
+                UIButton *sendAgainButton = [UIButton buttonWithType:UIButtonTypeSystem];
+                [sendAgainButton setTitle:@"دوباره بفرست" forState:UIControlStateNormal];
+                [sendAgainButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [sendAgainButton addTarget:self action:@selector(sendAgainPressed) forControlEvents:UIControlEventTouchUpInside];
+                sendAgainButton.titleLabel.font =[UIFont fontWithName:@"IRANSans" size:15];
+                sendAgainButton.frame = CGRectMake(self.view.center.x-50, self.view.center.y+100, 100, 50);
+                
+                [alert addSubview:sendAgainButton];
+                
+                [alert showAlertInView:self
+                             withTitle:@"کد وارد شده اشتباه است"
+                          withSubtitle:@"لطفا کد دریافتی را وارد نمایید"
+                       withCustomImage:[UIImage imageNamed:@"alert.png"]
+                   withDoneButtonTitle:@"تایید"
+                            andButtons:nil];
+                
+                [alert doneActionBlock:^{
+                    [self ConfirmNumber:alert.textField.text];
+                    
+                }];
+                
+            }
+            
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
+    [self.getData ConfirmNumber:st.accesstoken Code:code withCallback:callback];
+}
+
+
+-(void)sendAgainPressed:(id)Sender
+{
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            
+        }
+        else
+        {
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
+    [self.getData SendConfirmCode:st.accesstoken withCallback:callback];
+    
 }
 
 - (void)clicked:(BOOL)isFront
@@ -592,6 +808,21 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 -(void)ResetEverything
 {
+    if (isLastOrder) {
+        isLastOrder = NO;
+        [self InitActivityIndicators];
+        
+        [self AddDropDown];
+        [self InitPin];
+        [self InitLocationManager];
+        [self AddKindSwitch];
+        [self.view bringSubviewToFront:self.HumanPin];
+        [self.view bringSubviewToFront:self.myLocationButton];
+        [self.view bringSubviewToFront:self.addressContainerView];
+    }
+    
+    [self ClearDataCollector];
+    
     [orderTimer invalidate];
     self.isCanceled = NO;
     _orderId = nil;
@@ -621,6 +852,26 @@ typedef NS_ENUM(NSInteger, RequestType) {
     
     [self RemoveBackButton];
     
+}
+
+-(void)ClearDataCollector
+{
+    [DataCollector sharedInstance].sourceLat = @"";
+    [DataCollector sharedInstance].sourceLon = @"";
+    [DataCollector sharedInstance].sourceAddress = @"";
+    [DataCollector sharedInstance].sourceBell = @"";
+    [DataCollector sharedInstance].sourcePlate = @"";
+    [DataCollector sharedInstance].destinationLat = @"";
+    [DataCollector sharedInstance].destinationLon = @"";
+    [DataCollector sharedInstance].destinationAddress = @"";
+    [DataCollector sharedInstance].destinationBell = @"";
+    [DataCollector sharedInstance].destinationPlate = @"";
+    [DataCollector sharedInstance].destinationPhoneNumber = @"";
+    [DataCollector sharedInstance].destinationFullName = @"";
+    [DataCollector sharedInstance].orderType = @"";
+    [DataCollector sharedInstance].haveReturn = @"";
+    [DataCollector sharedInstance].payInDestination = @"";
+    [DataCollector sharedInstance].offCode = @"";
 }
 
 -(void)ResetToSelectDestination
@@ -1132,7 +1383,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     double latitude = mapView.camera.target.latitude;
     double longitude = mapView.camera.target.longitude;
     
-    [self spinLayer:compassImage.layer duration:.5 direction:-1 degrees:40];
+    [self spinLayer:compassImage.layer duration:.5 direction:1 degrees:40];
     
     [UIView animateWithDuration:0.2
                           delay:0
@@ -1373,6 +1624,32 @@ typedef NS_ENUM(NSInteger, RequestType) {
     
 }
 
+-(void)Notificationkey
+{
+    NSString *token = [self GetToken];
+    
+    if (token !=nil) {
+        
+        RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        
+            if (wasSuccessful) {
+                
+            }
+            else
+            {
+                
+            }
+        };
+        
+        Settings *st = [[Settings alloc]init];
+        
+        st = [DBManager selectSetting][0];
+        
+        [self.getData SetNotificationToken:st.accesstoken Token:token withCallback:callback];
+    }
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -1447,6 +1724,48 @@ typedef NS_ENUM(NSInteger, RequestType) {
     NSString *documentsPath = [paths objectAtIndex:0];
     // get the path to our Data/plist file
     NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"rating.plist"];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    
+    return (NSString*)array[0];
+}
+
+-(NSString*)IsConfirmed
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"confirmed.plist"];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    
+    return (NSString*)array[0];
+}
+
+-(NSString*)GetToken
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"token.plist"];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    
+    if (array.count >0)
+        return (NSString*)array[0];
+    else
+        return nil;
+}
+
+-(NSString*)Version
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"version.plist"];
     
     NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
     

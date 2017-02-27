@@ -67,8 +67,40 @@
                 [DBManager saveOrUpdataSetting:setting];
                 
                 loginButton.enabled = YES;
-                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
-                [self performSegueWithIdentifier:@"main" sender:self];
+                
+                RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+                    if (wasSuccessful) {
+                        
+                        if (![[data valueForKey:@"status"] isEqualToString:@"True"]) {
+                            [self Save:@""];
+                        }
+                        
+                        [self Save:[data valueForKey:@"isConfirmed"]];
+                        
+                        [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+                        [self performSegueWithIdentifier:@"main" sender:self];
+                    }
+                    
+                    else
+                    {
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                                        message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"خب"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                        
+                        NSLog( @"Unable to fetch Data. Try again.");
+                        
+                    }
+                };
+                
+                Settings *st = [[Settings alloc]init];
+                
+                st = [DBManager selectSetting][0];
+                
+                [self.getData Status:st.accesstoken withCallback:callback];
             }
             
             else
@@ -101,6 +133,22 @@
         [alert show];
         
     }
+    
+}
+
+- (void)Save:(NSString*)IsConfirmed
+{
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:IsConfirmed];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"confirmed.plist"];
+    
+    [array writeToFile:plistPath atomically: TRUE];
     
 }
 

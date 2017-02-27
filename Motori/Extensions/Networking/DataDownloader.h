@@ -27,9 +27,19 @@ typedef void (^ImageRequestCompleteBlock) (BOOL wasSuccessful,UIImage *image);
 
 - (void)GetOrderStatus:(NSString*)token OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback;;
 
-- (void)Rating:(NSString*)token Score:(NSString*)score OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback;;
+- (void)Rating:(NSString*)token Score:(NSString*)score OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback;
+
+- (void)SetNotificationToken:(NSString*)accesstoken Token:(NSString*)token withCallback:(RequestCompleteBlock)callback;
+
+- (void)SendBill:(NSString*)token OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback;
+
+- (void)ConfirmNumber:(NSString*)token Code:(NSString*)code withCallback:(RequestCompleteBlock)callback;
 
 - (void)Credit:(NSString*)token withCallback:(RequestCompleteBlock)callback;
+
+- (void)Status:(NSString*)token withCallback:(RequestCompleteBlock)callback;
+
+- (void)SendConfirmCode:(NSString*)token withCallback:(RequestCompleteBlock)callback;
 
 - (void)OrderHistory:(NSString*)token Page:(NSString*)page withCallback:(RequestCompleteBlock)callback;
 

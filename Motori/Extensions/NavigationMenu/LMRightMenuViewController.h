@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LMRightMenuViewController : UIViewController
+@property(nonatomic,weak)IBOutlet UILabel *credit;
 
 @end

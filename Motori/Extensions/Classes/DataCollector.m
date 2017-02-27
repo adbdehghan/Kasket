@@ -9,11 +9,7 @@
 #import "DataCollector.h"
 
 @implementation DataCollector
-@synthesize sourceBell;
-@synthesize sourcePlate;
-@synthesize destinationBell;
-@synthesize destinationPlate;
-@synthesize destinationPhoneNumber;
+
 
 -(instancetype)init
 {

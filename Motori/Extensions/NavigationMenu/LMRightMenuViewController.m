@@ -9,8 +9,11 @@
 #import "LMRightMenuViewController.h"
 #import "UIViewController+LMSideBarController.h"
 #import "MMCell.h"
+#import "DataDownloader.h"
+#import "Settings.h"
 #import "DBManager.h"
 #import "FCAlertView.h"
+#import "MapCharacter.h"
 
 @interface LMRightMenuViewController ()
 
@@ -19,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (strong, nonatomic) DataDownloader *getData;
 
 @end
 
@@ -38,8 +42,49 @@
     self.avatarImageView.layer.borderWidth = 1.0f;
     self.avatarImageView.layer.rasterizationScale = [UIScreen mainScreen].scale;
     self.avatarImageView.layer.shouldRasterize = YES;
+    
+    [self Credit];
 }
 
+-(void)Credit
+{
+    
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        
+        if (wasSuccessful) {
+            
+           
+            NSNumberFormatter *formatter = [NSNumberFormatter new];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+            NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:[[data valueForKey:@"credit"] integerValue]]];
+            
+            self.credit.text = [NSString stringWithFormat:@"%@ تومان",[MapCharacter MapCharacter:formatted]];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            NSLog( @"Unable to fetch Data. Try again.");
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.getData Credit:st.accesstoken withCallback:callback];
+}
+
+-(IBAction)ProfileButtonPressed:(id)sender
+{
+
+
+}
 
 #pragma mark - TABLE VIEW DATASOURCE
 
@@ -120,6 +165,15 @@
     }
     
     [self.sideBarController hideMenuViewController:YES];
+}
+
+- (DataDownloader *)getData
+{
+    if (!_getData) {
+        self.getData = [[DataDownloader alloc] init];
+    }
+    
+    return _getData;
 }
 
 @end

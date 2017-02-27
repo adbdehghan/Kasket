@@ -438,10 +438,6 @@
 {
     if([self.delegate respondsToSelector:@selector(ForwardClicked)])
     {
-        [DataCollector sharedInstance].destinationBell = bellTextField.text;
-        [DataCollector sharedInstance].destinationPlate = plateTextField.text;
-        
-        
         [self.delegate ForwardClicked];
     }
 }

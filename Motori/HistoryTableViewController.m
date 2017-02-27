@@ -14,6 +14,10 @@
 #import "HistoryTableViewCell.h"
 #import "UIScrollView+UzysAnimatedGifLoadMore.h"
 #import "UIImage+OHPDF.h"
+#import "MapCharacter.h"
+#import "UIImageView+WebCache.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import "FCAlertView.h"
 
 @import GoogleMaps;
 @interface HistoryTableViewController ()
@@ -22,6 +26,7 @@
     UIActivityIndicatorView *activityIndicator;
     UILabel *clearMessage;
     NSIndexPath *selectedIndexPath;
+    HistoryTableViewCell *lastCell;
     BOOL isExpanded;
 }
 @property (strong, nonatomic) DataDownloader *getData;
@@ -106,19 +111,33 @@
             if (wasSuccessful) {
                 NSMutableArray *temp = [[NSMutableArray alloc]init];
                 
-                for (NSDictionary *item in (NSMutableArray*)data) {
+                self.totalPages = [[data valueForKey:@"totalpage"] integerValue];
+                
+                for (NSDictionary *item in (NSMutableArray*)[data valueForKey:@"data"]) {
                     OrderHistory *order = [[OrderHistory alloc]init];
-                    order.destinationFullName = [item valueForKey:@"fullName"];
+                    order.orderId = [NSString stringWithFormat:@"%@",[item valueForKey:@"id"]];
+                    order.destinationFullName = [item valueForKey:@"destinationFullName"];
+                    order.employeeName =[item valueForKey:@"employeeName"];
                     order.sourceAddress =[item valueForKey:@"sourceAddress"];
                     order.destinationAddress =[item valueForKey:@"destinationAddress"];
-                    order.orderTime =[item valueForKey:@"ordertime"];
-                    order.price = [item valueForKey:@"price"];
-                    order.sourceLat = [item valueForKey:@"sourceLat"];
-                    order.sourceLon = [item valueForKey:@"sourceLon"];
-                    order.destinationLat = [item valueForKey:@"destinationLat"];
-                    order.destinationLon = [item valueForKey:@"destinationLon"];
-                    //self.totalPages = [[item valueForKey:@"totalpage"] integerValue];
+                    order.orderTime =[item valueForKey:@"orderTime"];
+                    order.price = [item valueForKey:@"totalPrice"];
+                    order.orderNumber = [item valueForKey:@"orderNumber"];
+                    order.sourceLat = [[item valueForKey:@"sourcelocation"] valueForKey:@"latitude"];
+                    order.sourceLon = [[item valueForKey:@"sourcelocation"] valueForKey:@"longitude"];
+                    order.sourcePlate = [[item valueForKey:@"sourceNum"] isEqual:[NSNull null]]? @"-":[item valueForKey:@"sourceNum"];
+                    order.sourceBell = [[item valueForKey:@"sourceBell"] isEqual:[NSNull null]] ? @"-" : [item valueForKey:@"sourceBell"];
+                    order.destinationLat = [[item valueForKey:@"destinationlocation"] valueForKey:@"latitude"];
+                    order.destinationLon = [[item valueForKey:@"destinationlocation"] valueForKey:@"longitude"];
                     
+                    order.destinationBell = [[item valueForKey:@"destinationBell"] isEqual:[NSNull null]] ? @"-" : [item valueForKey:@"destinationBell"];
+                    order.destinationPlate = [[item valueForKey:@"destinationNum"] isEqual:[NSNull null]] ? @"-" : [item valueForKey:@"destinationNum"];
+                    order.destinationPhoneNumber = [[item valueForKey:@"destinationPhoneNumber"] isEqual:[NSNull null]] ? @"-" : [item valueForKey:@"destinationPhoneNumber"];
+                    
+                    order.status = [NSString stringWithFormat:@"%@",[item valueForKey:@"status"]];
+                    order.orderType = [NSString stringWithFormat:@"%@",[item valueForKey:@"orderType"]];
+                    order.payInDestination = [NSString stringWithFormat:@"%@",[item valueForKey:@"payinDestination"]];
+                    order.paymentStatus = [NSString stringWithFormat:@"%@",[item valueForKey:@"paymentstatus"]];
                     [tableItems addObject:order];
                     [temp addObject:order];
                 }
@@ -126,11 +145,10 @@
                 [activityIndicator stopAnimating];
                 
                 if (temp.count == 0) {
-                  //  clearMessage.alpha = 1;
+                    clearMessage.alpha = 1;
                 }
                 else
                     clearMessage.alpha = 0;
-                
                 
                 
                 NSInteger rows = [strongSelf.tableView numberOfRowsInSection:0];
@@ -179,6 +197,71 @@
 
 }
 
+- (void)GetBill:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    if (indexPath != nil)
+    {
+        OrderHistory *item = [[OrderHistory alloc]init];
+        item = [tableItems objectAtIndex:indexPath.row];
+        
+        FCAlertView *alert = [[FCAlertView alloc] init];
+        
+        [alert showAlertInView:self
+                     withTitle:@"رسید سفارش"
+                  withSubtitle:@"آیا مایل به دریافت رسید از طریق ایمیل هستید؟"
+               withCustomImage:[UIImage imageNamed:@"alert.png"]
+           withDoneButtonTitle:@"بله"
+                    andButtons:nil];
+        [alert addButton:@"خیر" withActionBlock:^{
+            // Put your action here
+        }];
+        [alert doneActionBlock:^{
+            [self RequestBill:item.orderId];
+        }];
+        
+    }
+}
+
+-(void)RequestBill:(NSString*)orderId
+{
+    
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        
+        if (wasSuccessful) {
+     
+            FCAlertView *alert = [[FCAlertView alloc] init];
+            [alert makeAlertTypeSuccess];
+            [alert showAlertInView:self
+                         withTitle:nil
+                      withSubtitle:@"رسید سفارش به ایمیل وارد شده در حساب کاربری شما ارسال شد"
+                   withCustomImage:[UIImage imageNamed:@"alert.png"]
+               withDoneButtonTitle:@"خب"
+                        andButtons:nil];
+            
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            NSLog( @"Unable to fetch Data. Try again.");
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.getData SendBill:st.accesstoken OrderId:orderId withCallback:callback];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -195,8 +278,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    //return tableItems.count;
-    return 2;
+    return tableItems.count;
+    //return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -205,60 +288,118 @@
     if (!cell)
         cell = [[HistoryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
     
-    OrderHistory *item = [[OrderHistory alloc]init];
-   // item = [tableItems objectAtIndex:indexPath.row];
     
-    cell.fullnameLabel.text = item.destinationFullName;
-    cell.addressLabel.text = item.sourceAddress;
-    cell.dateTimeLabel.text = item.orderTime;
+    cell.layerView.layer.cornerRadius = 5;
+    cell.emailButton.layer.cornerRadius = 5;
+    cell.emailButton.layer.masksToBounds = NO;
+    [cell.emailButton addTarget:self action:@selector(GetBill:) forControlEvents:UIControlEventTouchUpInside];
+    cell.background.layer.shadowColor = [UIColor blackColor].CGColor;
+    cell.background.layer.shadowOffset = CGSizeMake(1, 1.f);
+    cell.background.layer.shadowRadius = 5;
+    cell.background.layer.shadowOpacity = 0.3;
+    cell.background.layer.cornerRadius = 5;
+    
+    cell.background.layer.masksToBounds = NO;
+    
+    OrderHistory *item = [[OrderHistory alloc]init];
+    item = [tableItems objectAtIndex:indexPath.row];
+    
+    cell.fullnameLabel.text = item.employeeName;
+    cell.fullnameLabelDetail.text = item.employeeName;
+    cell.orderTypeLabel.text = [self OrderType:item];
+    cell.payinDestinationLabel.text = [self PaymentTypes:item];
+    cell.orderStatus.text = [self StatusTypes:item];
+    cell.roundTripLabel.text = [item.haveReturn isEqualToString:@"1"] ? @"رفت و برگشت":@"یکطرفه";
+    cell.orderNumberLabel.text = item.orderNumber;
+        cell.addressLabel.text = [item.sourceAddress isEqual:[NSNull null]] ? @"-" : item.sourceAddress;
+    cell.destinationAddressLabel.text = [item.destinationAddress isEqual:[NSNull null]] ? @"-" :item.destinationAddress;
+    cell.dateTimeLabel.text = [MapCharacter MapCharacter:item.orderTime];
+    
+    cell.sourceAddressInfoLabel.text = [NSString stringWithFormat:@"پلاک  %@  زنگ یا واحد  %@",item.sourcePlate,item.sourceBell];
+    
+    NSString *displayString = [NSString stringWithFormat:@"پلاک  %@  زنگ یا واحد  %@  شماره همراه گیرنده  %@  نام گیرنده  %@",item.destinationPlate,item.destinationBell,item.destinationPhoneNumber,item.destinationFullName];
+    
+    cell.destinationAddressInfoLabel.lineBreakMode = NSLineBreakByClipping;
+    cell.destinationAddressInfoLabel.text = [displayString stringByAppendingString:@"\n\n\n\n"];
+    
+    
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:[item.price integerValue]]];
-    cell.priceLabel.text =[NSString stringWithFormat:@"%@",formatted];
+    cell.priceLabel.text =[NSString stringWithFormat:@"%@ تومان" ,[MapCharacter MapCharacter:[NSString stringWithFormat:@"%@",formatted]]];
+    cell.priceLabelDetail.text =[NSString stringWithFormat:@"%@ تومان" ,[MapCharacter MapCharacter:[NSString stringWithFormat:@"%@",formatted]]];
     
-    if (cell.mapView.subviews.count == 0) {
-        GMSMapView *mapView;
-        GMSCameraPosition *mainCamera = [GMSCameraPosition cameraWithLatitude:[item.sourceLat doubleValue]
-                                                                longitude:[item.sourceLon doubleValue]
-                                                                     zoom:15];
-        
-        mapView = [GMSMapView mapWithFrame:CGRectMake(0, 0, cell.mapView.frame.size.width, cell.mapView.frame.size.height) camera:mainCamera];
-        
-        mapView.myLocationEnabled = NO;
-        mapView.userInteractionEnabled = NO;
-        
-        [cell.mapView addSubview:mapView];
-        
-        
-        GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = CLLocationCoordinate2DMake([item.sourceLat doubleValue],[item.sourceLon doubleValue]);
-        marker.snippet = @"";
-        marker.appearAnimation = kGMSMarkerAnimationPop;
-        marker.icon =[UIImage imageWithPDFNamed:@"sourcemarker.pdf"
-                                      fitInSize:CGSizeMake(50, 50)];
-        marker.map = mapView;
-        
-        GMSMarker *desmarker = [[GMSMarker alloc] init];
-        desmarker.appearAnimation = YES;
-        desmarker.flat = YES;
-        desmarker.position = CLLocationCoordinate2DMake([item.destinationLat doubleValue],[item.destinationLon doubleValue]);
-        desmarker.map = mapView;
-        desmarker.icon =  [UIImage imageWithPDFNamed:@"destinationmarker.pdf"
-                                           fitInSize:CGSizeMake(50, 50)];
-        
-        GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:marker.position coordinate:desmarker.position];
-        GMSCameraPosition *camera = [mapView cameraForBounds:bounds insets:UIEdgeInsetsMake(30, 30, 30, 30)];
-        
-        [mapView animateToCameraPosition:camera];
-        
+    if ([item.status isEqualToString:@"6"] || [item.status isEqualToString:@"7"]) {
+        cell.layerView.backgroundColor = [UIColor grayColor];
     }
+    else
+        cell.layerView.backgroundColor = [UIColor colorWithRed:12/255.f green:127/255.f blue:209/255.f alpha:1];
+
+    
+    if ([indexPath compare:selectedIndexPath] != NSOrderedSame) {
+        cell.layerView.alpha= .7;
+        cell.fullnameLabel.alpha = 1;
+        cell.dateTimeLabel.alpha = 1;
+        cell.priceLabel.alpha = 1;
+        cell.orderStatus.alpha = 1;
+        cell.orderNumberLabel.alpha = 1;
+    }
+    else
+    {
+        cell.layerView.alpha= 0;
+        cell.fullnameLabel.alpha = 0;
+        cell.dateTimeLabel.alpha = 0;
+        cell.priceLabel.alpha = 0;
+        cell.orderStatus.alpha = 0;
+        cell.orderNumberLabel.alpha = 0;
+    }
+    
+    NSString *staticMapUrl = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?autoscale=2&visual_refresh=true&markers=icon:http://kaskett.ir/content/images/sourcemarker.png|%@,%@&markers=icon:http://kaskett.ir/content/images/destinationmarker.png|%@,%@&%@",item.sourceLat, item.sourceLon,item.destinationLat ,item.destinationLon,[NSString stringWithFormat:@"size=%dx%d",2*(int)cell.mapView.frame.size.width, 2*(int)cell.mapView.frame.size.height]];
+    
+    NSURL *mapUrl = [NSURL URLWithString:[staticMapUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    [cell.mapView setImageWithURL:mapUrl
+                   placeholderImage:nil options:SDWebImageRefreshCached usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    [cell.mapView setClipsToBounds:YES];
+    cell.mapView.layer.cornerRadius = 5;
+    
     
     return cell;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if ([indexPath compare:selectedIndexPath] != NSOrderedSame) {
+        [UIView animateWithDuration:.6 animations:^()
+         {
+             lastCell.layerView.alpha=.7;
+             lastCell.fullnameLabel.alpha = 1;
+             lastCell.dateTimeLabel.alpha = 1;
+             lastCell.priceLabel.alpha = 1;
+             lastCell.orderStatus.alpha = 1;
+             lastCell.orderNumberLabel.alpha = 1;
+             lastCell.mapView.layer.cornerRadius = 5;
+         }];
+    }
+    
     selectedIndexPath = indexPath;
+    
+    HistoryTableViewCell *cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    lastCell = cell;
+    [UIView animateWithDuration:.6 animations:^()
+    {
+        cell.layerView.alpha=0;
+        cell.fullnameLabel.alpha = 0;
+        cell.dateTimeLabel.alpha = 0;
+        cell.priceLabel.alpha = 0;
+        cell.orderStatus.alpha = 0;
+        cell.orderNumberLabel.alpha = 0;
+        cell.mapView.layer.cornerRadius = 0;
+        
+    }];
+    
     [tableView beginUpdates];
     [tableView endUpdates];
 }
@@ -267,12 +408,12 @@
     
     if ([indexPath compare:selectedIndexPath] == NSOrderedSame) {
         
-        return  300;
+        return  440;
     }
     else
     {
         
-        return 150;
+        return 162;
     } 
 }
 
@@ -307,6 +448,66 @@
     
     UIBarButtonItem *settingBarButton = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
     self.navigationItem.leftBarButtonItem = settingBarButton;
+    
+}
+
+-(NSString*)OrderType:(OrderHistory*)order
+{
+
+    switch ([order.orderType integerValue]) {
+        case 0:
+            return @"ارسال بسته";
+            break;
+        case 1:
+            return @"شخص";
+            break;
+        default:
+            break;
+    }
+    
+    return @"";
+
+}
+
+-(NSString*)StatusTypes:(OrderHistory*)order
+{
+    
+    switch ([order.status integerValue]) {
+        case 5:
+            return @"";
+            break;
+        case 6:
+            return @"لغو شده توسط سرویس دهنده";
+            break;
+        default:
+            break;
+    }
+    
+    return @"";
+    
+}
+
+-(NSString*)PaymentTypes:(OrderHistory*)order
+{
+    
+    switch ([order.payInDestination integerValue]) {
+        case 1:
+            return @"پرداخت توسط گیرنده";
+            break;
+        default:
+        {
+            if ([order.paymentStatus integerValue] == 1) {
+                return @"پرداخت نقدی توسط فرستنده";
+            }
+            else if ([order.paymentStatus integerValue] == 2)
+                return @"پرداخت اعتباری توسط فرستنده";
+            else if ([order.paymentStatus integerValue] == 0)
+                return @"پرداخت نشده";
+        }
+            break;
+    }
+    
+    return @"";
     
 }
 

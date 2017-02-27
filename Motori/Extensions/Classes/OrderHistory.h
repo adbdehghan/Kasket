@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface OrderHistory : NSObject
+@property (nonatomic,strong) NSString *orderId;
 @property (nonatomic,strong) NSString *sourceLat;
 @property (nonatomic,strong) NSString *sourceLon;
 @property (nonatomic,strong) NSString *sourceAddress;
@@ -24,7 +25,11 @@
 @property (nonatomic,strong) NSString *orderType;
 @property (nonatomic,strong) NSString *haveReturn;
 @property (nonatomic,strong) NSString *payInDestination;
+@property (nonatomic,strong) NSString *paymentStatus;
 @property (nonatomic,strong) NSString *offCode;
 @property (nonatomic,strong) NSString *price;
 @property (nonatomic,strong) NSString *orderTime;
+@property (nonatomic,strong) NSString *employeeName;
+@property (nonatomic,strong) NSString *status;
+@property (nonatomic,strong) NSString *orderNumber;
 @end

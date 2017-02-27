@@ -666,7 +666,7 @@
         [firstButton addTarget:self action:@selector(handleButton:) forControlEvents:UIControlEventTouchUpInside];
         [firstButton addTarget:self action:@selector(btnTouched) forControlEvents:UIControlEventTouchDown];
         [firstButton addTarget:self action:@selector(btnReleased) forControlEvents:UIControlEventTouchDragExit];
-        firstButton.titleLabel.font = [UIFont systemFontOfSize:16.0f weight:UIFontWeightRegular];
+        firstButton.titleLabel.font = [UIFont fontWithName:@"IRANSans" size:15];
         firstButton.tintColor = self.colorScheme;
         if (self.colorScheme == nil && _darkTheme)
             firstButton.tintColor = [UIColor whiteColor];
@@ -709,7 +709,7 @@
         [secondButton addTarget:self action:@selector(handleButton:) forControlEvents:UIControlEventTouchUpInside];
         [secondButton addTarget:self action:@selector(btnTouched) forControlEvents:UIControlEventTouchDown];
         [secondButton addTarget:self action:@selector(btnReleased) forControlEvents:UIControlEventTouchDragExit];
-        secondButton.titleLabel.font = [UIFont systemFontOfSize:16.0f weight:UIFontWeightRegular];
+        secondButton.titleLabel.font = [UIFont fontWithName:@"IRANSans" size:16];
         secondButton.tintColor = self.colorScheme;
         if (self.colorScheme == nil && _darkTheme)
             secondButton.tintColor = [UIColor whiteColor];
@@ -748,7 +748,7 @@
         [doneButton addTarget:self action:@selector(donePressed) forControlEvents:UIControlEventTouchUpInside];
         [doneButton addTarget:self action:@selector(btnTouched) forControlEvents:UIControlEventTouchDown];
         [doneButton addTarget:self action:@selector(btnReleased) forControlEvents:UIControlEventTouchDragExit];
-        doneButton.titleLabel.font = [UIFont systemFontOfSize:18.0f weight:UIFontWeightMedium];
+        doneButton.titleLabel.font = [UIFont fontWithName:@"IRANSans" size:18];
         if (_colorScheme != nil || _darkTheme)
             doneButton.tintColor = [UIColor whiteColor];
         if (self.doneButtonTitleColor != nil)
