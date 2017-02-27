@@ -537,6 +537,7 @@
 				64E686621E5FAB2000DA0631 /* Notification */,
 				64E6866A1E5FB28900DA0631 /* Activities */,
 				64E6866E1E5FD6AB00DA0631 /* RaiseCredit */,
+				64E6867E1E63D0A500DA0631 /* Profile */,
 				643439E41E16AF2F00B4FE3F /* Main.storyboard */,
 				643439E71E16AF2F00B4FE3F /* Assets.xcassets */,
 				643439E91E16AF2F00B4FE3F /* LaunchScreen.storyboard */,
@@ -941,6 +942,13 @@
 				64E6866F1E5FD6D100DA0631 /* RaiseCreditViewController.m */,
 			);
 			name = RaiseCredit;
+			sourceTree = "<group>";
+		};
+		64E6867E1E63D0A500DA0631 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		64E871CD1E2DA5B800C48548 /* RadialMenu */ = {

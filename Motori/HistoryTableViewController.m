@@ -116,7 +116,7 @@
                 for (NSDictionary *item in (NSMutableArray*)[data valueForKey:@"data"]) {
                     OrderHistory *order = [[OrderHistory alloc]init];
                     order.orderId = [NSString stringWithFormat:@"%@",[item valueForKey:@"id"]];
-                    order.destinationFullName = [item valueForKey:@"destinationFullName"];
+                    order.destinationFullName = [[item valueForKey:@"destinationFullName"]isEqual:[NSNull null]]? @"-":[item valueForKey:@"destinationFullName"];
                     order.employeeName =[item valueForKey:@"employeeName"];
                     order.sourceAddress =[item valueForKey:@"sourceAddress"];
                     order.destinationAddress =[item valueForKey:@"destinationAddress"];

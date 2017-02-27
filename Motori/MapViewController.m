@@ -734,7 +734,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
     DataCollector *instance = [DataCollector sharedInstance];
     NSString *test = instance.sourceBell;
     
-    if (orderState != SummaryStep || orderState == FindEmployee) {
+    
+    if (orderState != SummaryStep && orderState != FindEmployee) {
         
         [self.popupController dismissPopupControllerAnimated:YES];
     }
@@ -827,7 +828,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     self.isCanceled = NO;
     _orderId = nil;
     orderState = SourceStep;
-    [self.popupController dismissPopupControllerAnimated:YES];
+    
     
     [mapView clear];
     self.HumanPin.image = [UIImage imageWithPDFNamed:@"sourcepin.pdf"
@@ -851,6 +852,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [mapView animateToCameraPosition:camera];
     
     [self RemoveBackButton];
+    
+    [self.popupController dismissPopupControllerAnimated:YES];
     
 }
 

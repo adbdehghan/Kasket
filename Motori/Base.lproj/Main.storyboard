@@ -29,9 +29,6 @@
         <array key="IRANSans_UltraLight.ttf">
             <string>IRANSans-UltraLight</string>
         </array>
-        <array key="Yekan.ttf">
-            <string>BYekan</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Splash View Controller-->
@@ -586,7 +583,7 @@
                                             <rect key="frame" x="20" y="27" width="180" height="142"/>
                                             <connections>
                                                 <action selector="ProfileButtonPressed:" destination="a4m-Hm-p1i" eventType="touchUpInside" id="0Uw-QY-LKO"/>
-                                                <segue destination="Hur-UY-sJt" kind="show" id="R1S-NB-QtI"/>
+                                                <segue destination="Hur-UY-sJt" kind="show" identifier="" id="R1S-NB-QtI"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -718,25 +715,26 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnc-3q-vXm">
                                                     <rect key="frame" x="8" y="8" width="343" height="106"/>
-                                                    <fontDescription key="fontDescription" name="BYekan+" family="B Yekan+" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="IRANSans" family="IRANSans" pointSize="17"/>
                                                     <color key="textColor" red="0.46441489460000002" green="0.4614830613" blue="0.46666824820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lfv-Hh-999">
                                                     <rect key="frame" x="0.0" y="116" width="359" height="26"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L77-0q-JQi">
-                                                            <rect key="frame" x="8" y="2" width="42" height="23"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L77-0q-JQi">
+                                                            <rect key="frame" x="8" y="2" width="343" height="23"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="23" id="Lk1-PY-vef"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="BYekan" family="B Yekan" pointSize="15"/>
+                                                            <fontDescription key="fontDescription" name="IRANSans-Medium" family="IRANSans" pointSize="15"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.0" green="0.64724779129999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="L77-0q-JQi" secondAttribute="trailing" constant="8" id="6U2-1n-YVn"/>
                                                         <constraint firstItem="L77-0q-JQi" firstAttribute="top" secondItem="Lfv-Hh-999" secondAttribute="top" constant="2" id="9qc-4G-ryW"/>
                                                         <constraint firstItem="L77-0q-JQi" firstAttribute="leading" secondItem="Lfv-Hh-999" secondAttribute="leading" constant="8" id="fT7-VP-PD2"/>
                                                     </constraints>
@@ -778,7 +776,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAa-aN-0Id" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2377" y="-71"/>
+            <point key="canvasLocation" x="2376.8000000000002" y="-71.514242878560722"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a3n-BU-OUz">
@@ -1404,7 +1402,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGu-d5-9VP">
                                 <rect key="frame" x="20" y="340" width="82" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.81815612319999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.74509803921568629" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="82" id="ekq-ub-ypi"/>
                                     <constraint firstAttribute="height" constant="48" id="hdz-R2-53x"/>
@@ -1419,7 +1417,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MsG-0S-C8g">
                                 <rect key="frame" x="146.5" y="340" width="82" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.81815612319999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.74509803921568629" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="mF4-hc-oG7"/>
                                     <constraint firstAttribute="width" constant="82" id="wjT-Fb-etT"/>
@@ -1434,7 +1432,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzK-HL-YdN">
                                 <rect key="frame" x="273" y="340" width="82" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.81815612319999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.74509803921568629" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="EyP-lA-Vaa"/>
                                     <constraint firstAttribute="width" constant="82" id="KOj-Ct-oGQ"/>
@@ -1448,7 +1446,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.81960784313725488" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.74509803921568629" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="YSu-rf-wdG" firstAttribute="leading" secondItem="dq2-dp-NUk" secondAttribute="leadingMargin" constant="-3" id="0vv-uh-PAz"/>
                             <constraint firstAttribute="trailing" secondItem="gzK-HL-YdN" secondAttribute="trailing" constant="20" id="19H-aK-jex"/>
@@ -1629,7 +1627,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.81960784313725488" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.74509803921568629" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="s3Z-no-DeF" secondAttribute="trailing" constant="47" id="03f-zG-B5E"/>
                             <constraint firstItem="s3Z-no-DeF" firstAttribute="top" secondItem="cCi-Du-LNb" secondAttribute="top" constant="250" id="24X-6Z-Nsn"/>
@@ -1700,8 +1698,8 @@
         <image name="user.png" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="E0N-Tq-CVw"/>
-        <segue reference="ipg-rP-xki"/>
+        <segue reference="c1M-hT-fsb"/>
         <segue reference="zIB-Ek-xbb"/>
+        <segue reference="ipg-rP-xki"/>
     </inferredMetricsTieBreakers>
 </document>

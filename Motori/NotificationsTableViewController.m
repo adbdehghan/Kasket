@@ -13,6 +13,8 @@
 #import "UIScrollView+UzysAnimatedGifLoadMore.h"
 #import "Notification.h"
 #import "NotificationTableViewCell.h"
+#import "MapCharacter.h"
+
 
 @interface NotificationsTableViewController ()
 {
@@ -205,8 +207,8 @@
     
     cell.contentLabel.attributedText = attributedString;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.dateTimeLabel.font =[UIFont fontWithName:@"B Yekan" size:15];
-    cell.dateTimeLabel.text = [ NSString stringWithFormat:@"%@",item.Time];
+    cell.dateTimeLabel.font =[UIFont fontWithName:@"IRANSans" size:15];
+    cell.dateTimeLabel.text = [ NSString stringWithFormat:@"%@",[MapCharacter MapCharacter:item.Time]];
     cell.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.contentLabel.numberOfLines = 0;
     
