@@ -486,7 +486,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [self.view addSubview:menuContainer];
     [self.view bringSubviewToFront:menuContainer];
     
-    UIImageView *menuImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 25, 15)];
+    menuImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 25, 15)];
     menuImage.image = [UIImage imageNamed:@"menu"];
     menuImage.contentMode= UIViewContentModeScaleAspectFit;
     menuImage.clipsToBounds = YES;
@@ -498,7 +498,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [menuButton setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
     
     menuButton.userInteractionEnabled = YES;
-    menuButton.frame = CGRectMake(0, 0, 50, 50);
+    menuButton.frame = CGRectMake(0, 0, 60, 60);
     [menuContainer addSubview:menuButton];
     
     [UIView animateWithDuration:.45f
@@ -657,7 +657,6 @@ typedef NS_ENUM(NSInteger, RequestType) {
         GMSCameraPosition *camera = [mapView cameraForBounds:bounds insets:UIEdgeInsetsMake(190, 60, 210, 60)];
    
         [mapView animateToCameraPosition:camera];
-//        mapView.userInteractionEnabled = NO;
         
         self.HumanPin.alpha = 0;
         
@@ -731,10 +730,6 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 -(void)ForwardClicked
 {
-    DataCollector *instance = [DataCollector sharedInstance];
-    NSString *test = instance.sourceBell;
-    
-    
     if (orderState != SummaryStep && orderState != FindEmployee) {
         
         [self.popupController dismissPopupControllerAnimated:YES];
@@ -1129,6 +1124,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
         _orderId = [self OrderId];
     }
     
+    __block BOOL isDone = NO;
+    
     __block NSInteger rate;
     rate = 0;
     ratingView = [[FCAlertView alloc] init];
@@ -1140,6 +1137,12 @@ typedef NS_ENUM(NSInteger, RequestType) {
         rate = (long)rating;
         NSLog(@"Your Rating: %ld", (long)rating); // Use the Rating as you'd like
         
+        if (isDone) {
+            [self RequestRate:[NSString stringWithFormat:@"%ld",(long)rate]];
+        }
+        else
+            [self RequestRate:[NSString stringWithFormat:@"%@",@"-1"]];
+        
     }];
     
     [ratingView showAlertInView:self
@@ -1148,37 +1151,48 @@ typedef NS_ENUM(NSInteger, RequestType) {
                 withCustomImage:nil
             withDoneButtonTitle:@"تایید"
                      andButtons:nil];
+    [ratingView addButton:@"نمی خوام" withActionBlock:^{
+        // Put your action here
+    }];
     
     [ratingView doneActionBlock:^{
         
-        RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
-            if (wasSuccessful) {
-                
-                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
-                
-            }
-            else
-            {
-                [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
-                                                                message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
-                                                               delegate:self
-                                                      cancelButtonTitle:@"خب"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-        };
-        
-        Settings *st = [[Settings alloc]init];
-        
-        st = [DBManager selectSetting][0];
-        
-        [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
-        [self.getData Rating:st.accesstoken Score:[NSString stringWithFormat:@"%ld",(long)rate] OrderId:_orderId withCallback:callback];
+        isDone = YES;
         
     }];
+
     
 }
+
+-(void)RequestRate:(NSString*)rate
+{
+    
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            
+        }
+        else
+        {
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"خب"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
+    [self.getData Rating:st.accesstoken Score:rate OrderId:_orderId withCallback:callback];
+}
+
 
 - (UIImage*)image:(UIImage*)originalImage scaledToSize:(CGSize)size
 {
