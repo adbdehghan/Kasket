@@ -1125,7 +1125,6 @@ typedef NS_ENUM(NSInteger, RequestType) {
     }
     
     __block BOOL isDone = NO;
-    
     __block NSInteger rate;
     rate = 0;
     ratingView = [[FCAlertView alloc] init];
@@ -1152,15 +1151,13 @@ typedef NS_ENUM(NSInteger, RequestType) {
             withDoneButtonTitle:@"تایید"
                      andButtons:nil];
     [ratingView addButton:@"نمی خوام" withActionBlock:^{
-        // Put your action here
+        
     }];
     
     [ratingView doneActionBlock:^{
-        
         isDone = YES;
         
     }];
-
     
 }
 

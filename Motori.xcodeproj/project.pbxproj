@@ -150,6 +150,8 @@
 		64E686791E6129DA00DA0631 /* MapHelmet.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E686781E6129DA00DA0631 /* MapHelmet.pdf */; };
 		64E6867B1E613E7C00DA0631 /* avatar.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 64E6867A1E613E7C00DA0631 /* avatar.pdf */; };
 		64E6867D1E63BE3500DA0631 /* message.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E6867C1E63BE3500DA0631 /* message.png */; };
+		64E686851E655A7000DA0631 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E686831E655A7000DA0631 /* ProfileViewController.m */; };
+		64E686871E6565C900DA0631 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E686861E6565C900DA0631 /* user.png */; };
 		64E871CC1E2D9D5300C48548 /* mypic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64E871CB1E2D9D5300C48548 /* mypic.jpg */; };
 		64E871D81E2DA5B800C48548 /* LNERadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */; };
 		64E871D91E2DA5B800C48548 /* JTNumberScrollAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E871D21E2DA5B800C48548 /* JTNumberScrollAnimatedView.m */; };
@@ -401,6 +403,9 @@
 		64E686781E6129DA00DA0631 /* MapHelmet.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = MapHelmet.pdf; sourceTree = "<group>"; };
 		64E6867A1E613E7C00DA0631 /* avatar.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = avatar.pdf; sourceTree = "<group>"; };
 		64E6867C1E63BE3500DA0631 /* message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message.png; sourceTree = "<group>"; };
+		64E686831E655A7000DA0631 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		64E686841E655A7000DA0631 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		64E686861E6565C900DA0631 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		64E871CB1E2D9D5300C48548 /* mypic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mypic.jpg; sourceTree = "<group>"; };
 		64E871CE1E2DA5B800C48548 /* LNERadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNERadialMenu.h; sourceTree = "<group>"; };
 		64E871CF1E2DA5B800C48548 /* LNERadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNERadialMenu.m; sourceTree = "<group>"; };
@@ -444,6 +449,7 @@
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64E686861E6565C900DA0631 /* user.png */,
 				64E6867C1E63BE3500DA0631 /* message.png */,
 				64E6867A1E613E7C00DA0631 /* avatar.pdf */,
 				64E686781E6129DA00DA0631 /* MapHelmet.pdf */,
@@ -947,6 +953,8 @@
 		64E6867E1E63D0A500DA0631 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				64E686841E655A7000DA0631 /* ProfileViewController.h */,
+				64E686831E655A7000DA0631 /* ProfileViewController.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1078,6 +1086,7 @@
 				64E6867B1E613E7C00DA0631 /* avatar.pdf in Resources */,
 				646C96951E4A7EC00090962A /* sourcemarker.pdf in Resources */,
 				3AB5B19C1E33BC36002AE9F2 /* creditcard.png in Resources */,
+				64E686871E6565C900DA0631 /* user.png in Resources */,
 				64343AEA1E16B17D00B4FE3F /* IRANSans_Bold.ttf in Resources */,
 				64343AD81E16B0D600B4FE3F /* NavBarIconSearchBar_blue@2x.png in Resources */,
 				642018041E4FBEB000AF7819 /* front@2x.png in Resources */,
@@ -1252,6 +1261,7 @@
 				64343AC71E16B0D600B4FE3F /* SDWebImagePrefetcher.m in Sources */,
 				64E686541E5E8B4300DA0631 /* Arcs.m in Sources */,
 				643439DD1E16AF2F00B4FE3F /* main.m in Sources */,
+				64E686851E655A7000DA0631 /* ProfileViewController.m in Sources */,
 				64E871D81E2DA5B800C48548 /* LNERadialMenu.m in Sources */,
 				64343AE11E16B0D600B4FE3F /* iconCollectionViewCell.m in Sources */,
 				64343ADE1E16B0D600B4FE3F /* HistoryTableViewCell.m in Sources */,

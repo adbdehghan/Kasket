@@ -622,6 +622,59 @@ NSMutableDictionary *receivedData;
      } didSendData:nil];
 }
 
+- (void)Profile:(NSString*)token withCallback:(RequestCompleteBlock)callback
+{
+    receivedData = [[NSMutableDictionary alloc]init];
+    
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/ClientProfile",URLaddress];
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:sample parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Success %@", responseObject);
+        
+        callback(YES,responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        callback(NO,nil);
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+}
+
+- (void)ChangeProfile:(NSString*)token FullName:(NSString*)fullname Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback
+{
+    receivedData = [[NSMutableDictionary alloc]init];
+    
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/changeProfile",URLaddress];
+    
+    NSDictionary *parameters = @{@"fullname": fullname,@"email":email,@"newpassword":password};
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:sample parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Success %@", responseObject);
+        
+        callback(YES,responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        callback(NO,nil);
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+}
+
+
 - (void)GetCompetitions:(NSString *)orgId token:(NSString*)token Page:(NSString*)page withCallback:(RequestCompleteBlock)callback
 {
         NSString *sample =[NSString stringWithFormat: @"%s/api/register/GETCompetitions",URLaddress];
