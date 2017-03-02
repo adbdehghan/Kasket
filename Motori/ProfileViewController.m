@@ -46,6 +46,14 @@
     self.profileImageView.layer.shadowOpacity = .5;
     self.profileImageView.layer.masksToBounds = NO;
     
+    self.topUIView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+    self.topUIView.layer.shadowRadius = 5;
+    self.topUIView.layer.shadowOffset = CGSizeMake(1, 1);
+    self.topUIView.layer.shadowOpacity = .7;
+    self.topUIView.layer.cornerRadius = 8;
+    self.topUIView.layer.masksToBounds = NO;
+    
+    
     [self GetProfileData];
     
 }
@@ -174,7 +182,7 @@
 -(void)CustomizeNavigationTitle
 {
     UILabel* label=[[UILabel alloc] initWithFrame:CGRectMake(0,0, self.navigationItem.titleView.frame.size.width, 40)];
-    label.text=@"پروفایل";
+    label.text=@"حساب کاربری";
     label.textColor=[UIColor whiteColor];
     label.backgroundColor =[UIColor clearColor];
     label.adjustsFontSizeToFitWidth=YES;
