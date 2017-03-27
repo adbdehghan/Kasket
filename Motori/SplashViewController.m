@@ -7,7 +7,6 @@
 //
 
 #import "SplashViewController.h"
-
 #import "DBManager.h"
 #import "Settings.h"
 #import "DataDownloader.h"

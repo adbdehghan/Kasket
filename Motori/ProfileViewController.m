@@ -13,10 +13,22 @@
 #import "DBManager.h"
 #import "UIWindow+YzdHUD.h"
 #import "FCAlertView.h"
+#import "MapCharacter.h"
+
+#define currentMonth [currentMonthString integerValue]
 
 @interface ProfileViewController ()<UITextFieldDelegate>
 {
     BOOL isSave;
+    NSMutableArray *yearArray;
+    NSArray *monthArray;
+    NSMutableArray *DaysArray;
+    NSString *currentMonthString;
+    int selectedYearRow;
+    int selectedMonthRow;
+    int selectedDayRow;
+    
+    BOOL firstTimeLoad;
 }
 @property (strong, nonatomic) DataDownloader *getData;
 
@@ -29,23 +41,8 @@
     [self CustomizeNavigationTitle];
     isSave = NO;
     self.SaveUIButton.layer.cornerRadius = 5;
-    self.SaveUIButton.layer.shadowColor = [UIColor darkGrayColor].CGColor;
-    self.SaveUIButton.layer.shadowRadius = 5;
-    self.SaveUIButton.layer.shadowOffset = CGSizeMake(1, 1);
-    self.SaveUIButton.layer.shadowOpacity = .5;
-    self.SaveUIButton.layer.masksToBounds = NO;
     [IQKeyboardManager sharedManager].enable = YES;
-    
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2;
-   // self.profileImageView.layer.borderColor = [UIColor clearColor].CGColor;
-    //self.profileImageView.layer.borderWidth = 0;
-    
-    self.profileImageView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
-    self.profileImageView.layer.shadowRadius = 6;
-    self.profileImageView.layer.shadowOffset = CGSizeMake(1, 1);
-    self.profileImageView.layer.shadowOpacity = .5;
-    self.profileImageView.layer.masksToBounds = NO;
-    
+
     self.topUIView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
     self.topUIView.layer.shadowRadius = 5;
     self.topUIView.layer.shadowOffset = CGSizeMake(1, 1);
@@ -55,7 +52,75 @@
     
     
     [self GetProfileData];
+    [self ConfigDatePicker];
+}
+
+-(void)ConfigDatePicker
+{
+
+    firstTimeLoad = YES;
+    self.customPicker.hidden = YES;
+    self.toolbarCancelDone.hidden = YES;
     
+    NSDate *date = [NSDate date];
+    
+    // Get Current Year
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"fa_IR"]];
+    
+    NSString *currentyearString = [NSString stringWithFormat:@"%@",
+                                   [formatter stringFromDate:date]];
+    
+    
+    // Get Current  Month
+    
+    [formatter setDateFormat:@"MM"];
+    
+    currentMonthString = [NSString stringWithFormat:@"%ld",(long)[[formatter stringFromDate:date]integerValue]];
+    // Get Current  Date
+    
+    [formatter setDateFormat:@"dd"];
+    NSString *currentDateString = [NSString stringWithFormat:@"%ld",(long)[[formatter stringFromDate:date]integerValue]];
+    
+    
+    // PickerView -  Years data
+    yearArray = [[NSMutableArray alloc]init];
+    
+    
+    for (int i = 1350; i <= 1400 ; i++)
+    {
+        [yearArray addObject:[MapCharacter MapCharacter:[NSString stringWithFormat:@"%d",i]]];
+        
+    }
+    
+    
+    // PickerView -  Months data
+    monthArray = @[@"۱",@"۲",@"۳",@"۴",@"۵",@"۶",@"۷",@"۸",@"۹",@"۱۰",@"۱۱",@"۱۲"];
+    
+    
+    // PickerView -  days data
+    
+    DaysArray = [[NSMutableArray alloc]init];
+    
+    for (int i = 1; i <= 31; i++)
+    {
+        [DaysArray addObject:[MapCharacter MapCharacter:[NSString stringWithFormat:@"%d",i]]];
+        
+    }
+    
+    // PickerView - Default Selection as per current Date
+    
+    [self.customPicker selectRow:[yearArray indexOfObject:[MapCharacter MapCharacter:currentyearString]] inComponent:0 animated:YES];
+    
+    [self.customPicker selectRow:[monthArray indexOfObject:[MapCharacter MapCharacter:currentMonthString]] inComponent:1 animated:YES];
+    
+    [self.customPicker selectRow:[DaysArray indexOfObject:[MapCharacter MapCharacter:currentDateString]] inComponent:2 animated:YES];
+    
+    NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [UIFont fontWithName:@"IRANSans" size:16.0] , NSForegroundColorAttributeName: [UIColor whiteColor]};
+    [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAppearanceDict forState:UIControlStateNormal];
+
 }
 
 -(void)GetProfileData
@@ -63,17 +128,21 @@
     RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
         if (wasSuccessful) {
          
-            self.nameUITextField.text = [data valueForKey:@"fullname"];
+            self.nameUITextField.text = [data valueForKey:@"fullname"] == [NSNull null] ? @"" : [data valueForKey:@"fullname"];
             
             if ([data valueForKey:@"email"] != [NSNull null]) {
                 
                 self.emailUITextField.text = [data valueForKey:@"email"];
                 
             }
+            
+            self.textFieldEnterDate.text = [data valueForKey:@"birthdate"] == [NSNull null] ? @"" : [MapCharacter MapCharacter:[data valueForKey:@"birthdate"]];
+            
             [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
         }
         else
         {
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
@@ -100,12 +169,12 @@
 
 - (IBAction)ButtonEvent:(id)sender {
     
-    
     if (!isSave) {
         isSave = YES;
         self.nameUITextField.userInteractionEnabled = YES;
         self.emailUITextField.userInteractionEnabled = YES;
         self.passwordUITextField.userInteractionEnabled = YES;
+        self.textFieldEnterDate.userInteractionEnabled = YES;
         
         [self.nameUITextField resignFirstResponder];
         
@@ -113,43 +182,46 @@
         
         [UIView animateWithDuration:1 animations:^{
         
-            [self.SaveUIButton setBackgroundColor:[UIColor blackColor]];
-            [self.profileImageView setBackgroundColor:[UIColor darkGrayColor]];
-            [self.topUIView setBackgroundColor:[UIColor colorWithRed:71/255.f green:106/255.f blue:129/255.f alpha:1]];
+            self.SaveUIButton.backgroundColor =[UIColor colorWithRed:0/255.f green:190/255.f blue:255/255.f alpha:1];
+            [self.view setBackgroundColor:[UIColor colorWithRed:48/255.f green:71/255.f blue:88/255.f alpha:1]];
+            
         }];
-        
-        
     }
     else
     {
         self.nameUITextField.userInteractionEnabled = NO;
         self.emailUITextField.userInteractionEnabled = NO;
         self.passwordUITextField.userInteractionEnabled = NO;
+        self.textFieldEnterDate.userInteractionEnabled = NO;
         [UIView animateWithDuration:1 animations:^{
-            [self.SaveUIButton setBackgroundColor:[UIColor colorWithRed:0/255.f green:162/255.f blue:252/255.f alpha:1]];
-            [self.topUIView setBackgroundColor:[UIColor colorWithRed:0/255.f green:176/255.f blue:252/255.f alpha:1]];
-            [self.profileImageView setBackgroundColor:[UIColor colorWithRed:48/255.f green:71/255.f blue:88/255.f alpha:1]];
+            [self.SaveUIButton setBackgroundColor:[UIColor colorWithRed:48/255.f green:71/255.f blue:88/255.f alpha:1]];
+            self.view.backgroundColor =[UIColor colorWithRed:0/255.f green:190/255.f blue:255/255.f alpha:1];
+   
         }];
         isSave = NO;
         [self.SaveUIButton setTitle: @"ویرایش" forState:UIControlStateNormal];
         
         [self ChangeProfile];
-        
     }
-    
 }
 
 
 -(void)ChangeProfile
 {
 
+    self.SaveUIButton.userInteractionEnabled = NO;
+    
     RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        
+        self.SaveUIButton.userInteractionEnabled = YES;
+        
         if (wasSuccessful) {
             
             [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
         }
         else
         {
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
@@ -168,9 +240,8 @@
     
     st = [DBManager selectSetting][0];
     
-    
     [self.view.window showHUDWithText:@"لطفا صبر کنید" Type:ShowLoading Enabled:YES];
-    [self.getData ChangeProfile:st.accesstoken FullName:self.nameUITextField.text Email:self.emailUITextField.text Password:self.passwordUITextField.text withCallback:callback];
+    [self.getData ChangeProfile:st.accesstoken FullName:self.nameUITextField.text Email:self.emailUITextField.text Birthdate:[MapCharacter MapCharacterReverse:self.textFieldEnterDate.text] Password:self.passwordUITextField.text withCallback:callback];
 
 }
 
@@ -251,6 +322,245 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+    
+    if (component == 0)
+    {
+        selectedYearRow = row;
+        [self.customPicker reloadAllComponents];
+    }
+    else if (component == 1)
+    {
+        selectedMonthRow = row;
+        [self.customPicker reloadAllComponents];
+    }
+    else if (component == 2)
+    {
+        selectedDayRow = row;
+        
+        [self.customPicker reloadAllComponents];
+        
+    }
+    
+}
+
+
+#pragma mark - UIPickerViewDatasource
+
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component
+           reusingView:(UIView *)view {
+    
+    // Custom View created for each component
+    
+    UILabel *pickerLabel = (UILabel *)view;
+    
+    if (pickerLabel == nil) {
+        CGRect frame = CGRectMake(0.0, 0.0, 50, 60);
+        pickerLabel = [[UILabel alloc] initWithFrame:frame];
+        [pickerLabel setTextAlignment:NSTextAlignmentCenter];
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:[UIFont systemFontOfSize:15.0f]];
+        pickerLabel.font = [UIFont fontWithName:@"IRANSans" size:15.0];
+        pickerLabel.textColor = [UIColor whiteColor];
+        
+    }
+    
+    if (component == 0)
+    {
+        pickerLabel.text =  [yearArray objectAtIndex:row]; // Year
+    }
+    else if (component == 1)
+    {
+        pickerLabel.text =  [monthArray objectAtIndex:row];  // Month
+    }
+    else if (component == 2)
+    {
+        pickerLabel.text =  [DaysArray objectAtIndex:row]; // Date
+        
+    }
+    
+    return pickerLabel;
+    
+}
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    
+    return 3;
+    
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    
+    if (component == 0)
+    {
+        return [yearArray count];
+        
+    }
+    else if (component == 1)
+    {
+        return [monthArray count];
+    }
+    else if (component == 2)
+    { // day
+        
+        if (firstTimeLoad)
+        {
+            if (currentMonth == 1 || currentMonth == 3 || currentMonth == 5 || currentMonth == 7 || currentMonth == 8 || currentMonth == 10 || currentMonth == 12)
+            {
+                return 31;
+            }
+            else if (currentMonth == 2)
+            {
+                int yearint = [[yearArray objectAtIndex:selectedYearRow]intValue ];
+                
+                if(((yearint %4==0)&&(yearint %100!=0))||(yearint %400==0)){
+                    
+                    return 29;
+                }
+                else
+                {
+                    return 28; // or return 29
+                }
+                
+            }
+            else
+            {
+                return 30;
+            }
+            
+        }
+        else
+        {
+            
+            if (selectedMonthRow == 0 || selectedMonthRow == 2 || selectedMonthRow == 4 || selectedMonthRow == 6 || selectedMonthRow == 7 || selectedMonthRow == 9 || selectedMonthRow == 11)
+            {
+                return 31;
+            }
+            else if (selectedMonthRow == 1)
+            {
+                int yearint = [[yearArray objectAtIndex:selectedYearRow]intValue ];
+                
+                if(((yearint %4==0)&&(yearint %100!=0))||(yearint %400==0)){
+                    return 29;
+                }
+                else
+                {
+                    return 28; // or return 29
+                }
+            }
+            else
+            {
+                return 30;
+            }
+            
+        }
+        
+        
+    }
+    
+    return 0;
+}
+
+
+
+- (IBAction)actionCancel:(id)sender
+{
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         self.customPicker.hidden = YES;
+                         self.toolbarCancelDone.hidden = YES;
+                         
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         
+                     }];
+    
+    
+}
+
+- (IBAction)actionDone:(id)sender
+{
+    
+    
+    self.textFieldEnterDate.text = [NSString stringWithFormat:@"%@/%@/%@",[yearArray objectAtIndex:[self.customPicker selectedRowInComponent:0]],[monthArray objectAtIndex:[self.customPicker selectedRowInComponent:1]],[DaysArray objectAtIndex:[self.customPicker selectedRowInComponent:2]]];
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         self.customPicker.hidden = YES;
+                         self.toolbarCancelDone.hidden = YES;
+                         
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         
+                     }];
+    
+    
+    
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         self.customPicker.hidden = NO;
+                         self.toolbarCancelDone.hidden = NO;
+                         self.textFieldEnterDate.text = @"";
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+    
+    
+    self.customPicker.hidden = NO;
+    self.toolbarCancelDone.hidden = NO;
+    self.textFieldEnterDate.text = @"";
+    
+    
+    
+    return YES;
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return  YES;
+    
+}
+
+
 - (DataDownloader *)getData
 {
     if (!_getData) {
@@ -259,6 +569,7 @@
     
     return _getData;
 }
+
 
 
 @end

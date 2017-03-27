@@ -9,6 +9,7 @@
 #import "sourceDetails.h"
 #import "CNPPopupController.h"
 #import "DataCollector.h"
+#import "DBManager.h"
 
 @implementation sourceDetails
 
@@ -71,6 +72,41 @@
         bellTextFieldView.alpha = .3f;
         [self addSubview:bellTextFieldView];
         
+        UIView *toggleContainer = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height-100, frame.size.width, 55)];
+        toggleContainer.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        toggleContainer.layer.shadowRadius = 5;
+        toggleContainer.layer.shadowOffset = CGSizeMake(1, 1);
+        toggleContainer.layer.shadowOpacity = .6;
+        toggleContainer.layer.masksToBounds = NO;
+        toggleContainer.backgroundColor = [UIColor whiteColor];
+        [self addSubview:toggleContainer];
+        
+        BEMCheckBox *myCheckBox = [[BEMCheckBox alloc] initWithFrame:CGRectMake(frame.size.width - 40, 15, 25, 25)];
+        myCheckBox.delegate = self;
+        myCheckBox.boxType = BEMBoxTypeCircle;
+        myCheckBox.onFillColor =  [UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1];
+        myCheckBox.onTintColor =  [UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1];
+        myCheckBox.onCheckColor =  [UIColor whiteColor];
+        [toggleContainer addSubview:myCheckBox];
+        
+        favoriteLabel = [[UILabel alloc] initWithFrame:CGRectMake(toggleContainer.frame.size.width-229, toggleContainer.frame.size.height/2 - 7.5, 180, 15)];
+        favoriteLabel.backgroundColor = [UIColor clearColor];
+        favoriteLabel.textAlignment = NSTextAlignmentRight;
+        favoriteLabel.textColor = [UIColor darkGrayColor];
+        favoriteLabel.font = [UIFont fontWithName:@"IRANSans" size:14];
+        favoriteLabel.text = @"اضافه به آدرس های منتخب";
+        [toggleContainer addSubview:favoriteLabel];
+        
+        if ([DataCollector sharedInstance].isSourceFavorite) {
+            [myCheckBox setOn:YES animated:YES];
+            isAddressSave = YES;
+            favoriteLabel.text = @"به آدرس های منتخب اضافه شد";
+            myCheckBox.userInteractionEnabled = NO;
+        }
+        
+        UIImageView *star = [[UIImageView alloc]initWithFrame:CGRectMake(10, toggleContainer.frame.size.height/2-12.5, 25, 25)];
+        star.image = [UIImage imageNamed:@"star.png"];
+        [toggleContainer addSubview:star];
         
         CNPPopupButton *button = [[CNPPopupButton alloc] initWithFrame:CGRectMake(0, frame.size.height-50, frame.size.width, 50)];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -88,6 +124,18 @@
     return self;
 }
 
+-(void)didTapCheckBox:(BEMCheckBox *)checkBox
+{
+    if (checkBox.on) {
+        isAddressSave = YES;
+    }
+    
+    favoriteLabel.text = @"به آدرس های منتخب اضافه شد";
+    
+    checkBox.userInteractionEnabled = NO;
+    
+}
+
 -(void)ForwardClicked
 {
     if([self.delegate respondsToSelector:@selector(ForwardClicked)])
@@ -95,10 +143,15 @@
         [DataCollector sharedInstance].sourceBell = bellTextField.text;
         [DataCollector sharedInstance].sourcePlate = plateTextField.text;
         
-        [self.delegate ForwardClicked];
+        if (isAddressSave && [DataCollector sharedInstance].isSourceFavorite == NO) {
+            [DataCollector sharedInstance].isSourceFavorite = &(isAddressSave);
+            [DBManager createSourceTable];
+            [DBManager InsertToSourceTable:[DataCollector sharedInstance]];
+            
+        }
         
+        [self.delegate ForwardClicked];
     }
-
 }
 
 

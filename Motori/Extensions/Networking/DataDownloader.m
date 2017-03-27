@@ -647,13 +647,13 @@ NSMutableDictionary *receivedData;
     }];
 }
 
-- (void)ChangeProfile:(NSString*)token FullName:(NSString*)fullname Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback
+- (void)ChangeProfile:(NSString*)token FullName:(NSString*)fullname Email:(NSString*)email Birthdate:(NSString*)birthdate Password:(NSString*)password withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
     NSString *sample =[NSString stringWithFormat: @"%s/api/user/changeProfile",URLaddress];
     
-    NSDictionary *parameters = @{@"fullname": fullname,@"email":email,@"newpassword":password};
+    NSDictionary *parameters = @{@"fullname": fullname,@"email":email,@"birthdate":birthdate,@"newpassword":password};
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

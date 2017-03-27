@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "FMDatabase.h"
 #import "Settings.h"
+#import "DataCollector.h"
+#import "Destination.h"
+#import "Source.h"
 
 #define dataBasePath [[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:dataBaseName]
 #define dataBaseName @"dataBase.sqlite"
@@ -52,6 +55,13 @@
  *	@return	
  */
 + (BOOL)createTable;
++ (BOOL)createSourceTable;
++ (BOOL)createDestinationTable;
++ (BOOL)InsertToSourceTable:(DataCollector *)Data;
++ (NSMutableArray*)selectSourceTable;
++ (BOOL)InsertToDestinationTable:(DataCollector *)Data;
++ (NSMutableArray*)selectDestinationTable;
++(void)deleteRow:(NSString*)ObjId FromTable:(NSString*)tableName;
 /**
  *	@brief	添加chatdata  如果主键重复就更新
  *

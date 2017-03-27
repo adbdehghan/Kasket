@@ -10,4 +10,5 @@
 
 @interface MapCharacter : NSObject
 +(NSString*)MapCharacter:(NSString*)character;
++(NSString*)MapCharacterReverse:(NSString*)character;
 @end

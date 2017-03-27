@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     
-    self.menuTitles = @[@"افزایش اعتبار", @"فعالیت ها",@"پیام ها", @"کد هدیه", @"مکان های منتخب", @"درباره ما",@"خروج"];
+    self.menuTitles = @[@"افزایش اعتبار", @"فعالیت ها",@"پیام ها", @"مکان های منتخب", @"درباره ما",@"خروج"];
     self.menuImages = @[@"creditcard",@"archive",@"notification",@"giftcode",@"adress",@"aboutus",@"logout"];
     self.avatarImageView.clipsToBounds = YES;
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2;
@@ -130,15 +130,12 @@
             
             break;
         case 3:
-            
+            [self performSegueWithIdentifier:@"address" sender:self];  
             break;
         case 4:
             
             break;
         case 5:
-            
-            break;
-        case 6:
         {
             FCAlertView *alert = [[FCAlertView alloc] init];
             

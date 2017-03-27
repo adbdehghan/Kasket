@@ -36,4 +36,30 @@
     return character;
 }
 
++(NSString*)MapCharacterReverse:(NSString*)character
+{
+    if ([character containsString:@"۱"])
+        character = [character stringByReplacingOccurrencesOfString:@"۱" withString:@"1"];
+    if ([character containsString:@"۲"])
+        character =[character stringByReplacingOccurrencesOfString:@"۲" withString:@"2"];
+    if ([character containsString:@"۳"])
+        character =[character stringByReplacingOccurrencesOfString:@"۳" withString:@"3"];
+    if ([character containsString:@"۴"])
+        character =[character stringByReplacingOccurrencesOfString:@"۴" withString:@"4"];
+    if ([character containsString:@"۵"])
+        character =[character stringByReplacingOccurrencesOfString:@"۵" withString:@"5"];
+    if ([character containsString:@"۶"])
+        character =[character stringByReplacingOccurrencesOfString:@"۶" withString:@"6"];
+    if ([character containsString:@"۷"])
+        character =[character stringByReplacingOccurrencesOfString:@"۷" withString:@"7"];
+    if ([character containsString:@"۸"])
+        character =[character stringByReplacingOccurrencesOfString:@"۸" withString:@"8"];
+    if ([character containsString:@"۹"])
+        character =[character stringByReplacingOccurrencesOfString:@"۹" withString:@"9"];
+    if ([character containsString:@"۰"])
+        character =[character stringByReplacingOccurrencesOfString:@"۰" withString:@"0"];
+    
+    return character;
+}
+
 @end

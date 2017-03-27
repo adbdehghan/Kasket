@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BEMCheckBox.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>CNPPopupController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -87,12 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>160C02C1DA27CC5E022D5BEBBF7EB629</key>
+		<key>1613271357771814C71601D90B787D94</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1613271357771814C71601D90B787D94</key>
+		<key>228561A9326400BCDF92C88CA553BEE1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,7 +107,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>70721F917CB193583B2CF776F27D0196</key>
+		<key>45DD5BCDD1C8F4D7A9940E76D428556C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,17 +127,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BC19A72FB7D1DB0B2CC5F6C5CF2400F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C36CB2CB977A4E7D954935096D00A1ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CE5771478098AC44A9D5F2050A7467E3</key>
+		<key>EF1ABE20DAA23760FBF0359740C1F0B9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EF1ABE20DAA23760FBF0359740C1F0B9</key>
+		<key>F077D9D09DD4CFAB48DB7BDBD76533C4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -131,7 +131,7 @@ static NSString *const kCellIdentifier = @"ASJDropDownCellIdentifier";
     cell.detailTextLabel.textColor = _itemColor;
   }
   if (hasImage) {
-      cell.imageView.image =[self image:item.image scaledToSize:CGSizeMake(25, 32)];
+      cell.imageView.image =item.image;
       cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
   }
   

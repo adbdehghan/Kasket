@@ -8,19 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "MapViewController.h"
+#import "BEMCheckBox.h"
 
 @class DestinationDetails;
 @protocol DestinationDelegate <NSObject>
 - (void)ForwardClicked;
 @end
 
-@interface DestinationDetails : UIView
+@interface DestinationDetails : UIView <BEMCheckBoxDelegate>
 {
     UITextField *bellTextField;
     UITextField *plateTextField;
     UITextField *phoneTextField;
     UITextField *nameTextField;
-    
+    UILabel *favoriteLabel;
+    BOOL isAddressSave;
 }
 
 @property(nonatomic,strong) UILabel *addressLabel;

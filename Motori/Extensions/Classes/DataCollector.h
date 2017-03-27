@@ -26,4 +26,6 @@
 @property (nonatomic,strong) NSString *haveReturn;
 @property (nonatomic,strong) NSString *payInDestination;
 @property (nonatomic,strong) NSString *offCode;
+@property BOOL *isSourceFavorite;
+@property BOOL *isDestinationFavorite;
 @end

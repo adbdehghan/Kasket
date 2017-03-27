@@ -19,6 +19,7 @@ pod 'OHPDFImage'
 pod 'CNPPopupController'
 pod 'LUNSegmentedControl'
 pod "OCGoogleDirectionsAPI", "~> 0.1.7"
+pod 'BEMCheckBox'
   # Pods for Motori
 
 end

@@ -1,5 +1,6 @@
 PODS:
   - AnimatedGIFImageSerialization (0.2.0)
+  - BEMCheckBox (1.4.0)
   - CNPPopupController (0.3.3)
   - DGActivityIndicatorView (2.1.1)
   - FCAlertView (1.2.7)
@@ -20,6 +21,7 @@ PODS:
 
 DEPENDENCIES:
   - AnimatedGIFImageSerialization
+  - BEMCheckBox
   - CNPPopupController
   - DGActivityIndicatorView
   - FCAlertView
@@ -35,6 +37,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AnimatedGIFImageSerialization: b0f0cfe71eac1ee45a3d57ae533c23b8e6f29501
+  BEMCheckBox: e18e4a148905b290bd03d98b767651c104f4eda3
   CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
   FCAlertView: 12b2656b2482df54710c2d8415bc193117688f62
@@ -48,6 +51,6 @@ SPEC CHECKSUMS:
   SPGooglePlacesAutocomplete: 4d70b3961ed350328740757952eaa833fcd1b57e
   UIImage-Helpers: 06b04a42bdd222844035602e87e936765c80f620
 
-PODFILE CHECKSUM: 23527d8ff11551d5ae7d65ed8773a3afed4da5a5
+PODFILE CHECKSUM: caaf1c5eff363996046c450e1a3ea520843c76e5
 
 COCOAPODS: 1.2.0

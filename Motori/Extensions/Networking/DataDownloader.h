@@ -37,7 +37,7 @@ typedef void (^ImageRequestCompleteBlock) (BOOL wasSuccessful,UIImage *image);
 
 - (void)Profile:(NSString*)token withCallback:(RequestCompleteBlock)callback;
 
-- (void)ChangeProfile:(NSString*)token FullName:(NSString*)fullname Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback;
+- (void)ChangeProfile:(NSString*)token FullName:(NSString*)fullname Email:(NSString*)email Birthdate:(NSString*)birthdate Password:(NSString*)password withCallback:(RequestCompleteBlock)callback;
 
 - (void)Credit:(NSString*)token withCallback:(RequestCompleteBlock)callback;
 

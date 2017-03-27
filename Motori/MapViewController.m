@@ -29,6 +29,9 @@
 #import "KasketView.h"
 #import "KLCPopup.h"
 #import "UIWindow+YzdHUD.h"
+#import "Destination.h"
+#import "Source.h"
+
 
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -40,7 +43,8 @@ typedef NS_ENUM(NSInteger, OrderState) {
     DestinationStep,
     SummaryStep,
     FindEmployee,
-    KasketViewStep
+    KasketViewStep,
+    PickFavoritePlace
 };
 
 typedef NS_ENUM(NSInteger, RequestType) {
@@ -687,14 +691,14 @@ typedef NS_ENUM(NSInteger, RequestType) {
     UIView *customView;
     
     if (orderState == SourceView) {
-        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
+        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 210)];
         sourceDetails *sourceView = [[sourceDetails alloc]initWithFrame:customView.frame];
         sourceView.delegate = self;
         [customView addSubview:sourceView];
     }
     else if (orderState == DestinationStep)
     {
-        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
+        customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 250)];
         DestinationDetails *destinationView = [[DestinationDetails alloc]initWithFrame:customView.frame];
         destinationView.delegate = self;
         [customView addSubview:destinationView];
@@ -870,6 +874,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [DataCollector sharedInstance].haveReturn = @"";
     [DataCollector sharedInstance].payInDestination = @"";
     [DataCollector sharedInstance].offCode = @"";
+    [DataCollector sharedInstance].isSourceFavorite = NO;
+    [DataCollector sharedInstance].isDestinationFavorite = NO;
 }
 
 -(void)ResetToSelectDestination
@@ -1070,10 +1076,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
             {
                 kasketCoordinate = CLLocationCoordinate2DMake([latitude doubleValue],[longitude doubleValue]);
                 if (kasketCoordinate.latitude != 0 && kasketCoordinate.latitude !=0) {
-                    
-                    
+                                        
                     if (myCarmarker == nil) {
-                        
                         
                         myCarmarker = [[GMSMarker alloc] init];
                         
@@ -1474,7 +1478,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
                                 NSMutableArray *temp = [[NSMutableArray alloc] init];
                                 for (GMSAutocompletePrediction* result in results) {
                                     NSLog(@"Result '%@' with placeID %@", result.attributedFullText.string, result.placeID);
-                                    ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.attributedFullText.string subtitle:@"" image:[UIImage imageNamed:@"Pin.png"]];
+                                                                 ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.attributedFullText.string subtitle:@"" image:[self image:[UIImage imageNamed:@"Pin.png"] scaledToSize:CGSizeMake(25, 32)]];
                                     [temp addObject:menuItem];
                                 }
                                 if (temp.count>0) {
@@ -1546,7 +1550,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
                                 NSMutableArray *temp = [[NSMutableArray alloc] init];
                                 for (GMSAutocompletePrediction* result in results) {
                                     NSLog(@"Result '%@' with placeID %@", result.attributedFullText.string, result.placeID);
-                                    ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.attributedFullText.string subtitle:@"" image:[UIImage imageNamed:@"Pin.png"]];
+                                    ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.attributedFullText.string subtitle:@"" image:[self image:[UIImage imageNamed:@"Pin.png"] scaledToSize:CGSizeMake(25, 32)]];
                                     [temp addObject:menuItem];
                                 }
                                 if (temp.count>0) {
@@ -1598,6 +1602,88 @@ typedef NS_ENUM(NSInteger, RequestType) {
 {
     searchBar.searchField.text = @"";
     
+    
+    
+    NSMutableArray *temp = [[NSMutableArray alloc] init];
+    NSMutableArray *sourceTableItems = [DBManager selectSourceTable];
+    NSMutableArray *destinationTableItems = [DBManager selectDestinationTable];
+    
+    if (orderState == SourceStep) {
+        for (Source *result in sourceTableItems) {
+            
+            ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.sourceAddress subtitle:@"" image:[self image:[UIImage imageNamed:@"star.png"] scaledToSize:CGSizeMake(25, 25)]];
+            [temp addObject:menuItem];
+        }
+    }
+    else if(orderState == SelectDestination)
+    {
+        for (Destination *result in destinationTableItems) {
+            
+            ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.destinationAddress subtitle:@"" image:[self image:[UIImage imageNamed:@"star.png"] scaledToSize:CGSizeMake(28, 28)]];
+            [temp addObject:menuItem];
+        }
+    
+    }
+    
+    if (temp>0) {
+    
+        _dropDown.menuItems = temp;
+        
+        
+        [_dropDown showMenuWithCompletion:^(ASJDropDownMenu *dropDownMenu, ASJDropDownMenuItem *menuItem, NSUInteger index)
+         {
+             searchBar.searchField.text = menuItem.title;
+             sourceMarker = [[GMSMarker alloc] init];
+             sourceMarker.appearAnimation = YES;
+             sourceMarker.flat = YES;
+             
+             double latitude =  mapView.camera.target.latitude;
+             double longitude = mapView.camera.target.longitude;
+             
+             self.pinLocationSource = CLLocationCoordinate2DMake(latitude,longitude);;
+             [DataCollector sharedInstance].sourceLat = [NSString stringWithFormat:@"%f",latitude];
+             [DataCollector sharedInstance].sourceLon = [NSString stringWithFormat:@"%f",longitude];
+             
+             sourceMarker.position = CLLocationCoordinate2DMake(latitude,longitude);
+             sourceMarker.map = mapView;
+             sourceMarker.icon = [UIImage imageWithPDFNamed:@"sourcemarker.pdf"
+                                                  fitInSize:CGSizeMake(50, 50)];
+             GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude+0.001
+                                                                     longitude:longitude+0.001
+                                                                          zoom:17.0];
+             [mapView animateToCameraPosition:camera];
+             
+             [stepButton setTitle:@"تأیید مقصد" forState:UIControlStateNormal];
+             
+             self.HumanPin.image = [UIImage imageWithPDFNamed:@"destinationpin.pdf"
+                                                    fitInSize:self.HumanPin.bounds.size];
+             
+             compassImage.image = [UIImage imageNamed:@"destinationcompass"];
+             
+             
+             
+             [UIView animateWithDuration:.3 animations:^(){
+                 
+                 menuContainer.alpha = 0;
+                 self.kindSwitch.alpha = 0;
+             }];
+             
+             
+             
+             if (requestType == Box) {
+                 [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
+                 [self showPopupWithStyle:CNPPopupStyleActionSheet];
+             }
+             else
+             {
+                 orderState = SelectDestination;
+                 [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
+             }
+             
+             [self InitBackButton];
+         }];
+    }
+
     UIGraphicsBeginImageContext(mapView.frame.size);
     [[mapView layer] renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
