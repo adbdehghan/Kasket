@@ -10,5 +10,6 @@
 
 @interface LMRightMenuViewController : UIViewController
 @property(nonatomic,weak)IBOutlet UILabel *credit;
+@property(nonatomic,weak)IBOutlet UILabel *fullname;
 
 @end

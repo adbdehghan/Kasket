@@ -557,7 +557,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                            delegate:self
-                                                  cancelButtonTitle:@"خب"
+                                                  cancelButtonTitle:@"تایید"
                                                   otherButtonTitles:nil];
 //            [alert show];
             
@@ -574,7 +574,7 @@
     
     paymentSegmentedControl.userInteractionEnabled = NO;
     
-    [self.getData GetPrice:st.accesstoken SourceLat:[DataCollector sharedInstance].sourceLat SourceLon:[DataCollector sharedInstance].sourceLon DestinationLat:[DataCollector sharedInstance].destinationLat DestinationLon:[DataCollector sharedInstance].destinationLon HaveReturn:haveReturn OrderType:[DataCollector sharedInstance].orderType withCallback:callback];
+    [self.getData GetPrice:st.accesstoken SourceLat:[DataCollector sharedInstance].sourceLat SourceLon:[DataCollector sharedInstance].sourceLon DestinationLat:[DataCollector sharedInstance].destinationLat DestinationLon:[DataCollector sharedInstance].destinationLon HaveReturn:haveReturn OrderType:@"0" withCallback:callback];
 
 }
 

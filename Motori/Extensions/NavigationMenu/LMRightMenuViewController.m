@@ -35,7 +35,7 @@
     [super viewDidLoad];
     
     self.menuTitles = @[@"افزایش اعتبار", @"فعالیت ها",@"پیام ها", @"مکان های منتخب", @"درباره ما",@"خروج"];
-    self.menuImages = @[@"creditcard",@"archive",@"notification",@"giftcode",@"adress",@"aboutus",@"logout"];
+    self.menuImages = @[@"creditcard",@"archive",@"notification",@"adress",@"aboutus",@"logout"];
     self.avatarImageView.clipsToBounds = YES;
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2;
     self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -59,6 +59,8 @@
             NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:[[data valueForKey:@"credit"] integerValue]]];
             
             self.credit.text = [NSString stringWithFormat:@"%@ تومان",[MapCharacter MapCharacter:formatted]];
+            
+            self.fullname.text = [data valueForKey:@"fullname"];
         }
         else
         {

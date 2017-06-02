@@ -87,7 +87,7 @@
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                                         message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                                        delegate:self
-                                                              cancelButtonTitle:@"خب"
+                                                              cancelButtonTitle:@"تایید"
                                                               otherButtonTitles:nil];
                         [alert show];
                         
@@ -128,7 +128,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"🤔"
                                                         message:@"لطفا همه ی مقادیر را تکمیل نمایید."
                                                        delegate:self
-                                              cancelButtonTitle:@"خب"
+                                              cancelButtonTitle:@"تایید"
                                               otherButtonTitles:nil];
         [alert show];
         
@@ -168,7 +168,7 @@
                  withTitle:nil
               withSubtitle:@"نام کاربری یا کلمه ی عبور اشتباه است"
            withCustomImage:[UIImage imageNamed:@"alert.png"]
-       withDoneButtonTitle:@"خب"
+       withDoneButtonTitle:@"تایید"
                 andButtons:nil];
     
 }

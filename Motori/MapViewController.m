@@ -131,7 +131,6 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [self setupMapView];
     [self CustomizeNavigationBar];
     
- 
     
     [self CheckVersion];
     
@@ -149,6 +148,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
     self.kindSwitch.delegate = self;
     self.kindSwitch.transform = CGAffineTransformMakeRotation(M_PI_2);
     [self.view addSubview:self.kindSwitch];
+    
+    [self.kindSwitch setHidden:YES];
     
     requestType = Box;
 }
@@ -522,7 +523,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [stepButton addTarget:self
                action:@selector(stepButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [stepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [stepButton setBackgroundColor:[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1]];
+    [stepButton setBackgroundColor:[UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1]];
      [stepButton setTitle:@"تأیید مبدأ" forState:UIControlStateNormal];
     stepButton.titleLabel.font = [UIFont fontWithName:@"IRANSans" size:16];
     stepButton.userInteractionEnabled = YES;
@@ -536,7 +537,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     [self.myLocationButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.myLocationButton setImage:[UIImage imageNamed:@"position"] forState:UIControlStateNormal];
     self.myLocationButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.myLocationButton setBackgroundColor:[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1]];
+    [self.myLocationButton setBackgroundColor:[UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1]];
     self.myLocationButton.userInteractionEnabled = YES;
     self.myLocationButton.frame = CGRectMake(CGRectGetWidth(self.view.bounds)- 40, CGRectGetHeight(self.view.bounds)-125, 30, 30);
     self.myLocationButton.layer.cornerRadius = self.myLocationButton.frame.size.height/2;
@@ -1612,6 +1613,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
         for (Source *result in sourceTableItems) {
             
             ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.sourceAddress subtitle:@"" image:[self image:[UIImage imageNamed:@"star.png"] scaledToSize:CGSizeMake(25, 25)]];
+            menuItem.itemId = result.sourceId;
             [temp addObject:menuItem];
         }
     }
@@ -1620,6 +1622,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
         for (Destination *result in destinationTableItems) {
             
             ASJDropDownMenuItem *menuItem = [ASJDropDownMenuItem itemWithTitle:result.destinationAddress subtitle:@"" image:[self image:[UIImage imageNamed:@"star.png"] scaledToSize:CGSizeMake(28, 28)]];
+            menuItem.itemId = result.destinationId;
             [temp addObject:menuItem];
         }
     
@@ -1627,60 +1630,133 @@ typedef NS_ENUM(NSInteger, RequestType) {
     
     if (temp>0) {
     
+        
         _dropDown.menuItems = temp;
         
         
         [_dropDown showMenuWithCompletion:^(ASJDropDownMenu *dropDownMenu, ASJDropDownMenuItem *menuItem, NSUInteger index)
          {
-             searchBar.searchField.text = menuItem.title;
-             sourceMarker = [[GMSMarker alloc] init];
-             sourceMarker.appearAnimation = YES;
-             sourceMarker.flat = YES;
-             
-             double latitude =  mapView.camera.target.latitude;
-             double longitude = mapView.camera.target.longitude;
-             
-             self.pinLocationSource = CLLocationCoordinate2DMake(latitude,longitude);;
-             [DataCollector sharedInstance].sourceLat = [NSString stringWithFormat:@"%f",latitude];
-             [DataCollector sharedInstance].sourceLon = [NSString stringWithFormat:@"%f",longitude];
-             
-             sourceMarker.position = CLLocationCoordinate2DMake(latitude,longitude);
-             sourceMarker.map = mapView;
-             sourceMarker.icon = [UIImage imageWithPDFNamed:@"sourcemarker.pdf"
-                                                  fitInSize:CGSizeMake(50, 50)];
-             GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude+0.001
-                                                                     longitude:longitude+0.001
-                                                                          zoom:17.0];
-             [mapView animateToCameraPosition:camera];
-             
-             [stepButton setTitle:@"تأیید مقصد" forState:UIControlStateNormal];
-             
-             self.HumanPin.image = [UIImage imageWithPDFNamed:@"destinationpin.pdf"
-                                                    fitInSize:self.HumanPin.bounds.size];
-             
-             compassImage.image = [UIImage imageNamed:@"destinationcompass"];
              
              
-             
-             [UIView animateWithDuration:.3 animations:^(){
+             if (orderState == SourceStep) {
                  
-                 menuContainer.alpha = 0;
-                 self.kindSwitch.alpha = 0;
-             }];
-             
-             
-             
-             if (requestType == Box) {
-                 [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
-                 [self showPopupWithStyle:CNPPopupStyleActionSheet];
-             }
-             else
-             {
+                 Source *source;
+                 
+                 for (Source *result in sourceTableItems) {
+                     if (result.sourceId == menuItem.itemId) {
+                         source = result;
+                     }
+                 }
+                 
+                 
+                 searchBar.searchField.text = menuItem.title;
+                 sourceMarker = [[GMSMarker alloc] init];
+                 sourceMarker.appearAnimation = YES;
+                 sourceMarker.flat = YES;
+                 
+                 double latitude =  [source.sourceLat floatValue];
+                 double longitude = [source.sourceLon floatValue];
+                 
+                 self.pinLocationSource = CLLocationCoordinate2DMake(latitude,longitude);;
+                 [DataCollector sharedInstance].sourceLat = source.sourceLat;
+                 [DataCollector sharedInstance].sourceLon = source.sourceLon;
+                 
+                 sourceMarker.position = CLLocationCoordinate2DMake(latitude,longitude);
+                 sourceMarker.map = mapView;
+                 sourceMarker.icon = [UIImage imageWithPDFNamed:@"sourcemarker.pdf"
+                                                      fitInSize:CGSizeMake(50, 50)];
+                 GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude+0.001
+                                                                         longitude:longitude+0.001
+                                                                              zoom:17.0];
+                 [mapView animateToCameraPosition:camera];
+                 
+                 [stepButton setTitle:@"تأیید مقصد" forState:UIControlStateNormal];
+                 
+                 self.HumanPin.image = [UIImage imageWithPDFNamed:@"destinationpin.pdf"
+                                                        fitInSize:self.HumanPin.bounds.size];
+                 
+                 compassImage.image = [UIImage imageNamed:@"destinationcompass"];
+                 
+                 
+                 
+                 [UIView animateWithDuration:.3 animations:^(){
+                     
+                     menuContainer.alpha = 0;
+                     self.kindSwitch.alpha = 0;
+                 }];
+                 
                  orderState = SelectDestination;
                  [DataCollector sharedInstance].sourceAddress = self.searchBarWithDelegate.searchField.text;
+                 [DataCollector sharedInstance].sourceBell = source.sourceBell;
+                 [DataCollector sharedInstance].sourcePlate = source.sourcePlate;
+                 [DataCollector sharedInstance].isSourceFavorite = YES;
+
+                 
+                 [searchBar.searchField endEditing:YES];
+                 
+                 [self InitBackButton];
+
+                 
+             }
+             else if(orderState == SelectDestination)
+             {
+                 Destination *destination;
+                 
+                for (Destination *result in destinationTableItems) {
+                    
+                    if (result.destinationId == menuItem.itemId) {
+                        destination = result;
+                    }
+                    
+                }
+                 
+                 searchBar.searchField.text = menuItem.title;
+                 
+                 desmarker = [[GMSMarker alloc] init];
+                 desmarker.appearAnimation = YES;
+                 desmarker.flat = YES;
+                 orderState = DestinationStep;
+                 
+                 double latitude =  [destination.destinationLat floatValue];
+                 double longitude = [destination.destinationLon floatValue];
+                 
+                 self.pinLocationDestination = CLLocationCoordinate2DMake(latitude,longitude);;
+                 [DataCollector sharedInstance].destinationLat = [NSString stringWithFormat:@"%f",latitude];
+                 [DataCollector sharedInstance].destinationLon = [NSString stringWithFormat:@"%f",longitude];
+                 desmarker.position = CLLocationCoordinate2DMake(latitude,longitude);
+                 desmarker.map = mapView;
+                 desmarker.icon =  [UIImage imageWithPDFNamed:@"destinationmarker.pdf"
+                                                    fitInSize:CGSizeMake(50, 50)];
+                 
+                 GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.pinLocationSource coordinate:self.pinLocationDestination];
+                 GMSCameraPosition *camera = [mapView cameraForBounds:bounds insets:UIEdgeInsetsMake(190, 60, 210, 60)];
+                 
+                 [mapView animateToCameraPosition:camera];
+                 
+                 self.HumanPin.alpha = 0;
+                 
+                 self.myLocationButton.hidden = YES;
+                 stepButton.hidden = YES;
+                 
+                 orderState = SummaryStep;
+                 [DataCollector sharedInstance].destinationAddress = self.searchBarWithDelegate.searchField.text;
+                 [DataCollector sharedInstance].destinationBell = destination.destinationBell;
+                 [DataCollector sharedInstance].destinationPlate = destination.destinationPlate;
+                 [DataCollector sharedInstance].destinationFullName = destination.destinationFullName;
+                 [DataCollector sharedInstance].destinationPhoneNumber = destination.destinationPhoneNumber;
+                 [DataCollector sharedInstance].isDestinationFavorite = YES;
+                 
+                 [UIView animateWithDuration:.3 animations:^(){
+                     
+                     self.searchBarWithDelegate.alpha = 0;
+                 }];
+                 
+                 [searchBar.searchField endEditing:YES];
+                 
+                 [self showPopupWithStyle:CNPPopupStyleActionSheet];
+                 
              }
              
-             [self InitBackButton];
          }];
     }
 
@@ -1695,7 +1771,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         self.HumanPin.alpha = 0;
+                         //self.HumanPin.alpha = 0;
                          self.bluredView.alpha = 1;
                          layer.alpha = .2f;
 

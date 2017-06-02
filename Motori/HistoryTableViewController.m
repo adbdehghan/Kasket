@@ -178,7 +178,7 @@
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                                 message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                                delegate:self
-                                                      cancelButtonTitle:@"خب"
+                                                      cancelButtonTitle:@"تایید"
                                                       otherButtonTitles:nil];
                 [alert show];
                 
@@ -238,7 +238,7 @@
                          withTitle:nil
                       withSubtitle:@"رسید سفارش به ایمیل وارد شده در حساب کاربری شما ارسال شد"
                    withCustomImage:[UIImage imageNamed:@"alert.png"]
-               withDoneButtonTitle:@"خب"
+               withDoneButtonTitle:@"تایید"
                         andButtons:nil];
             
         }
@@ -247,7 +247,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                            delegate:self
-                                                  cancelButtonTitle:@"خب"
+                                                  cancelButtonTitle:@"تایید"
                                                   otherButtonTitles:nil];
             [alert show];
             

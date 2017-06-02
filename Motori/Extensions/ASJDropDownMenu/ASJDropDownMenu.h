@@ -126,6 +126,7 @@ typedef NS_ENUM(NSInteger, ASJDropDownMenuDirection)
 
 @interface ASJDropDownMenuItem : NSObject
 
+@property (copy, nonatomic) NSString *itemId;
 /**
  *  Main text of the menu item.
  */

@@ -76,7 +76,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
                                                             message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
                                                            delegate:self
-                                                  cancelButtonTitle:@"خب"
+                                                  cancelButtonTitle:@"تایید"
                                                   otherButtonTitles:nil];
             [alert show];
             
@@ -126,7 +126,7 @@
                      withTitle:nil
                   withSubtitle:@"لطفا مبلغ را وارد نمایید"
                withCustomImage:[UIImage imageNamed:@"alert.png"]
-           withDoneButtonTitle:@"خب"
+           withDoneButtonTitle:@"تایید"
                     andButtons:nil];
         
     }   
@@ -140,7 +140,7 @@
                  withTitle:nil
               withSubtitle:@"کد پرداخت در حافظه دستگاه ذخیره شد. جهت پرداخت، لطفا آن را در برنامه Phone به عنوان شماره Paste نمایید و Call را بزنید."
            withCustomImage:[UIImage imageNamed:@"alert.png"]
-       withDoneButtonTitle:@"خب"
+       withDoneButtonTitle:@"تایید"
                 andButtons:nil];
 
 }
