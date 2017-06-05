@@ -182,7 +182,7 @@
         
         [UIView animateWithDuration:1 animations:^{
         
-            self.SaveUIButton.backgroundColor =[UIColor colorWithRed:0/255.f green:190/255.f blue:255/255.f alpha:1];
+            self.SaveUIButton.backgroundColor =[UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
             [self.view setBackgroundColor:[UIColor colorWithRed:48/255.f green:71/255.f blue:88/255.f alpha:1]];
             
         }];
@@ -195,7 +195,7 @@
         self.textFieldEnterDate.userInteractionEnabled = NO;
         [UIView animateWithDuration:1 animations:^{
             [self.SaveUIButton setBackgroundColor:[UIColor colorWithRed:48/255.f green:71/255.f blue:88/255.f alpha:1]];
-            self.view.backgroundColor =[UIColor colorWithRed:0/255.f green:190/255.f blue:255/255.f alpha:1];
+            self.view.backgroundColor =[UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
    
         }];
         isSave = NO;

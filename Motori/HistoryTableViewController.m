@@ -333,7 +333,7 @@
         cell.layerView.backgroundColor = [UIColor grayColor];
     }
     else
-        cell.layerView.backgroundColor = [UIColor colorWithRed:12/255.f green:127/255.f blue:209/255.f alpha:1];
+        cell.layerView.backgroundColor = [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
 
     
     if ([indexPath compare:selectedIndexPath] != NSOrderedSame) {
