@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A406BE21EE4E1D2009BE852 /* TPFloatRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A406BE11EE4E1D2009BE852 /* TPFloatRatingView.m */; };
+		3A406BE61EE4E411009BE852 /* RatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A406BE51EE4E411009BE852 /* RatingViewController.m */; };
 		3A6739E91E305B3A00160478 /* pin.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3A6739E81E305B3A00160478 /* pin.gif */; };
 		3A673A1B1E30609D00160478 /* staticpin.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A673A1A1E30609D00160478 /* staticpin.png */; };
 		3A673A1D1E306C7B00160478 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A673A1C1E306C7B00160478 /* menu.png */; };
@@ -172,6 +174,10 @@
 
 /* Begin PBXFileReference section */
 		221D8687D32C4341C6981CC4 /* Pods_Motori.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motori.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A406BE01EE4E1D2009BE852 /* TPFloatRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPFloatRatingView.h; sourceTree = "<group>"; };
+		3A406BE11EE4E1D2009BE852 /* TPFloatRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPFloatRatingView.m; sourceTree = "<group>"; };
+		3A406BE41EE4E411009BE852 /* RatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingViewController.h; sourceTree = "<group>"; };
+		3A406BE51EE4E411009BE852 /* RatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingViewController.m; sourceTree = "<group>"; };
 		3A6739E81E305B3A00160478 /* pin.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = pin.gif; sourceTree = "<group>"; };
 		3A673A1A1E30609D00160478 /* staticpin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = staticpin.png; sourceTree = "<group>"; };
 		3A673A1C1E306C7B00160478 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
@@ -453,6 +459,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A406BDF1EE4E1D2009BE852 /* RatingStarControl */ = {
+			isa = PBXGroup;
+			children = (
+				3A406BE01EE4E1D2009BE852 /* TPFloatRatingView.h */,
+				3A406BE11EE4E1D2009BE852 /* TPFloatRatingView.m */,
+			);
+			path = RatingStarControl;
+			sourceTree = "<group>";
+		};
+		3A406BE31EE4E3E9009BE852 /* Rating View */ = {
+			isa = PBXGroup;
+			children = (
+				3A406BE41EE4E411009BE852 /* RatingViewController.h */,
+				3A406BE51EE4E411009BE852 /* RatingViewController.m */,
+			);
+			name = "Rating View";
+			sourceTree = "<group>";
+		};
 		3A673A1E1E307EBE00160478 /* NavigationMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +593,7 @@
 				64E6866E1E5FD6AB00DA0631 /* RaiseCredit */,
 				64E6867E1E63D0A500DA0631 /* Profile */,
 				64A360051E836F8A00E3122B /* FavoriteAddress */,
+				3A406BE31EE4E3E9009BE852 /* Rating View */,
 				643439E41E16AF2F00B4FE3F /* Main.storyboard */,
 				643439E71E16AF2F00B4FE3F /* Assets.xcassets */,
 				643439E91E16AF2F00B4FE3F /* LaunchScreen.storyboard */,
@@ -589,6 +614,7 @@
 		643439FB1E16B0D600B4FE3F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3A406BDF1EE4E1D2009BE852 /* RatingStarControl */,
 				64E6865A1E5EC47C00DA0631 /* KLCPopup */,
 				64E6864A1E5E8B1E00DA0631 /* Radar View */,
 				64E18DB91E58FF8F00CB4A12 /* YGPulseView */,
@@ -1266,6 +1292,7 @@
 				64343AB71E16B0D600B4FE3F /* SBJsonBase.m in Sources */,
 				64343AA51E16B0D600B4FE3F /* DBManager.m in Sources */,
 				64343ABB1E16B0D600B4FE3F /* UzysAnimtedGifLoadMoreView.m in Sources */,
+				3A406BE21EE4E1D2009BE852 /* TPFloatRatingView.m in Sources */,
 				64343AA11E16B0D600B4FE3F /* AFURLSessionManager.m in Sources */,
 				64343AE21E16B0D600B4FE3F /* MMCell.m in Sources */,
 				64343A9F1E16B0D600B4FE3F /* AFURLRequestSerialization.m in Sources */,
@@ -1307,6 +1334,7 @@
 				64343AAF1E16B0D600B4FE3F /* MBSpinningCircle.m in Sources */,
 				6483162C1E2BEAB70067C4EF /* ASJDropDownMenu.m in Sources */,
 				64343AC71E16B0D600B4FE3F /* SDWebImagePrefetcher.m in Sources */,
+				3A406BE61EE4E411009BE852 /* RatingViewController.m in Sources */,
 				64E686541E5E8B4300DA0631 /* Arcs.m in Sources */,
 				643439DD1E16AF2F00B4FE3F /* main.m in Sources */,
 				64E686851E655A7000DA0631 /* ProfileViewController.m in Sources */,

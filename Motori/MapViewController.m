@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self performSegueWithIdentifier:@"rating" sender:self];
     sti = [[Settings alloc]init];
     sti = [DBManager selectSetting][0];
     [self Notificationkey];
