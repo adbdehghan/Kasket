@@ -14,13 +14,14 @@
 #import "DBManager.h"
 #import "DGActivityIndicatorView.h"
 #import "CNPPopupController.h"
+#import "BEMCheckBox.h"
 
 @class SummaryView;
 @protocol SummaryDelegate <NSObject>
 - (void)ForwardClicked;
 @end
 
-@interface SummaryView : UIView<LUNSegmentedControlDataSource, LUNSegmentedControlDelegate>
+@interface SummaryView : UIView<LUNSegmentedControlDataSource, LUNSegmentedControlDelegate,BEMCheckBoxDelegate>
 {
     UITextField *bellTextField;
     UITextField *plateTextField;
@@ -28,6 +29,7 @@
     UIView *timeCircleView;
     LUNSegmentedControl *segmentedControl;
     LUNSegmentedControl *paymentSegmentedControl;
+    LUNSegmentedControl *insuranceSegmentedControl;
     NSString *price;
     UILabel *priceLabel;
     UILabel *timeLabel;
@@ -37,7 +39,7 @@
     CNPPopupButton *mainButton;
     CAGradientLayer *gradient;
     UIView *mainView;
-    
+    UILabel *insuranceLabel;
 }
 
 @property(nonatomic,strong) UILabel *addressLabel;

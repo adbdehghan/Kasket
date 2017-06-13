@@ -31,7 +31,9 @@
 #import "UIWindow+YzdHUD.h"
 #import "Destination.h"
 #import "Source.h"
-
+#import "RatingViewController.h"
+#import "UIResponder+MotionRecognizers.h"
+#import "CPMotionRecognizingWindow.h"
 
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -91,6 +93,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     Settings *sti;
     NSMutableDictionary *normal;
     BOOL isLastOrder;
+    int shakeCounter;
 }
 @property (nonatomic) CLLocation *myLocation;
 @property (nonatomic) CLLocation *deviceLocation;
@@ -121,7 +124,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self performSegueWithIdentifier:@"rating" sender:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(motionWasRecognized:) name:@"CPDeviceShaken" object:nil];
+    shakeCounter = 0;
     sti = [[Settings alloc]init];
     sti = [DBManager selectSetting][0];
     [self Notificationkey];
@@ -137,6 +141,28 @@ typedef NS_ENUM(NSInteger, RequestType) {
     orderState = SourceStep;
     _placesClient = [GMSPlacesClient sharedClient];
 }
+
+-(void)motionWasRecognized:(NSNotification*)notif
+{
+    shakeCounter = 0;
+    [self performSegueWithIdentifier:@"report" sender:self];
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent*)event
+{
+    if (event.type == UIEventTypeMotion && event.subtype == UIEventSubtypeMotionShake ) {
+        if (shakeCounter==0) {
+            shakeCounter++;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CPDeviceShaken" object:self];
+        }
+    }
+    
+}
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 
 -(void)AddKindSwitch{
 
@@ -157,6 +183,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    [self becomeFirstResponder];
+    shakeCounter = 0;
 }
 
 
@@ -986,7 +1014,17 @@ typedef NS_ENUM(NSInteger, RequestType) {
             if ([[data valueForKey:@"status"]isEqualToString:@"ok"]) {
                 [self.popupController dismissPopupControllerAnimated:YES];
                 orderState = KasketViewStep;
-                [self SaveOrder:[data valueForKey:@"data"]];
+                
+                data = [data valueForKey:@"data"];
+                
+                NSMutableDictionary *test = [[NSMutableDictionary alloc]init];
+                [test setObject:[data valueForKey:@"name"] forKey:@"name"];
+                [test setObject:[data valueForKey:@"totalPrice"] == [NSNull null] ? @"" :[data valueForKey:@"totalPrice"]  forKey:@"totalPrice"];
+                [test setObject:[data valueForKey:@"orderId"] forKey:@"orderId"];
+                [test setObject:[data valueForKey:@"price"] == [NSNull null] ?  @"" :[data valueForKey:@"price"]  forKey:@"price"];
+                [test setObject:[data valueForKey:@"phonenumber"] forKey:@"phonenumber"];
+                [test setObject:[data valueForKey:@"plate"] == [NSNull null] ? @"" :[data valueForKey:@"plate"]  forKey:@"plate"];
+                [self SaveOrder:test];
                 [self showPopupWithStyle:CNPPopupStyleActionSheet];
                 
                 orderTimer  =  [NSTimer scheduledTimerWithTimeInterval:3.0
@@ -1045,17 +1083,17 @@ typedef NS_ENUM(NSInteger, RequestType) {
                              withTitle:nil
                           withSubtitle:@"متاسفانه درخواست شما از طرف پذیرنده لغو شد، لطفا دوباره درخواست دهید"
                        withCustomImage:[UIImage imageNamed:@"alert.png"]
-                   withDoneButtonTitle:@"خب"
+                   withDoneButtonTitle:@"تایید"
                             andButtons:nil];
                 
             }
             else if([status isEqualToString:@"5"])
             {
                 [orderTimer invalidate];
-                [self ResetEverything];
                 self.isCanceled = YES;
                 [self ShowRatingView];
                 isArrived = NO;
+                [self ResetEverything];
                 myCarmarker = nil;
             }
             else if([status isEqualToString:@"3"])
@@ -1069,7 +1107,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
                                  withTitle:nil
                               withSubtitle:@"کاسکت شما رسید"
                            withCustomImage:[UIImage imageNamed:@"alert.png"]
-                       withDoneButtonTitle:@"خب"
+                       withDoneButtonTitle:@"تایید"
                                 andButtons:nil];
                 }
             }
@@ -1094,7 +1132,6 @@ typedef NS_ENUM(NSInteger, RequestType) {
                     [CATransaction setAnimationDuration:1.6];
                     myCarmarker.position = kasketCoordinate;
                     [CATransaction commit];
-                    
                     
                     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:kasketCoordinate.latitude
                                                                             longitude:kasketCoordinate.longitude
@@ -1125,76 +1162,20 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 -(void)ShowRatingView
 {
+    
     if (_orderId == nil) {
-        _orderId = [self OrderId];
+        _orderId = [((NSDictionary*)[self OrderId]) valueForKey:@"orderId"];
+    }
+    else
+    {
+        NSMutableDictionary *order = [[NSMutableDictionary alloc]init];
+        [order setValue:_orderId forKey:@"orderId"];
+        [self SaveOrderId:order];
+        
     }
     
-    __block BOOL isDone = NO;
-    __block NSInteger rate;
-    rate = 0;
-    ratingView = [[FCAlertView alloc] init];
-    ratingView.blurBackground = 1;
-    ratingView.bounceAnimations = 1;
-    ratingView.fullCircleCustomImage = NO;
-    [ratingView makeAlertTypeRateStars:^(NSInteger rating) {
-        
-        rate = (long)rating;
-        NSLog(@"Your Rating: %ld", (long)rating); // Use the Rating as you'd like
-        
-        if (isDone) {
-            [self RequestRate:[NSString stringWithFormat:@"%ld",(long)rate]];
-        }
-        else
-            [self RequestRate:[NSString stringWithFormat:@"%@",@"-1"]];
-        
-    }];
-    
-    [ratingView showAlertInView:self
-                      withTitle:@""
-                   withSubtitle:@"لطفا میزان رضایتمندی خود را از سرویس ما مشخص کنید"
-                withCustomImage:nil
-            withDoneButtonTitle:@"تایید"
-                     andButtons:nil];
-    [ratingView addButton:@"نمی خوام" withActionBlock:^{
-        
-    }];
-    
-    [ratingView doneActionBlock:^{
-        isDone = YES;
-        
-    }];
-    
+    [self performSegueWithIdentifier:@"rating" sender:self];
 }
-
--(void)RequestRate:(NSString*)rate
-{
-    
-    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
-        if (wasSuccessful) {
-            
-            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
-            
-        }
-        else
-        {
-            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
-                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"خب"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
-    };
-    
-    Settings *st = [[Settings alloc]init];
-    
-    st = [DBManager selectSetting][0];
-    
-    [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
-    [self.getData Rating:st.accesstoken Score:rate OrderId:_orderId withCallback:callback];
-}
-
 
 - (UIImage*)image:(UIImage*)originalImage scaledToSize:(CGSize)size
 {
@@ -1778,6 +1759,8 @@ typedef NS_ENUM(NSInteger, RequestType) {
                      } completion:NULL];
 }
 
+
+
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
     [self.view endEditing:YES];
     [self ResetView];
@@ -1792,7 +1775,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
                          self.HumanPin.alpha = 1;
                          self.bluredView.alpha = 0;
                          layer.alpha = 0;
-//                         self.searchBarWithDelegate.frame = CGRectMake(10, 72, CGRectGetWidth(self.view.bounds) - 20.0, 50.0);
+                         //                         self.searchBarWithDelegate.frame = CGRectMake(10, 72, CGRectGetWidth(self.view.bounds) - 20.0, 50.0);
                          self.navigationController.navigationBar.alpha = 1.0f;
                      } completion:NULL];
     
@@ -1807,7 +1790,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     if (token !=nil) {
         
         RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
-        
+            
             if (wasSuccessful) {
                 
             }
@@ -1865,6 +1848,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     
     [data writeToFile:plistPath atomically: TRUE];
     _orderId = [data valueForKey:@"orderId"];
+    
 }
 
 -(NSMutableDictionary*)OrderDetail
@@ -1888,9 +1872,9 @@ typedef NS_ENUM(NSInteger, RequestType) {
     // get the path to our Data/plist file
     NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"orderid.plist"];
     
-    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    NSArray *array = [NSArray arrayWithContentsOfFile:plistPath];
     
-    return (NSString*)array[0];
+    return (NSArray*)array[0];
 }
 
 -(NSString*)IsRated
@@ -1952,14 +1936,29 @@ typedef NS_ENUM(NSInteger, RequestType) {
 {
     return UIStatusBarStyleDefault;
 }
-/*
+
+- (void)SaveOrderId:(NSDictionary*)orderId
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:orderId];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"orderid.plist"];
+    
+    [array writeToFile:plistPath atomically: TRUE];
+    
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
 }
-*/
+
+
 
 @end

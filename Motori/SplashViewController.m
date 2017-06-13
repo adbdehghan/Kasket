@@ -74,7 +74,7 @@
                             
                             [self SaveRating:isRated];
                             if ([isRated isEqualToString:@"True"]) {
-                                [self SaveOrderId:[NSString stringWithFormat:@"%@",[[data valueForKey:@"lastRatingDetail"] valueForKey:@"orderId"]]];
+                                [self SaveOrderId:[data valueForKey:@"lastRatingDetail"]];
                             }
                             
                             
@@ -206,7 +206,7 @@
     
 }
 
-- (void)SaveOrderId:(NSString*)orderId
+- (void)SaveOrderId:(NSDictionary*)orderId
 {
     
     NSMutableArray *array = [[NSMutableArray alloc] init];

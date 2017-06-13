@@ -60,7 +60,7 @@
             
             self.credit.text = [NSString stringWithFormat:@"%@ تومان",[MapCharacter MapCharacter:formatted]];
             
-            self.fullname.text = [data valueForKey:@"fullname"];
+            self.fullname.text = [data valueForKey:@"fullname"] == nil ? @"" :[data valueForKey:@"fullname"];
         }
         else
         {
@@ -135,7 +135,7 @@
             [self performSegueWithIdentifier:@"address" sender:self];  
             break;
         case 4:
-            
+            [self performSegueWithIdentifier:@"about" sender:self];
             break;
         case 5:
         {

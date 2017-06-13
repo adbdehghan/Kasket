@@ -163,30 +163,12 @@
     self.navigationItem.titleView=label;
     
     // Get the previous view controller
-    UIViewController *previousVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 1];
+    UIViewController *previousVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
     // Create a UIBarButtonItem
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:self action:@selector(popViewController)];
     // Associate the barButtonItem to the previous view
     [previousVC.navigationItem setBackBarButtonItem:barButtonItem];
     
-    UIButton *settingButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    UIImage *settingImage = [[UIImage imageNamed:@"close.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [settingButton setImage:settingImage forState:UIControlStateNormal];
-    
-    settingButton.tintColor = [UIColor whiteColor];
-    [settingButton addTarget:self action:@selector(closeButtonAction)forControlEvents:UIControlEventTouchUpInside];
-    [settingButton setFrame:CGRectMake(0, 0, 15, 15)];
-    
-    
-    UIBarButtonItem *settingBarButton = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
-    self.navigationItem.leftBarButtonItem = settingBarButton;
-    
-}
-
--(void)closeButtonAction
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(NSString*)MapCharacter:(NSString*)character

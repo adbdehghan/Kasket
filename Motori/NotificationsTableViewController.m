@@ -287,7 +287,7 @@
     [previousVC.navigationItem setBackBarButtonItem:barButtonItem];
     
     UIButton *settingButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    
+    settingButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     UIImage *settingImage = [[UIImage imageNamed:@"close.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [settingButton setImage:settingImage forState:UIControlStateNormal];
     

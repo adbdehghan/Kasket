@@ -151,13 +151,17 @@
     [array writeToFile:plistPath atomically: TRUE];
     
 }
+- (IBAction)ForgetPasswordEvent:(id)sender {
+    
+    [self performSegueWithIdentifier:@"forget" sender:self];
+}
 
 -(void)AddGradientLayer
 {
     UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = view.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.5f] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.8f] CGColor], (id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:.3] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:0.3] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.4f] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.6f] CGColor], (id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],nil];
     [self.view.layer insertSublayer:gradient atIndex:0];
 }
 -(void)ShowError

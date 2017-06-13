@@ -108,13 +108,36 @@ NSMutableDictionary *receivedData;
 
 }
 
-- (void)GetPrice:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType withCallback:(RequestCompleteBlock)callback
+- (void)ForgetPassword:(NSString *)param1 withCallback:(RequestCompleteBlock)callback
+{
+    NSDictionary *parameters = @{@"phonenumber": param1};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    NSString *URLString =[NSString stringWithFormat: @"%s/api/user/sendpass",URLaddress];
+    
+    
+    [manager GET:URLString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Success %@", responseObject);
+        
+        callback(YES,responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        callback(NO,nil);
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+}
+
+- (void)GetPrice:(NSString*)token SourceLat:(NSString*)sourceLat SourceLon:(NSString*)sourceLon DestinationLat:(NSString*)destinationLat DestinationLon:(NSString*)destinationLon HaveReturn:(NSString*)haveReturn OrderType:(NSString*)orderType Cost:(NSString*)cost withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
 
     NSString *sample =[NSString stringWithFormat: @"%s/api/user/GetPrice",URLaddress];
     
-    NSDictionary *parameters = @{@"sourceLat": sourceLat, @"sourceLon" : sourceLon,@"destinationLat":destinationLat,@"destinationLon":destinationLon,@"haveReturn":haveReturn,@"orderType":orderType};
+    NSDictionary *parameters = @{@"sourceLat": sourceLat, @"sourceLon" : sourceLon,@"destinationLat":destinationLat,@"destinationLon":destinationLon,@"haveReturn":haveReturn,@"orderType":orderType,@"cost":cost};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -243,15 +266,15 @@ NSMutableDictionary *receivedData;
     }];
 }
 
-- (void)Rating:(NSString*)token Score:(NSString*)score OrderId:(NSString*)orderId withCallback:(RequestCompleteBlock)callback
+- (void)Rating:(NSString*)token Score:(NSString*)score OrderId:(NSString*)orderId Reason:(NSString*)reason withCallback:(RequestCompleteBlock)callback
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
     NSString *sample =[NSString stringWithFormat: @"%s/api/user/SetScore",URLaddress];
     
     NSDictionary *parameters = @{@"score": score,
-                                 @"orderId":orderId};
-    
+                                 @"orderId":orderId,
+                                 @"reason":reason};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -451,7 +474,7 @@ NSMutableDictionary *receivedData;
 {
     receivedData = [[NSMutableDictionary alloc]init];
     
-    NSString *sample =[NSString stringWithFormat: @"%s/api/register/ClientTransactions",URLaddress];
+    NSString *sample =[NSString stringWithFormat: @"%s/api/user/ClientTransactions",URLaddress];
     
     NSDictionary *parameters = @{@"page": page};
     

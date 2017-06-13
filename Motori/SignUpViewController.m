@@ -115,9 +115,9 @@
         }
     };
     
-    if (fullNameTextField.text.length > 0 && emailTextField.text.length > 0 && passwordTextField.text.length > 2) {
+    if (fullNameTextField.text.length > 0 && phoneNumberTextField.text.length > 0 && passwordTextField.text.length > 2) {
         [self.view.window showHUDWithText:@"لطفا صبر کنید" Type:ShowLoading Enabled:YES];
-        [self.getData RegisterMember:fullNameTextField.text Param2:phoneNumberTextField.text Email:emailTextField.text Password:passwordTextField.text withCallback:callback];
+        [self.getData RegisterMember:fullNameTextField.text Param2:phoneNumberTextField.text Email:emailTextField.text == nil ? @"" :emailTextField.text  Password:passwordTextField.text withCallback:callback];
     }
     else
     {
@@ -139,10 +139,9 @@
     UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = view.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.5f] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.8f] CGColor], (id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:.3] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:0.3] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.4f] CGColor],(id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:.6f] CGColor], (id)[[UIColor colorWithRed:160/255.f green:165/255.f blue:238/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],(id)[[UIColor colorWithRed:30/255.f green:170/255.f blue:241/255.f alpha:1] CGColor],nil];
     [self.view.layer insertSublayer:gradient atIndex:0];
 }
-
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     //    [nameUiTextField resignFirstResponder];

@@ -205,6 +205,33 @@
         [mainView addConstraints:@[ leftpaymentXConstraint, leftpaymentYConstraint,widthConstraintpayment, heightConstraintpayment]];
         
         
+        
+//        UIView *toggleContainer = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height-100, frame.size.width, 55)];
+//        toggleContainer.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+//        toggleContainer.layer.shadowRadius = 5;
+//        toggleContainer.layer.shadowOffset = CGSizeMake(1, 1);
+//        toggleContainer.layer.shadowOpacity = .6;
+//        toggleContainer.layer.masksToBounds = NO;
+//        toggleContainer.backgroundColor = [UIColor whiteColor];
+//        [self addSubview:toggleContainer];
+//        
+//        BEMCheckBox *myCheckBox = [[BEMCheckBox alloc] initWithFrame:CGRectMake(frame.size.width - 40, 15, 25, 25)];
+//        myCheckBox.delegate = self;
+//        myCheckBox.boxType = BEMBoxTypeCircle;
+//        myCheckBox.onFillColor = [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
+//        myCheckBox.onTintColor =  [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
+//        myCheckBox.onCheckColor =  [UIColor whiteColor];
+//        [toggleContainer addSubview:myCheckBox];
+//        
+//        insuranceLabel = [[UILabel alloc] initWithFrame:CGRectMake(toggleContainer.frame.size.width-229, toggleContainer.frame.size.height/2 - 7.5, 180, 15)];
+//        insuranceLabel.backgroundColor = [UIColor clearColor];
+//        insuranceLabel.textAlignment = NSTextAlignmentRight;
+//        insuranceLabel.textColor = [UIColor darkGrayColor];
+//        insuranceLabel.font = [UIFont fontWithName:@"IRANSans" size:14];
+//        insuranceLabel.text = @"بسته بیمه شود";
+//        [toggleContainer addSubview:insuranceLabel];
+        
+        
         mainButton = [[CNPPopupButton alloc] initWithFrame:CGRectMake(0, frame.size.height-50, frame.size.width, 50)];
         [mainButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         mainButton.titleLabel.font = [UIFont fontWithName:@"IRANSans" size:16];
@@ -217,11 +244,7 @@
         gradient.endPoint = CGPointMake(0.5,1.0);
         [mainButton.layer insertSublayer:gradient atIndex:0];
         
- 
-        
-        
         [self AnimateCircle];
-
         [self GetPrice];
         [self GetTime:NO];
         
@@ -257,8 +280,6 @@
                 [self bringSubviewToFront:priceCircleView];
           
             }];
-            
-            
             
             gradient.colors =  [NSArray arrayWithObjects:(id)([UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1].CGColor),(id)( [UIColor colorWithRed:52/255.f green:77/255.f blue:146/255.f alpha:1].CGColor),(id)([UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1].CGColor),nil];
            // gradient.colors = [NSArray arrayWithObjects:(id)([UIColor colorWithRed:70/255.f green:70/255.f blue:70/255.f alpha:1].CGColor),(id)( [UIColor colorWithRed:255/255.f green:0/255.f blue:66/255.f alpha:.1].CGColor),nil];
@@ -574,7 +595,7 @@
     
     paymentSegmentedControl.userInteractionEnabled = NO;
     
-    [self.getData GetPrice:st.accesstoken SourceLat:[DataCollector sharedInstance].sourceLat SourceLon:[DataCollector sharedInstance].sourceLon DestinationLat:[DataCollector sharedInstance].destinationLat DestinationLon:[DataCollector sharedInstance].destinationLon HaveReturn:haveReturn OrderType:@"0" withCallback:callback];
+    [self.getData GetPrice:st.accesstoken SourceLat:[DataCollector sharedInstance].sourceLat SourceLon:[DataCollector sharedInstance].sourceLon DestinationLat:[DataCollector sharedInstance].destinationLat DestinationLon:[DataCollector sharedInstance].destinationLon HaveReturn:haveReturn OrderType:@"0" Cost:@"0" withCallback:callback];
 
 }
 

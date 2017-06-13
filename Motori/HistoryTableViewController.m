@@ -311,8 +311,10 @@
     cell.orderStatus.text = [self StatusTypes:item];
     cell.roundTripLabel.text = [item.haveReturn isEqualToString:@"1"] ? @"رفت و برگشت":@"یکطرفه";
     cell.orderNumberLabel.text = item.orderNumber;
-        cell.addressLabel.text = [item.sourceAddress isEqual:[NSNull null]] ? @"-" : item.sourceAddress;
+    cell.addressLabel.text = [item.sourceAddress isEqual:[NSNull null]] ? @"-" : item.sourceAddress;
+    cell.quickAddressLabel.text = [item.sourceAddress isEqual:[NSNull null]] ? @"-" : item.sourceAddress;
     cell.destinationAddressLabel.text = [item.destinationAddress isEqual:[NSNull null]] ? @"-" :item.destinationAddress;
+    cell.quickDestinationAddressLabel.text = [item.destinationAddress isEqual:[NSNull null]] ? @"-" :item.destinationAddress;
     cell.dateTimeLabel.text = [MapCharacter MapCharacter:item.orderTime];
     
     cell.sourceAddressInfoLabel.text = [NSString stringWithFormat:@"پلاک  %@  زنگ یا واحد  %@",item.sourcePlate,item.sourceBell];
@@ -376,6 +378,8 @@
          {
              lastCell.layerView.alpha=.7;
              lastCell.fullnameLabel.alpha = 1;
+             lastCell.quickAddressLabel.alpha = 1;
+             lastCell.quickDestinationAddressLabel.alpha = 1;
              lastCell.dateTimeLabel.alpha = 1;
              lastCell.priceLabel.alpha = 1;
              lastCell.orderStatus.alpha = 1;
@@ -392,6 +396,8 @@
     {
         cell.layerView.alpha=0;
         cell.fullnameLabel.alpha = 0;
+        cell.quickAddressLabel.alpha = 0;
+        cell.quickDestinationAddressLabel.alpha = 0;
         cell.dateTimeLabel.alpha = 0;
         cell.priceLabel.alpha = 0;
         cell.orderStatus.alpha = 0;
@@ -437,7 +443,7 @@
     [previousVC.navigationItem setBackBarButtonItem:barButtonItem];
     
     UIButton *settingButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    
+    settingButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     UIImage *settingImage = [[UIImage imageNamed:@"close.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [settingButton setImage:settingImage forState:UIControlStateNormal];
 

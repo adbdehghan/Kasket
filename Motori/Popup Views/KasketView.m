@@ -133,6 +133,8 @@
     self.phoneNumber = [array valueForKey:@"phonenumber"];
     self.fullName = [array valueForKey:@"name"];
     self.price = [array valueForKey:@"totalPrice"];;
+//    self.plate = [array valueForKey:@"plate"];
+    
 }
 
 @end

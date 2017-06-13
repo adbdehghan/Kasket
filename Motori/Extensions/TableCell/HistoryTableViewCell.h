@@ -14,7 +14,9 @@
 @property (nonatomic, weak) IBOutlet UILabel *dateTimeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *dateTimeLabelDetail;
 @property (nonatomic, weak) IBOutlet UILabel *addressLabel;
+@property (nonatomic, weak) IBOutlet UILabel *quickAddressLabel;
 @property (nonatomic, weak) IBOutlet UILabel *destinationAddressLabel;
+@property (nonatomic, weak) IBOutlet UILabel *quickDestinationAddressLabel;
 @property (nonatomic, weak) IBOutlet UILabel *priceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *priceLabelDetail;
 @property (nonatomic, weak) IBOutlet UILabel *sourceAddressInfoLabel;

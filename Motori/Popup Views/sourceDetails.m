@@ -94,13 +94,13 @@
         favoriteLabel.textAlignment = NSTextAlignmentRight;
         favoriteLabel.textColor = [UIColor darkGrayColor];
         favoriteLabel.font = [UIFont fontWithName:@"IRANSans" size:14];
-        favoriteLabel.text = @"اضافه به آدرس های منتتایید";
+        favoriteLabel.text = @"اضافه به آدرس های منتخب";
         [toggleContainer addSubview:favoriteLabel];
         
         if ([DataCollector sharedInstance].isSourceFavorite) {
             [myCheckBox setOn:YES animated:YES];
             isAddressSave = YES;
-            favoriteLabel.text = @"به آدرس های منتتایید اضافه شد";
+            favoriteLabel.text = @"به آدرس های منتخب اضافه شد";
             myCheckBox.userInteractionEnabled = NO;
         }
         
@@ -130,7 +130,7 @@
         isAddressSave = YES;
     }
     
-    favoriteLabel.text = @"به آدرس های منتتایید اضافه شد";
+    favoriteLabel.text = @"به آدرس های منتخب اضافه شد";
     
     checkBox.userInteractionEnabled = NO;
     

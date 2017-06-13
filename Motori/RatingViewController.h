@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendRatingButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
+@property (nonatomic,strong) NSString *orderId;
 
 @end

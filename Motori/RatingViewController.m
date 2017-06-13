@@ -8,21 +8,37 @@
 
 #import "RatingViewController.h"
 #import "TPFloatRatingView.h"
+#import "DataDownloader.h"
+#import "Settings.h"
+#import "DBManager.h"
+#import "UIWindow+YzdHUD.h"
 
 @interface RatingViewController ()<TPFloatRatingViewDelegate>
 {
-    float ratingValue;
+    int ratingValue;
     NSInteger *selectedRow;
     NSArray *reasonArray;
-
+    NSString *reason;
+    BOOL notRated;
 }
 @property (strong, nonatomic) IBOutlet TPFloatRatingView *ratingView;
+@property (strong, nonatomic) DataDownloader *getData;
 @end
 
 @implementation RatingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSDictionary *order = [self OrderId];
+     _orderId = [order valueForKey:@"orderId"];
+    
+    if ([order valueForKey:@"cleanerName"]==nil) {
+        [self OrderDetail];
+    }
+    else
+        _kasketNameLabel.text = [((NSDictionary*)[self OrderId]) valueForKey:@"cleanerName"];
+    
+    
     [self CustomizeNavigationTitle];
     self.ratingView.delegate = self;
     self.ratingView.emptySelectedImage = [UIImage imageNamed:@"StarEmpty"];
@@ -49,7 +65,7 @@
 
 - (void)floatRatingView:(TPFloatRatingView *)ratingView ratingDidChange:(CGFloat)rating
 {
-    ratingValue = rating;
+    ratingValue = (int)rating;
     
     if (rating == 5) {
         self.reasonLabel.text = @"کاملا راضی";
@@ -81,8 +97,7 @@
 
 - (IBAction)SendRatingButton:(id)sender {
     
-    
-    
+    [self RequestRate];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -114,8 +129,49 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     selectedRow = indexPath.row;
-    
+    reason = [reasonArray objectAtIndex:selectedRow];
 }
+
+-(void)RequestRate
+{
+    if (notRated) {
+        ratingValue = -1;
+    }
+    RequestCompleteBlock callback = ^(BOOL wasSuccessful,NSMutableDictionary *data) {
+        if (wasSuccessful) {
+            
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        else
+        {
+            [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                            message:@"لطفا ارتباط خود با اینترنت را بررسی نمایید."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"تایید"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    };
+    
+    Settings *st = [[Settings alloc]init];
+    
+    st = [DBManager selectSetting][0];
+    
+    [self.view.window showHUDWithText:@"لطفا صبر نمایید" Type:ShowLoading Enabled:YES];
+    if (ratingValue == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"👻"
+                                                        message:@"لطفا ابتدا امتیاز بدهید"
+                                                       delegate:self
+                                              cancelButtonTitle:@"تایید"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else
+        [self.getData Rating:st.accesstoken Score:[NSString stringWithFormat:@"%d", ratingValue] OrderId:_orderId Reason:reason == nil ? @"" : reason withCallback:callback];
+}
+
 
 -(void)CustomizeNavigationTitle
 {
@@ -147,13 +203,48 @@
     
     UIBarButtonItem *settingBarButton = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
     self.navigationItem.leftBarButtonItem = settingBarButton;
-    
 }
 
 -(void)closeButtonAction
 {
+    notRated = YES;
+    [self RequestRate];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (DataDownloader *)getData
+{
+    if (!_getData) {
+        self.getData = [[DataDownloader alloc] init];
+    }
+    
+    return _getData;
+}
+
+-(NSString*)OrderId
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"orderid.plist"];
+    
+    NSArray *array = [NSArray arrayWithContentsOfFile:plistPath];
+    
+    return (NSArray*)array[0];
+}
+
+-(void)OrderDetail
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"Order.plist"];
+    
+    NSMutableDictionary *array = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+    
+    _kasketNameLabel.text = [array valueForKey:@"name"];
+}
 
 @end

@@ -14,6 +14,7 @@ PODS:
   - IQKeyboardManager (4.0.7)
   - LMSideBarController (1.0.1)
   - LUNSegmentedControl (1.0.7)
+  - LUNTutorialViewController (1.0.0)
   - OCGoogleDirectionsAPI (0.1.7)
   - OHPDFImage (3.2.1)
   - SPGooglePlacesAutocomplete (1.0.5)
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - IQKeyboardManager
   - LMSideBarController
   - LUNSegmentedControl
+  - LUNTutorialViewController
   - OCGoogleDirectionsAPI (~> 0.1.7)
   - OHPDFImage
   - SPGooglePlacesAutocomplete
@@ -46,11 +48,12 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 69002bb4fea60596b710e57d426abc00e5063630
   LMSideBarController: bfbe56b30c76a541918b4c3f8972f64a49b295a1
   LUNSegmentedControl: f868b1ea740f9917f05dbcb4cded85c33ec606e6
+  LUNTutorialViewController: 37bbc0d3a0af976abc7289fd2ead9b25345fcd4a
   OCGoogleDirectionsAPI: 03c35fbedfe01506b6270a94259969bc60d6f7ce
   OHPDFImage: b5ad5d7d99f4fbadaa8740cc3d1009f1a0b34ef0
   SPGooglePlacesAutocomplete: 4d70b3961ed350328740757952eaa833fcd1b57e
   UIImage-Helpers: 06b04a42bdd222844035602e87e936765c80f620
 
-PODFILE CHECKSUM: caaf1c5eff363996046c450e1a3ea520843c76e5
+PODFILE CHECKSUM: c8b1b5b71cf767e1e9cde09d833cb484d5f391f1
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.1.1
