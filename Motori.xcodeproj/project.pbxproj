@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A0DB7301EF686C600294BD3 /* ArenaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0DB72E1EF686C600294BD3 /* ArenaLogo.png */; };
+		3A0DB7311EF686C600294BD3 /* logo (3) copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0DB72F1EF686C600294BD3 /* logo (3) copy.png */; };
 		3A3170BF1EEC4061006FC116 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3170BE1EEC4061006FC116 /* ForgetPasswordViewController.m */; };
 		3A38C4271EEC0177006D2A75 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A38C4261EEC0177006D2A75 /* AboutViewController.m */; };
 		3A406BE21EE4E1D2009BE852 /* TPFloatRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A406BE11EE4E1D2009BE852 /* TPFloatRatingView.m */; };
@@ -183,6 +185,8 @@
 
 /* Begin PBXFileReference section */
 		221D8687D32C4341C6981CC4 /* Pods_Motori.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motori.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A0DB72E1EF686C600294BD3 /* ArenaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArenaLogo.png; sourceTree = "<group>"; };
+		3A0DB72F1EF686C600294BD3 /* logo (3) copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo (3) copy.png"; sourceTree = "<group>"; };
 		3A3170BD1EEC4061006FC116 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		3A3170BE1EEC4061006FC116 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		3A38C4251EEC0177006D2A75 /* AboutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -556,6 +560,8 @@
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3A0DB72E1EF686C600294BD3 /* ArenaLogo.png */,
+				3A0DB72F1EF686C600294BD3 /* logo (3) copy.png */,
 				3AC98C2E1EEEA07400DBF0AF /* add.png */,
 				3AB3BBF61EEE978600939C1F /* down-arrow.png */,
 				3AB3BBF71EEE978600939C1F /* up-arrow.png */,
@@ -1254,7 +1260,9 @@
 				3AB5B19D1E33BC36002AE9F2 /* lock.png in Resources */,
 				64E686671E5FABED00DA0631 /* nevertoolate@2x.gif in Resources */,
 				64A35FFF1E81D2A200E3122B /* user-shape.png in Resources */,
+				3A0DB7311EF686C600294BD3 /* logo (3) copy.png in Resources */,
 				64E686791E6129DA00DA0631 /* MapHelmet.pdf in Resources */,
+				3A0DB7301EF686C600294BD3 /* ArenaLogo.png in Resources */,
 				64E686691E5FAC3E00DA0631 /* close.png in Resources */,
 				64343AD11E16B0D600B4FE3F /* NavBarIconSearch_blue.png in Resources */,
 				64A360011E81F7E700E3122B /* cake.png in Resources */,
