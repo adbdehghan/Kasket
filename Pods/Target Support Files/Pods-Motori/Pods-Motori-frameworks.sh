@@ -59,8 +59,13 @@ code_sign_if_enabled() {
   if [ -n "${EXPANDED_CODE_SIGN_IDENTITY}" -a "${CODE_SIGNING_REQUIRED}" != "NO" -a "${CODE_SIGNING_ALLOWED}" != "NO" ]; then
     # Use the current code_sign_identitiy
     echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements \"$1\""
-    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements "$1"
+    local code_sign_cmd="/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements '$1'"
+
+    if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
+      code_sign_cmd="$code_sign_cmd &"
+    fi
+    echo "$code_sign_cmd"
+    eval "$code_sign_cmd"
   fi
 }
 
@@ -88,11 +93,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BEMCheckBox/BEMCheckBox.framework"
   install_framework "$BUILT_PRODUCTS_DIR/CNPPopupController/CNPPopupController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DGActivityIndicatorView/DGActivityIndicatorView.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EAIntroView/EAIntroView.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EARestrictedScrollView/EARestrictedScrollView.framework"
   install_framework "$BUILT_PRODUCTS_DIR/FCAlertView/FCAlertView.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IQKeyboardManager/IQKeyboardManager.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LMSideBarController/LMSideBarController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LUNSegmentedControl/LUNSegmentedControl.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/LUNTutorialViewController/LUNTutorialViewController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OCGoogleDirectionsAPI/OCGoogleDirectionsAPI.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OHPDFImage/OHPDFImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SPGooglePlacesAutocomplete/SPGooglePlacesAutocomplete.framework"
@@ -103,13 +109,17 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BEMCheckBox/BEMCheckBox.framework"
   install_framework "$BUILT_PRODUCTS_DIR/CNPPopupController/CNPPopupController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DGActivityIndicatorView/DGActivityIndicatorView.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EAIntroView/EAIntroView.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EARestrictedScrollView/EARestrictedScrollView.framework"
   install_framework "$BUILT_PRODUCTS_DIR/FCAlertView/FCAlertView.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IQKeyboardManager/IQKeyboardManager.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LMSideBarController/LMSideBarController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LUNSegmentedControl/LUNSegmentedControl.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/LUNTutorialViewController/LUNTutorialViewController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OCGoogleDirectionsAPI/OCGoogleDirectionsAPI.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OHPDFImage/OHPDFImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SPGooglePlacesAutocomplete/SPGooglePlacesAutocomplete.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UIImage-Helpers/UIImage_Helpers.framework"
+fi
+if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
+  wait
 fi

@@ -3,6 +3,9 @@ PODS:
   - BEMCheckBox (1.4.0)
   - CNPPopupController (0.3.3)
   - DGActivityIndicatorView (2.1.1)
+  - EAIntroView (2.10.0):
+    - EARestrictedScrollView (~> 1.1.0)
+  - EARestrictedScrollView (1.1.0)
   - FCAlertView (1.2.7)
   - GoogleMaps (2.0.1):
     - GoogleMaps/Maps (= 2.0.1)
@@ -14,7 +17,6 @@ PODS:
   - IQKeyboardManager (4.0.7)
   - LMSideBarController (1.0.1)
   - LUNSegmentedControl (1.0.7)
-  - LUNTutorialViewController (1.0.0)
   - OCGoogleDirectionsAPI (0.1.7)
   - OHPDFImage (3.2.1)
   - SPGooglePlacesAutocomplete (1.0.5)
@@ -25,13 +27,13 @@ DEPENDENCIES:
   - BEMCheckBox
   - CNPPopupController
   - DGActivityIndicatorView
+  - EAIntroView (~> 2.10.0)
   - FCAlertView
   - GoogleMaps (~> 2.0.0)
   - GooglePlaces
   - IQKeyboardManager
   - LMSideBarController
   - LUNSegmentedControl
-  - LUNTutorialViewController
   - OCGoogleDirectionsAPI (~> 0.1.7)
   - OHPDFImage
   - SPGooglePlacesAutocomplete
@@ -42,18 +44,19 @@ SPEC CHECKSUMS:
   BEMCheckBox: e18e4a148905b290bd03d98b767651c104f4eda3
   CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
+  EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
+  EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   FCAlertView: 12b2656b2482df54710c2d8415bc193117688f62
   GoogleMaps: f09da64fc987c1aa29394567c3cab5a3df83c402
   GooglePlaces: 72fab1d1651c6df0322f2aad245ffb15b80d3c56
   IQKeyboardManager: 69002bb4fea60596b710e57d426abc00e5063630
   LMSideBarController: bfbe56b30c76a541918b4c3f8972f64a49b295a1
   LUNSegmentedControl: f868b1ea740f9917f05dbcb4cded85c33ec606e6
-  LUNTutorialViewController: 37bbc0d3a0af976abc7289fd2ead9b25345fcd4a
   OCGoogleDirectionsAPI: 03c35fbedfe01506b6270a94259969bc60d6f7ce
   OHPDFImage: b5ad5d7d99f4fbadaa8740cc3d1009f1a0b34ef0
   SPGooglePlacesAutocomplete: 4d70b3961ed350328740757952eaa833fcd1b57e
   UIImage-Helpers: 06b04a42bdd222844035602e87e936765c80f620
 
-PODFILE CHECKSUM: c8b1b5b71cf767e1e9cde09d833cb484d5f391f1
+PODFILE CHECKSUM: 0c31f6c45352b0621714c7f15cb60433f22352f4
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

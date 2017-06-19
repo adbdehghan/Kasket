@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F0F4618AC6B93CA84A7D08D5AC99D20C"
+               BlueprintIdentifier = "F26FBC45A61955F778B9CBF178F52695"
                BuildableName = "UIImage_Helpers.framework"
                BlueprintName = "UIImage-Helpers"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F0F4618AC6B93CA84A7D08D5AC99D20C"
+            BlueprintIdentifier = "F26FBC45A61955F778B9CBF178F52695"
             BuildableName = "UIImage_Helpers.framework"
             BlueprintName = "UIImage-Helpers"
             ReferencedContainer = "container:Pods.xcodeproj">

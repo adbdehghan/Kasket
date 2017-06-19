@@ -20,6 +20,7 @@
 		3A673A1B1E30609D00160478 /* staticpin.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A673A1A1E30609D00160478 /* staticpin.png */; };
 		3A673A1D1E306C7B00160478 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A673A1C1E306C7B00160478 /* menu.png */; };
 		3A673A211E307EBE00160478 /* LMRightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A673A201E307EBE00160478 /* LMRightMenuViewController.m */; };
+		3A9066BF1EF7D4F20015CDD8 /* TuturialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9066BE1EF7D4F20015CDD8 /* TuturialViewController.m */; };
 		3A99B8011E1812FA00CF38F6 /* number.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A99B7FF1E1812FA00CF38F6 /* number.png */; };
 		3AB3BBF81EEE978600939C1F /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3BBF61EEE978600939C1F /* down-arrow.png */; };
 		3AB3BBF91EEE978600939C1F /* up-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3BBF71EEE978600939C1F /* up-arrow.png */; };
@@ -207,6 +208,14 @@
 		3A673A1C1E306C7B00160478 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		3A673A1F1E307EBE00160478 /* LMRightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRightMenuViewController.h; sourceTree = "<group>"; };
 		3A673A201E307EBE00160478 /* LMRightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRightMenuViewController.m; sourceTree = "<group>"; };
+		3A9066BD1EF7D4F20015CDD8 /* TuturialViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TuturialViewController.h; sourceTree = "<group>"; };
+		3A9066BE1EF7D4F20015CDD8 /* TuturialViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TuturialViewController.m; sourceTree = "<group>"; };
+		3A9066C51EF7DED00015CDD8 /* BG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG.jpg; sourceTree = "<group>"; };
+		3A9066C61EF7DED00015CDD8 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		3A9066C71EF7DED00015CDD8 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		3A9066C81EF7DED00015CDD8 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		3A9066C91EF7DED00015CDD8 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		3A9066CA1EF7DED00015CDD8 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		3A99B7FF1E1812FA00CF38F6 /* number.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number.png; sourceTree = "<group>"; };
 		3AB3BBF61EEE978600939C1F /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
 		3AB3BBF71EEE978600939C1F /* up-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-arrow.png"; sourceTree = "<group>"; };
@@ -557,9 +566,23 @@
 			path = NavigationMenu;
 			sourceTree = "<group>";
 		};
+		3A9066C01EF7DBE70015CDD8 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				3A9066C91EF7DED00015CDD8 /* 1.png */,
+				3A9066C61EF7DED00015CDD8 /* 2.png */,
+				3A9066C71EF7DED00015CDD8 /* 3.png */,
+				3A9066C81EF7DED00015CDD8 /* 4.png */,
+				3A9066CA1EF7DED00015CDD8 /* 5.png */,
+				3A9066C51EF7DED00015CDD8 /* BG.jpg */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3A9066C01EF7DBE70015CDD8 /* Intro */,
 				3A0DB72E1EF686C600294BD3 /* ArenaLogo.png */,
 				3A0DB72F1EF686C600294BD3 /* logo (3) copy.png */,
 				3AC98C2E1EEEA07400DBF0AF /* add.png */,
@@ -985,6 +1008,8 @@
 				643439F61E16AF6D00B4FE3F /* SignUpViewController.m */,
 				3A3170BD1EEC4061006FC116 /* ForgetPasswordViewController.h */,
 				3A3170BE1EEC4061006FC116 /* ForgetPasswordViewController.m */,
+				3A9066BD1EF7D4F20015CDD8 /* TuturialViewController.h */,
+				3A9066BE1EF7D4F20015CDD8 /* TuturialViewController.m */,
 			);
 			name = LoginViews;
 			sourceTree = "<group>";
@@ -1288,7 +1313,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9E06D1FA274463852886A3BF /* [CP] Copy Pods Resources */ = {
@@ -1348,6 +1373,7 @@
 				3AD9703B1E539FF2002B7888 /* DataCollector.m in Sources */,
 				64343ABC1E16B0D600B4FE3F /* DataDownloader.m in Sources */,
 				64343AC51E16B0D600B4FE3F /* SDWebImageDownloaderOperation.m in Sources */,
+				3A9066BF1EF7D4F20015CDD8 /* TuturialViewController.m in Sources */,
 				64343A9C1E16B0D600B4FE3F /* AFNetworkReachabilityManager.m in Sources */,
 				64343AC31E16B0D600B4FE3F /* SDWebImageDecoder.m in Sources */,
 				64343AA71E16B0D600B4FE3F /* FMDatabase.m in Sources */,

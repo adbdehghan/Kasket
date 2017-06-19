@@ -20,7 +20,7 @@ pod 'CNPPopupController'
 pod 'LUNSegmentedControl'
 pod "OCGoogleDirectionsAPI", "~> 0.1.7"
 pod 'BEMCheckBox'
-pod 'LUNTutorialViewController'
+pod 'EAIntroView', '~> 2.10.0'
   # Pods for Motori
 
 end
