@@ -24,6 +24,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>EAIntroView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>EARestrictedScrollView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FCAlertView-FCAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -97,17 +107,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>228561A9326400BCDF92C88CA553BEE1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3814077B60A225441E135CD435F07186</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>45DD5BCDD1C8F4D7A9940E76D428556C</key>
+		<key>58AAD2C9E898747F2F4ABF348E6325F2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>75E9ACCAC7E8DA15B4F11FD49A8A8761</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>822DA31A6A34C7EF41E1EC7A5EF8FC2F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,7 +157,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F077D9D09DD4CFAB48DB7BDBD76533C4</key>
+		<key>F26FBC45A61955F778B9CBF178F52695</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F2C23B204F2EA1B419E5E5DF657D4D3C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

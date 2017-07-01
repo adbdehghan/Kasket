@@ -38,11 +38,12 @@ NSMutableDictionary *receivedData;
      } didSendData:nil];
 }
 
-- (void)RegisterMember:(NSString *)param1 Param2:(NSString*)param2 Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback
+- (void)RegisterMember:(NSString *)param1 Param2:(NSString*)param2 LastName:(NSString*)lastName Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback
 {
     
     receivedData = [[NSMutableDictionary alloc]init];
-    NSDictionary *parameters = @{@"fullName": param1,
+    NSDictionary *parameters = @{@"name": param1,
+                                 @"lastName":lastName,
                                  @"email":email,
                                  @"phonenumber": param2,
                                  @"password":password,

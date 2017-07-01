@@ -46,6 +46,12 @@
 		642018031E4FBEB000AF7819 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 642017FF1E4FBEB000AF7819 /* back@2x.png */; };
 		642018041E4FBEB000AF7819 /* front@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 642018001E4FBEB000AF7819 /* front@2x.png */; };
 		642018051E4FBEB000AF7819 /* RSCameraSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 642018021E4FBEB000AF7819 /* RSCameraSwitch.m */; };
+		643228771EF808340048BA9D /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 643228711EF808340048BA9D /* 1.png */; };
+		643228781EF808340048BA9D /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 643228721EF808340048BA9D /* 2.png */; };
+		643228791EF808340048BA9D /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 643228731EF808340048BA9D /* 3.png */; };
+		6432287A1EF808340048BA9D /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 643228741EF808340048BA9D /* 4.png */; };
+		6432287B1EF808340048BA9D /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 643228751EF808340048BA9D /* 5.png */; };
+		6432287C1EF808340048BA9D /* BG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 643228761EF808340048BA9D /* BG.jpg */; };
 		643439DD1E16AF2F00B4FE3F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643439DC1E16AF2F00B4FE3F /* main.m */; };
 		643439E01E16AF2F00B4FE3F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 643439DF1E16AF2F00B4FE3F /* AppDelegate.m */; };
 		643439E61E16AF2F00B4FE3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643439E41E16AF2F00B4FE3F /* Main.storyboard */; };
@@ -210,12 +216,6 @@
 		3A673A201E307EBE00160478 /* LMRightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRightMenuViewController.m; sourceTree = "<group>"; };
 		3A9066BD1EF7D4F20015CDD8 /* TuturialViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TuturialViewController.h; sourceTree = "<group>"; };
 		3A9066BE1EF7D4F20015CDD8 /* TuturialViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TuturialViewController.m; sourceTree = "<group>"; };
-		3A9066C51EF7DED00015CDD8 /* BG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG.jpg; sourceTree = "<group>"; };
-		3A9066C61EF7DED00015CDD8 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
-		3A9066C71EF7DED00015CDD8 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
-		3A9066C81EF7DED00015CDD8 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
-		3A9066C91EF7DED00015CDD8 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		3A9066CA1EF7DED00015CDD8 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		3A99B7FF1E1812FA00CF38F6 /* number.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number.png; sourceTree = "<group>"; };
 		3AB3BBF61EEE978600939C1F /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
 		3AB3BBF71EEE978600939C1F /* up-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-arrow.png"; sourceTree = "<group>"; };
@@ -250,6 +250,12 @@
 		642018001E4FBEB000AF7819 /* front@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "front@2x.png"; sourceTree = "<group>"; };
 		642018011E4FBEB000AF7819 /* RSCameraSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCameraSwitch.h; sourceTree = "<group>"; };
 		642018021E4FBEB000AF7819 /* RSCameraSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCameraSwitch.m; sourceTree = "<group>"; };
+		643228711EF808340048BA9D /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		643228721EF808340048BA9D /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		643228731EF808340048BA9D /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		643228741EF808340048BA9D /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		643228751EF808340048BA9D /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		643228761EF808340048BA9D /* BG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG.jpg; sourceTree = "<group>"; };
 		643439D81E16AF2F00B4FE3F /* Motori.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motori.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		643439DC1E16AF2F00B4FE3F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		643439DE1E16AF2F00B4FE3F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -566,23 +572,10 @@
 			path = NavigationMenu;
 			sourceTree = "<group>";
 		};
-		3A9066C01EF7DBE70015CDD8 /* Intro */ = {
-			isa = PBXGroup;
-			children = (
-				3A9066C91EF7DED00015CDD8 /* 1.png */,
-				3A9066C61EF7DED00015CDD8 /* 2.png */,
-				3A9066C71EF7DED00015CDD8 /* 3.png */,
-				3A9066C81EF7DED00015CDD8 /* 4.png */,
-				3A9066CA1EF7DED00015CDD8 /* 5.png */,
-				3A9066C51EF7DED00015CDD8 /* BG.jpg */,
-			);
-			path = Intro;
-			sourceTree = "<group>";
-		};
 		3A99B7FB1E18002C00CF38F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				3A9066C01EF7DBE70015CDD8 /* Intro */,
+				643228701EF808340048BA9D /* Intro */,
 				3A0DB72E1EF686C600294BD3 /* ArenaLogo.png */,
 				3A0DB72F1EF686C600294BD3 /* logo (3) copy.png */,
 				3AC98C2E1EEEA07400DBF0AF /* add.png */,
@@ -656,6 +649,19 @@
 				642018021E4FBEB000AF7819 /* RSCameraSwitch.m */,
 			);
 			path = RSCameraSwitch;
+			sourceTree = "<group>";
+		};
+		643228701EF808340048BA9D /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				643228711EF808340048BA9D /* 1.png */,
+				643228721EF808340048BA9D /* 2.png */,
+				643228731EF808340048BA9D /* 3.png */,
+				643228741EF808340048BA9D /* 4.png */,
+				643228751EF808340048BA9D /* 5.png */,
+				643228761EF808340048BA9D /* BG.jpg */,
+			);
+			path = Intro;
 			sourceTree = "<group>";
 		};
 		643439CF1E16AF2F00B4FE3F = {
@@ -1233,6 +1239,7 @@
 				3AC98C2F1EEEA07400DBF0AF /* add.png in Resources */,
 				3AB5B1A71E33BD7C002AE9F2 /* giftcode.png in Resources */,
 				3A673A1B1E30609D00160478 /* staticpin.png in Resources */,
+				643228791EF808340048BA9D /* 3.png in Resources */,
 				64343AD61E16B0D600B4FE3F /* NavBarIconSearchBar2_blue@2x.png in Resources */,
 				3AB3BBF81EEE978600939C1F /* down-arrow.png in Resources */,
 				64343AEB1E16B17D00B4FE3F /* IRANSans_Light.ttf in Resources */,
@@ -1240,6 +1247,7 @@
 				64343AED1E16B17D00B4FE3F /* IRANSans_UltraLight.ttf in Resources */,
 				646C96921E4A7EC00090962A /* destinationpin.pdf in Resources */,
 				646C96911E4A7EC00090962A /* destinationcompass.png in Resources */,
+				6432287B1EF808340048BA9D /* 5.png in Resources */,
 				648316221E2BCBE70067C4EF /* birds.gif in Resources */,
 				643B29BA1E85E8E500D1902B /* star.png in Resources */,
 				64343AD21E16B0D600B4FE3F /* NavBarIconSearch_blue@2x.png in Resources */,
@@ -1247,9 +1255,12 @@
 				64343ADA1E16B0D600B4FE3F /* NavBarIconSearchCircle_blue@2x.png in Resources */,
 				643D6B601E340A1B003E26EA /* logout.png in Resources */,
 				3AB5B1A61E33BD7C002AE9F2 /* archive.png in Resources */,
+				6432287A1EF808340048BA9D /* 4.png in Resources */,
 				3A6739E91E305B3A00160478 /* pin.gif in Resources */,
+				6432287C1EF808340048BA9D /* BG.jpg in Resources */,
 				64E6867B1E613E7C00DA0631 /* avatar.pdf in Resources */,
 				646C96951E4A7EC00090962A /* sourcemarker.pdf in Resources */,
+				643228781EF808340048BA9D /* 2.png in Resources */,
 				3AB5B19C1E33BC36002AE9F2 /* creditcard.png in Resources */,
 				64E686871E6565C900DA0631 /* user.png in Resources */,
 				64343AEA1E16B17D00B4FE3F /* IRANSans_Bold.ttf in Resources */,
@@ -1263,6 +1274,7 @@
 				3AB5B19F1E33BC36002AE9F2 /* profile.png in Resources */,
 				64FFA1721E23F9A700DB26F3 /* arc.png in Resources */,
 				643B29CC1E887E1F00D1902B /* Trash.png in Resources */,
+				643228771EF808340048BA9D /* 1.png in Resources */,
 				3AB5B1A41E33BD7C002AE9F2 /* aboutus.png in Resources */,
 				64343AD51E16B0D600B4FE3F /* NavBarIconSearchBar2_blue.png in Resources */,
 				643D6B621E340E3F003E26EA /* alert.png in Resources */,
@@ -1313,7 +1325,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9E06D1FA274463852886A3BF /* [CP] Copy Pods Resources */ = {

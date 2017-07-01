@@ -73,7 +73,8 @@
                         [DBManager createTable];
                         [DBManager saveOrUpdataSetting:setting];
                         [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
-                        [self performSegueWithIdentifier:@"main" sender:self];
+                        [self SaveConfirmation:@"False"];
+                        [self performSegueWithIdentifier:@"tutorial" sender:self];
                         
                     }};
                 
@@ -115,9 +116,9 @@
         }
     };
     
-    if (fullNameTextField.text.length > 0 && phoneNumberTextField.text.length > 0 && passwordTextField.text.length > 2) {
+    if (nameTextField.text.length > 0 && lastNameTextField.text.length > 0 && phoneNumberTextField.text.length > 0 && passwordTextField.text.length > 2) {
         [self.view.window showHUDWithText:@"لطفا صبر کنید" Type:ShowLoading Enabled:YES];
-        [self.getData RegisterMember:fullNameTextField.text Param2:phoneNumberTextField.text Email:emailTextField.text == nil ? @"" :emailTextField.text  Password:passwordTextField.text withCallback:callback];
+        [self.getData RegisterMember:nameTextField.text Param2:phoneNumberTextField.text LastName:lastNameTextField.text Email:emailTextField.text == nil ? @"" :emailTextField.text  Password:passwordTextField.text withCallback:callback];
     }
     else
     {
@@ -167,6 +168,22 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)SaveConfirmation:(NSString*)IsConfirmed
+{
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:IsConfirmed];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    // get documents path
+    NSString *documentsPath = [paths objectAtIndex:0];
+    // get the path to our Data/plist file
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"confirmed.plist"];
+    
+    [array writeToFile:plistPath atomically: TRUE];
+    
 }
 
 /*

@@ -6,5 +6,4 @@ OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AnimatedGIFIm
 OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -l"z" -framework "Accelerate" -framework "AnimatedGIFImageSerialization" -framework "BEMCheckBox" -framework "CNPPopupController" -framework "CoreData" -framework "CoreGraphics" -framework "CoreLocation" -framework "CoreText" -framework "DGActivityIndicatorView" -framework "EAIntroView" -framework "EARestrictedScrollView" -framework "FCAlertView" -framework "GLKit" -framework "GoogleMaps" -framework "GoogleMapsBase" -framework "GoogleMapsCore" -framework "GooglePlaces" -framework "IQKeyboardManager" -framework "ImageIO" -framework "LMSideBarController" -framework "LUNSegmentedControl" -framework "OCGoogleDirectionsAPI" -framework "OHPDFImage" -framework "OpenGLES" -framework "QuartzCore" -framework "SPGooglePlacesAutocomplete" -framework "SystemConfiguration" -framework "UIImage_Helpers" -framework "UIKit"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
-PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods

@@ -15,7 +15,7 @@ typedef void (^ImageRequestCompleteBlock) (BOOL wasSuccessful,UIImage *image);
 
 - (void)requestVerificationCode:(NSString *)params withCallback:(RequestCompleteBlock)callback;
 
-- (void)RegisterMember:(NSString *)param1 Param2:(NSString*)param2 Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback;
+- (void)RegisterMember:(NSString *)param1 Param2:(NSString*)param2 LastName:(NSString*)lastName Email:(NSString*)email Password:(NSString*)password withCallback:(RequestCompleteBlock)callback;
 
 - (void)ForgetPassword:(NSString *)param1 withCallback:(RequestCompleteBlock)callback;
 

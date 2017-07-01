@@ -263,7 +263,8 @@
 - (UIButton *)skipButton {
     if (!_skipButton) {
         _skipButton = [[UIButton alloc] init];
-        [_skipButton setTitle:NSLocalizedString(@"Skip", nil) forState:UIControlStateNormal];
+        [_skipButton setTitle:NSLocalizedString(@"", nil) forState:UIControlStateNormal];
+        _skipButton.titleLabel.font = [UIFont fontWithName:@"IRANSans" size:14];
         [self applyDefaultsToSkipButton];
     }
     return _skipButton;
@@ -1002,8 +1003,9 @@ CGFloat easeOutValue(CGFloat value) {
 
     [UIView animateWithDuration:duration animations:^{
         self.alpha = 0;
+        [self finishIntroductionAndRemoveSelf];
     } completion:^(BOOL finished){
-		[self finishIntroductionAndRemoveSelf];
+        
 	}];
 }
 
@@ -1049,7 +1051,7 @@ CGFloat easeOutValue(CGFloat value) {
         return;
     }
     if(self.currentPageIndex + 1 >= [self.pages count]) {
-        [self hideWithFadeOutDuration:0.3];
+        [self hideWithFadeOutDuration:0];
     } else {
         // Just scroll to the new page.
         // After scrolling ends, we call -checkIndexForScrollView:, which itself sets the new currentPageIndex.

@@ -69,7 +69,7 @@
                                                            delegate:self
                                                   cancelButtonTitle:@"خب"
                                                   otherButtonTitles:nil];
-            [alert show];
+        //    [alert show];
             
             NSLog( @"Unable to fetch Data. Try again.");
         }

@@ -10,7 +10,8 @@
 
 @interface SignUpViewController : UIViewController
 {
-    IBOutlet UITextField *fullNameTextField;
+    IBOutlet UITextField *nameTextField;
+    IBOutlet UITextField *lastNameTextField;
     IBOutlet UITextField *phoneNumberTextField;
     IBOutlet UITextField *emailTextField;
     IBOutlet UITextField *passwordTextField;
