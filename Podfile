@@ -21,6 +21,7 @@ pod 'LUNSegmentedControl'
 pod "OCGoogleDirectionsAPI", "~> 0.1.7"
 pod 'BEMCheckBox'
 pod 'EAIntroView', '~> 2.10.0'
+pod 'HUMSlider', ~>'1.0'
   # Pods for Motori
 
 end

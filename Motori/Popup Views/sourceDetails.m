@@ -11,6 +11,7 @@
 #import "DataCollector.h"
 #import "DBManager.h"
 
+
 @implementation sourceDetails
 
 -(id)initWithFrame:(CGRect)frame
@@ -71,6 +72,8 @@
         bellTextFieldView.userInteractionEnabled = NO;
         bellTextFieldView.alpha = .3f;
         [self addSubview:bellTextFieldView];
+        
+    
         
         UIView *toggleContainer = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height-100, frame.size.width, 55)];
         toggleContainer.layer.shadowColor = [UIColor darkGrayColor].CGColor;
@@ -136,6 +139,10 @@
     
 }
 
+-(void)getSliderDidEndChangeValue:(NSInteger)value{
+    NSLog(@"didEndChanged - %ld",value);
+}
+
 -(void)ForwardClicked
 {
     if([self.delegate respondsToSelector:@selector(ForwardClicked)])
@@ -153,6 +160,5 @@
         [self.delegate ForwardClicked];
     }
 }
-
 
 @end

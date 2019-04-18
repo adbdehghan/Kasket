@@ -18,6 +18,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        
         UIView *dotView = [[UIView alloc]initWithFrame:CGRectMake(frame.size.width/2 - 12, 31, 12,12)];
         dotView.layer.cornerRadius = dotView.frame.size.width/2;
         dotView.backgroundColor = [UIColor colorWithRed:118/255.f green:106/255.f blue:247/255.f alpha:1];
@@ -38,7 +39,6 @@
         sepratorView.alpha = .3f;
         [self addSubview:sepratorView];
         
-        
         plateTextField = [[UITextField alloc]initWithFrame:CGRectMake(3*(frame.size.width/4)-35, 50, 70, 30)];
         plateTextField.keyboardType = UIKeyboardTypeDefault;
         plateTextField.font = [UIFont fontWithName:@"IRANSans" size:14];
@@ -54,7 +54,6 @@
         plateTextFieldView.userInteractionEnabled = NO;
         plateTextFieldView.alpha = .3f;
         [self addSubview:plateTextFieldView];
-        
         
         bellTextField = [[UITextField alloc]initWithFrame:CGRectMake(frame.size.width/4-35, 50, 70, 30)];
         bellTextField.keyboardType = UIKeyboardTypeDefault;
@@ -171,22 +170,36 @@
 
 -(void)ForwardClicked
 {
-    if([self.delegate respondsToSelector:@selector(ForwardClicked)])
-    {
-        [DataCollector sharedInstance].destinationBell = bellTextField.text;
-        [DataCollector sharedInstance].destinationPlate = plateTextField.text;
-        [DataCollector sharedInstance].destinationPhoneNumber =phoneTextField.text;
-        [DataCollector sharedInstance].destinationFullName =nameTextField.text;
-        
-        if (isAddressSave && [DataCollector sharedInstance].isDestinationFavorite == NO) {
-            [DataCollector sharedInstance].isDestinationFavorite = &(isAddressSave);
-            [DBManager createDestinationTable];
-            [DBManager InsertToDestinationTable:[DataCollector sharedInstance]];
+    if (phoneTextField.text.length > 0) {
+        if([self.delegate respondsToSelector:@selector(ForwardClicked)])
+        {
+            [DataCollector sharedInstance].destinationBell = bellTextField.text;
+            [DataCollector sharedInstance].destinationPlate = plateTextField.text;
+            [DataCollector sharedInstance].destinationPhoneNumber =phoneTextField.text;
+            [DataCollector sharedInstance].destinationFullName =nameTextField.text;
+            
+            if (isAddressSave && [DataCollector sharedInstance].isDestinationFavorite == NO) {
+                [DataCollector sharedInstance].isDestinationFavorite = &(isAddressSave);
+                [DBManager createDestinationTable];
+                [DBManager InsertToDestinationTable:[DataCollector sharedInstance]];
+            }
+            
+            [self.delegate ForwardClicked];            
         }
+    }
+    else
+    {
         
-        [self.delegate ForwardClicked];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"🙌🏽"
+                                                        message:@"لطفا شماره ی گیرنده را حتما وارد کنید"
+                                                       delegate:self
+                                              cancelButtonTitle:@"تایید"
+                                              otherButtonTitles:nil];
+        [alert show];
         
-    }   
+        NSLog( @"Unable to fetch Data. Try again.");
+        
+    }
 }
 
 @end

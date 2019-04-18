@@ -292,7 +292,7 @@
     
     
     UIBarButtonItem *logoutBarButton = [[UIBarButtonItem alloc] initWithCustomView:logoutButton];
-    self.navigationItem.rightBarButtonItem = logoutBarButton;
+//    self.navigationItem.rightBarButtonItem = logoutBarButton;
     
     
 }

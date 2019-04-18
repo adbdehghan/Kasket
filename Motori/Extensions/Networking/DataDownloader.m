@@ -12,7 +12,7 @@
 #import "AFNetworking.h"
 #import "Settings.h"
 #import "DBManager.h"
-#define URLaddress "http://kaskett.ir/"
+#define URLaddress "http://panel.kaskett.ir/"
 
 @implementation DataDownloader
 NSMutableDictionary *receivedData;
@@ -54,7 +54,7 @@ NSMutableDictionary *receivedData;
     
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
     
-    NSString *URLString = @"http://kaskett.ir/api/user/RegisterMember";
+    NSString *URLString = @"http://panel.kaskett.ir/api/user/RegisterMember";
     
     
     [manager POST:URLString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -86,7 +86,7 @@ NSMutableDictionary *receivedData;
     
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
     
-    NSString *URLString = @"http://kaskett.ir/token";
+    NSString *URLString = @"http://panel.kaskett.ir/token";
     
     
     [manager POST:URLString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MapViewController.h"
 #import "BEMCheckBox.h"
+#import "FCAlertView.h"
 
 @class DestinationDetails;
 @protocol DestinationDelegate <NSObject>
